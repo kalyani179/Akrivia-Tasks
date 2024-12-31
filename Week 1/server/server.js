@@ -4,16 +4,67 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const CryptoJS = require('crypto-js');
+
+const logger = require('./utilities/logger');
+const morgan = require('morgan');
+
+// Rate Limiting blocks user,bots or applications that are over-using or abusing a web property.
+const rateLimit = require('express-rate-limit');
 
 // Create the Express server
 const server = express();
 const PORT = 3000;
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 2, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again after 15 minutes',
+});
+
+
 const JWT_SECRET = 'kalyani@179';
+const key = "kalyani";
+const morganFormat = ":method :url :status :response-time ms";
 
 // Middlewares
 server.use(cors());
 server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(limiter);
+server.use(
+  morgan(morganFormat, {
+    stream: {
+      write: (message) => {
+        const logObject = {
+          method: message.split(" ")[0],
+          url: message.split(" ")[1],
+          status: message.split(" ")[2],
+          responseTime: message.split(" ")[3],
+        };
+        logger.info(JSON.stringify(logObject));
+      },
+    },
+  })
+);
+
+const encrypt = (data,key) => {
+  const cipherText = CryptoJS.AES.encrypt(data, key).toString();
+  return cipherText;
+}
+
+const decrypt = (cipherText,key) => {
+  try{
+    const bytes = CryptoJS.AES.decrypt(cipherText, key);
+    if(bytes.sigBytes > 0){
+      const originalText = bytes.toString(CryptoJS.enc.Utf8);
+      return originalText;
+    }
+  }
+  catch(err){
+    throw new Error("Invalid key");
+  }
+}
 
 // MySQL database connection
 const db = mysql.createConnection({
