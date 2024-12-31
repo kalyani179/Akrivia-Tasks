@@ -1,12 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const rateLimit = require('express-rate-limit');
 const dotenv = require('dotenv');
 
-// utilities
-const logger = require('./utilities/logger');
-const morgan = require('morgan');
+// middlewares
+const logger = require('./middlewares/logger');
+const morganMiddleware = require('./middlewares/morgan');
+const limiter = require('./middlewares/rateLimiter');
 
 // routes
 const authRouter = require('./routers/userAuthRouter');
@@ -16,38 +16,16 @@ dotenv.config();
 
 const server = express();
 const PORT = process.env.PORT || 3000;
-const morganFormat = ":method :url :status :response-time ms";
-
-// Rate Limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again after 15 minutes',
-});
+const morganFormat = ":method :url :status :response-time ms"
 
 // Middlewares
 server.use(cors());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
-server.use(limiter);
-server.use(
-    morgan(morganFormat, {
-      stream: {
-        write: (message) => {
-          const logObject = {
-            method: message.split(" ")[0],
-            url: message.split(" ")[1],
-            status: message.split(" ")[2],
-            responseTime: message.split(" ")[3],
-          };
-          logger.info(JSON.stringify(logObject));
-        },
-      },
-    })
-);
+server.use(morganMiddleware);
 
 // Routes
-server.use('/auth', authRouter);
+server.use('/auth', limiter, authRouter); // Apply limiter only on '/auth' routes
 
 // Start server
 server.listen(PORT, () => {
