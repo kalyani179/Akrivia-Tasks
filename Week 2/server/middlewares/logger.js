@@ -21,7 +21,7 @@ const logger = createLogger({
         prettyPrint() // Pretty print for better readability in files
     ),
     transports: [
-        new transports.File({ filename: './utils/app.log'}),
+        new transports.File({ filename: 'app.log'}),
         new transports.Console({ format: consoleLogFormat }) // Apply colorize only to console
     ]
 });
