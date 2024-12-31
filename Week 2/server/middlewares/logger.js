@@ -1,6 +1,5 @@
 // It enables customizable logging with multiple formats and transports.
 // used for logging HTTP requests and errors in a Node.js application, with logs saved to files and displayed in the console.
-
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, json, prettyPrint } = format;
 
