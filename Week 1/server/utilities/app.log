@@ -1,0 +1,57 @@
+{"level":"\u001b[32minfo\u001b[39m","message":"{\"method\":\"POST\",\"url\":\"/register\",\"status\":\"409\",\"responseTime\":\"123.213\"}","timestamp":"2024-12-31T06:59:34.766Z"}
+{"level":"\u001b[32minfo\u001b[39m","message":"{\"method\":\"POST\",\"url\":\"/register\",\"status\":\"409\",\"responseTime\":\"78.767\"}","timestamp":"2024-12-31T07:00:51.362Z"}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"74.409"}',
+  level: '\x1B[32minfo\x1B[39m',
+  timestamp: '2024-12-31T07:01:52.806Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"215.836"}',
+  level: 'info',
+  timestamp: '2024-12-31T07:06:56.628Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"-","responseTime":"-"}',
+  level: 'info',
+  timestamp: '2024-12-31T07:30:07.422Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"78.965"}',
+  level: 'info',
+  timestamp: '2024-12-31T07:30:08.174Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"72.679"}',
+  level: 'info',
+  timestamp: '2024-12-31T07:30:09.618Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"68.634"}',
+  level: 'info',
+  timestamp: '2024-12-31T07:30:10.910Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"69.699"}',
+  level: 'info',
+  timestamp: '2024-12-31T07:30:24.024Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"71.790"}',
+  level: 'info',
+  timestamp: '2024-12-31T07:31:40.625Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"72.760"}',
+  level: 'info',
+  timestamp: '2024-12-31T07:31:41.794Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"151.950"}',
+  level: 'info',
+  timestamp: '2024-12-31T09:02:54.438Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"94.338"}',
+  level: 'info',
+  timestamp: '2024-12-31T09:02:55.938Z'
+}

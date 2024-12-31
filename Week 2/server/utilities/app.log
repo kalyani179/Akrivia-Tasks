@@ -1,0 +1,145 @@
+{
+  message: '{"method":"POST","url":"/register","status":"404","responseTime":"0.904"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:47:55.826Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"404","responseTime":"1.278"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:48:53.236Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"500","responseTime":"72.704"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:49:59.566Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"184.525"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:50:31.611Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"159.462"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:50:34.073Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"404","responseTime":"1.610"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:51:51.664Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"147.201"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:53:10.203Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"71.120"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:54:27.660Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"217.900"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:54:29.056Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"109.999"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:55:18.632Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"165.027"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:55:21.776Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"75.666"}',
+  level: 'info',
+  timestamp: '2024-12-31T10:59:32.797Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"75.787"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:00:45.154Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"151.906"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:01:08.715Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"73.351"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:01:26.860Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"82.583"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:01:28.506Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"66.326"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:02:33.123Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"67.475"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:16:34.719Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"80.825"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:18:05.388Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"90.735"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:18:06.872Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"68.044"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:19:08.119Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"500","responseTime":"88.107"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:19:09.404Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"500","responseTime":"1.027"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:19:22.220Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"500","responseTime":"1.814"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:19:23.376Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"500","responseTime":"0.707"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:19:24.137Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"200","responseTime":"142.750"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:20:30.364Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"200","responseTime":"124.234"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:20:31.928Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"409","responseTime":"186.615"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:23:08.216Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"409","responseTime":"94.867"}',
+  level: 'info',
+  timestamp: '2024-12-31T11:23:38.963Z'
+}
