@@ -168,3 +168,8 @@
   level: 'info',
   timestamp: '2024-12-31T12:17:50.237Z'
 }
+{
+  message: '{"method":"POST","url":"/auth/register","status":"409","responseTime":"95.014"}',
+  level: 'info',
+  timestamp: '2024-12-31T12:21:07.033Z'
+}
