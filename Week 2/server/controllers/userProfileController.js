@@ -2,4 +2,4 @@ const profileUpload = async(req,res) => {
     res.json(req.file);
 }
 
-module.exports = {profileUpload};
+module.exports = { profileUpload };
