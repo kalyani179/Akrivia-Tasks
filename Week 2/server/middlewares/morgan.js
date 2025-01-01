@@ -1,5 +1,5 @@
 const morgan = require('morgan');
-const logger = require('./logger'); // Assuming logger.js is in the same directory
+const logger = require('./logger');
 
 const morganFormat = ":method :url :status :response-time ms";
 
@@ -13,7 +13,7 @@ const morganMiddleware = morgan(morganFormat, {
         status: message.split(" ")[2],
         responseTime: message.split(" ")[3],
       };
-      logger.info(JSON.stringify(logObject));  // Log the message with your custom logger
+      logger.info(JSON.stringify(logObject));
     },
   },
 });
