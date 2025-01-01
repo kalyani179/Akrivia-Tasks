@@ -83,3 +83,8 @@
   level: 'info',
   timestamp: '2025-01-01T11:19:32.056Z'
 }
+{
+  message: '{"method":"POST","url":"/auth/login","status":"200","responseTime":"87.488"}',
+  level: 'info',
+  timestamp: '2025-01-01T11:20:32.274Z'
+}
