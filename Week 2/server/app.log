@@ -3,3 +3,13 @@
   level: 'info',
   timestamp: '2024-12-31T12:30:34.260Z'
 }
+{
+  message: '{"method":"POST","url":"/login","status":"404","responseTime":"7.546"}',
+  level: 'info',
+  timestamp: '2025-01-01T02:05:56.298Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"404","responseTime":"4.099"}',
+  level: 'info',
+  timestamp: '2025-01-01T02:07:14.081Z'
+}

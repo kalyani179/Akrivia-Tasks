@@ -11,20 +11,19 @@ const morgan = require('morgan');
 
 // Rate Limiting blocks user,bots or applications that are over-using or abusing a web property.
 const rateLimit = require('express-rate-limit');
+const authenticateToken = require('./utilities/jwtAuth');
 
 // Create the Express server
 const server = express();
 const PORT = 3000;
+const JWT_SECRET = 'kalyani@179';
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 2, // limit each IP to 100 requests per windowMs
+  max: 6, // limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP, please try again after 15 minutes',
 });
 
-
-const JWT_SECRET = 'kalyani@179';
-const key = "kalyani";
 const morganFormat = ":method :url :status :response-time ms";
 
 // Middlewares
@@ -47,24 +46,6 @@ server.use(
     },
   })
 );
-
-const encrypt = (data,key) => {
-  const cipherText = CryptoJS.AES.encrypt(data, key).toString();
-  return cipherText;
-}
-
-const decrypt = (cipherText,key) => {
-  try{
-    const bytes = CryptoJS.AES.decrypt(cipherText, key);
-    if(bytes.sigBytes > 0){
-      const originalText = bytes.toString(CryptoJS.enc.Utf8);
-      return originalText;
-    }
-  }
-  catch(err){
-    throw new Error("Invalid key");
-  }
-}
 
 // MySQL database connection
 const db = mysql.createConnection({
@@ -157,8 +138,13 @@ server.post('/login', (req, res) => {
       expiresIn: '1h',
     });
 
-    res.status(200).json({ message: 'Login successful.', token });
+    return res.status(200).json({ message: 'Login successful.', token });
   });
+});
+
+
+server.get('/profile', authenticateToken, (req, res) => {
+  res.status(200).json({ message: `Hello, ${req.user.username}` });
 });
 
 // Start the server
