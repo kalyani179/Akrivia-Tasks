@@ -63,3 +63,8 @@
   level: 'info',
   timestamp: '2025-01-01T10:49:46.618Z'
 }
+{
+  message: '{"method":"POST","url":"/profile/upload","status":"200","responseTime":"31.913"}',
+  level: 'info',
+  timestamp: '2025-01-01T10:55:14.097Z'
+}
