@@ -115,3 +115,18 @@
   level: 'info',
   timestamp: '2025-01-01T02:22:04.712Z'
 }
+{
+  message: '{"method":"POST","url":"/profile","status":"404","responseTime":"1.211"}',
+  level: 'info',
+  timestamp: '2025-01-01T02:23:01.676Z'
+}
+{
+  message: '{"method":"POST","url":"/profile","status":"404","responseTime":"2.164"}',
+  level: 'info',
+  timestamp: '2025-01-01T02:23:03.025Z'
+}
+{
+  message: '{"method":"GET","url":"/profile","status":"200","responseTime":"11.707"}',
+  level: 'info',
+  timestamp: '2025-01-01T02:23:14.675Z'
+}
