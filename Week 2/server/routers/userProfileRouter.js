@@ -3,7 +3,7 @@ const router = express.Router();
 
 const authenticateToken = require('../utils/jwtUtils');
 const { profileUpload } = require('../controllers/userProfileController');
-const upload = require('../utils/multerUtils');
+const upload = require('../middlewares/multer');
 
 router.post('/upload',upload.single('avatar'),profileUpload);
 

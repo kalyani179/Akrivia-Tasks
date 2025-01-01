@@ -1,12 +1,12 @@
 const CryptoJS = require('crypto-js');
 
-// Encryption function
+// Encryption
 const encrypt = (data, key) => {
   const cipherText = CryptoJS.AES.encrypt(data, key).toString();
   return cipherText;
 }
 
-// Decryption function
+// Decryption 
 const decrypt = (cipherText, key) => {
   try {
     const bytes = CryptoJS.AES.decrypt(cipherText, key);

@@ -68,3 +68,18 @@
   level: 'info',
   timestamp: '2025-01-01T10:55:14.097Z'
 }
+{
+  message: '{"method":"POST","url":"/login","status":"404","responseTime":"2.273"}',
+  level: 'info',
+  timestamp: '2025-01-01T11:18:25.206Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"500","responseTime":"112.613"}',
+  level: 'info',
+  timestamp: '2025-01-01T11:18:39.009Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"500","responseTime":"80.808"}',
+  level: 'info',
+  timestamp: '2025-01-01T11:19:32.056Z'
+}

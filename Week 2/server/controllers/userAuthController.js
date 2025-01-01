@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { createUser, getUserByEmail } = require('../models/userModel'); // Import model functions
+const { createUser, getUserByEmail } = require('../models/userModel'); 
+const { encrypt } = require('../middlewares/encryption');
+
+const JWT_SECRET = process.env.JWT_SECRET
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -11,7 +14,7 @@ const register = async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await createUser(username, email, hashedPassword); // Using the model to create user
+    const result = await createUser(username, email, hashedPassword); 
     res.status(201).json({ message: 'User registered successfully.' });
   } catch (err) {
     if (err.code === 'ER_DUP_ENTRY') {
@@ -29,7 +32,7 @@ const login = async (req, res) => {
   }
 
   try {
-    const results = await getUserByEmail(email); // Using the model to get user by email
+    const results = await getUserByEmail(email); 
 
     if (results.length === 0) {
       return res.status(401).json({ message: 'Invalid email or password.' });
@@ -42,9 +45,9 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
-    const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    const userPayload = JSON.stringify({ id: user.id, username: user.username }); 
+    const encryptedPayload = encrypt(userPayload, JWT_SECRET); 
+    const token = jwt.sign({ data: encryptedPayload }, JWT_SECRET, { expiresIn: '1h' });
 
     res.status(200).json({ message: 'Login successful.', token });
   } catch (err) {
