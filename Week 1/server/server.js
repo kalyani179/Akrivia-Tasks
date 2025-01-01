@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const CryptoJS = require('crypto-js');
 
 const logger = require('./utilities/logger');
 const morgan = require('morgan');
@@ -20,7 +19,7 @@ const JWT_SECRET = 'kalyani@179';
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 6, // limit each IP to 100 requests per windowMs
+  max: 10, // limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP, please try again after 15 minutes',
 });
 

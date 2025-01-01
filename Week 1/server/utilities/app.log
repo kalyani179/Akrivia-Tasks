@@ -130,3 +130,68 @@
   level: 'info',
   timestamp: '2025-01-01T02:23:14.675Z'
 }
+{
+  message: '{"method":"GET","url":"/login","status":"404","responseTime":"3.968"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:37:28.829Z'
+}
+{
+  message: '{"method":"GET","url":"/login","status":"404","responseTime":"1.277"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:37:40.538Z'
+}
+{
+  message: '{"method":"GET","url":"/login","status":"404","responseTime":"1.919"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:38:03.221Z'
+}
+{
+  message: '{"method":"GET","url":"/login","status":"404","responseTime":"0.277"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:38:04.628Z'
+}
+{
+  message: '{"method":"GET","url":"/login","status":"404","responseTime":"0.382"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:38:05.696Z'
+}
+{
+  message: '{"method":"GET","url":"/login","status":"404","responseTime":"0.455"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:38:09.160Z'
+}
+{
+  message: '{"method":"GET","url":"/login","status":"404","responseTime":"0.145"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:38:10.537Z'
+}
+{
+  message: '{"method":"POST","url":"/login","status":"200","responseTime":"98.372"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:38:34.341Z'
+}
+{
+  message: '{"method":"GET","url":"/profile","status":"403","responseTime":"13.220"}',
+  level: 'info',
+  timestamp: '2025-01-01T04:39:00.046Z'
+}
+{
+  message: '{"method":"GET","url":"/profile","status":"403","responseTime":"7.486"}',
+  level: 'info',
+  timestamp: '2025-01-01T05:07:19.132Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"409","responseTime":"246.832"}',
+  level: 'info',
+  timestamp: '2025-01-01T05:36:15.322Z'
+}
+{
+  message: '{"method":"POST","url":"/register","status":"201","responseTime":"236.545"}',
+  level: 'info',
+  timestamp: '2025-01-01T05:36:42.967Z'
+}
+{
+  message: '{"method":"POST","url":"/login","status":"200","responseTime":"299.911"}',
+  level: 'info',
+  timestamp: '2025-01-01T05:37:13.449Z'
+}

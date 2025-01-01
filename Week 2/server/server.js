@@ -10,13 +10,13 @@ const limiter = require('./middlewares/rateLimiter');
 
 // routes
 const authRouter = require('./routers/userAuthRouter');
+const profileRouter = require('./routers/userProfileRouter');
 
 // To Load environment variables
 dotenv.config();
 
 const server = express();
 const PORT = process.env.PORT || 3000;
-const morganFormat = ":method :url :status :response-time ms"
 
 // Middlewares
 server.use(cors());
@@ -26,6 +26,7 @@ server.use(morganMiddleware);
 
 // Routes
 server.use('/auth', limiter, authRouter); // Apply limiter only on '/auth' routes
+server.use('/profile',limiter,profileRouter);
 
 // Start server
 server.listen(PORT, () => {
