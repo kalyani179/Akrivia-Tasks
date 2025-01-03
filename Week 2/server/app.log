@@ -88,3 +88,23 @@
   level: 'info',
   timestamp: '2025-01-01T11:20:32.274Z'
 }
+{
+  message: '{"method":"POST","url":"/auth/login","status":"200","responseTime":"182.092"}',
+  level: 'info',
+  timestamp: '2025-01-01T11:33:50.249Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"409","responseTime":"127.313"}',
+  level: 'info',
+  timestamp: '2025-01-02T14:15:51.840Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"409","responseTime":"197.334"}',
+  level: 'info',
+  timestamp: '2025-01-02T14:17:19.206Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/register","status":"409","responseTime":"215.920"}',
+  level: 'info',
+  timestamp: '2025-01-02T14:21:07.273Z'
+}

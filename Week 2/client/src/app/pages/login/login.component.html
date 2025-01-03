@@ -1,0 +1,42 @@
+<div class="flex flex-col justify-center items-center h-screen -my-10">
+    <h1 class="heading">User Login</h1>
+    <form
+        class="flex flex-col border border-black p-10 py-7 rounded space-y-5 w-96"
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()"
+    >
+        <div class="label-input">
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                formControlName="email"
+                email
+                required
+            />
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+                <div *ngIf="email.errors?.['required']" class="text-sm">Email is required</div>
+                <div *ngIf="email.errors?.['email']" class="text-sm">Enter a valid email (e.g., example&#64;gmail.com)</div>
+            </div>
+        </div>
+
+        <div class="label-input">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                formControlName="password"
+                required
+            />
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
+                <div *ngIf="password.errors?.['required']" class="text-sm">Password is required</div>
+                <div *ngIf="password.errors?.['pattern']" class="text-sm">
+                  Password must be at least 6 characters and include 1 capital letter, 1 symbol, and 1 number
+                </div>
+            </div>
+        </div>
+        <button class="btn" type="submit">Login</button>
+    </form>
+</div>
