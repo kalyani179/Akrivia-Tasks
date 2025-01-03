@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
           duration: 5000
         });
   
-        this.router.navigate(['/profile']);
+        window.location.href = '/profile'
         this.loginForm.reset();
       },
       error: (err) => {
