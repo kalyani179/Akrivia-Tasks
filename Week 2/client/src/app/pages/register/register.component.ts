@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
@@ -10,7 +12,7 @@ import { AuthService } from 'src/app/service/auth.service';
 export class RegisterComponent implements OnInit {
   registerForm !: FormGroup;
 
-  constructor(private auth:AuthService) { }
+  constructor(private auth:AuthService,private router:Router,private toast:NgToastService) { }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -37,27 +39,30 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('password') as FormControl;
   }
 
+ 
   onSubmit(): void {
     const data = this.registerForm.value;
     this.auth.register(data).subscribe({
       next: (response: any) => {
         console.log('Registration successful:', response);
-        if (response.message) {
-          alert(response.message);
-        } else {
-          alert('Registration successful');
-        }
+        this.toast.success({
+          detail: 'Registration Successful',
+          summary: response.message,
+          duration: 5000
+        });
+        this.router.navigate(['/login']);
         this.registerForm.reset();
       },
       error: (err) => {
         console.error('Error during registration:', err);
-        if (err.error.message) {
-          alert(err.error.message);
-        } else {
-          alert('Registration failed');
-        }
+        this.toast.error({
+          detail: 'Registration failed',
+          summary: err.error.message,
+          duration: 5000
+        });
         this.registerForm.reset();
       }
     });
   }
+  
 }

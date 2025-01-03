@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  
   loginForm !: FormGroup;
+
+  constructor(private auth:AuthService, private router:Router,private toast:NgToastService) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -31,6 +37,32 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.loginForm.value);
+    const data = this.loginForm.value;
+    this.auth.login(data).subscribe({
+      next: (response: any) => {
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+        }
+        console.log('Login successful:', response);
+  
+        this.toast.success({
+          detail: 'Login successful',
+          summary: response.message,
+          duration: 5000
+        });
+  
+        this.router.navigate(['/profile']);
+        this.loginForm.reset();
+      },
+      error: (err) => {
+        console.error('Error during login:', err);
+        this.toast.error({
+          detail: 'Login failed',
+          summary: err.error.message || 'An error occurred. Please try again.',
+          duration: 5000
+        });
+        this.loginForm.reset();
+      }
+    });
   }
 }

@@ -1,11 +1,22 @@
-<nav class="navbar navbar-dark bg-info">
+<nav class="navbar navbar-dark bg-info px-6">
     <a class="navbar-brand" routerLink="/">AkriviaHCM</a>
-    <div class="form-inline">
-        <button class="btn btn-dark mr-sm-2" routerLink="/register">Register</button> &nbsp;
-        <button class="btn btn-warning my-2 my-sm-0" routerLink="/login">Login</button>
+    <div *ngIf="!data" class="form-inline">
+      <button class="btn btn-dark mr-sm-2" routerLink="/register">Register</button> &nbsp;
+      <button class="btn btn-warning my-2 my-sm-0" routerLink="/login">Login</button>
     </div>
-    <div class="form-inline">
-        <div class="mr-sm-2 text-white">hello,Admin</div>
-        <button class="btn btn-warning my-2 my-sm-0">Logout</button>
-    </div>
-</nav>
+       <!-- Dropdown Menu -->
+       <div *ngIf="data" class="relative">
+        <button 
+          class="flex flex-col items-center space-x-2 text-white" 
+          (click)="toggleDropdown()">
+          <i class="fas fa-user-circle text-white text-2xl"></i>
+          <span>Hello,{{ data.username }}</span>
+        </button>
+       <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 bg-white rounded shadow-lg w-48">
+        <button 
+          class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200" 
+          (click)="logout()">Logout</button>
+      </div>
+      </div>
+ </nav>
+  
