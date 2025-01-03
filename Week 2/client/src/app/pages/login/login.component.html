@@ -13,7 +13,6 @@
                 name="email"
                 formControlName="email"
                 email
-                required
             />
             <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
                 <div *ngIf="email.errors?.['required']" class="text-sm">Email is required</div>
@@ -28,7 +27,6 @@
                 id="password"
                 name="password"
                 formControlName="password"
-                required
             />
             <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
                 <div *ngIf="password.errors?.['required']" class="text-sm">Password is required</div>
@@ -37,6 +35,6 @@
                 </div>
             </div>
         </div>
-        <button class="btn" type="submit">Login</button>
+        <button class="btn btn-warning" type="submit">Login</button>
     </form>
 </div>

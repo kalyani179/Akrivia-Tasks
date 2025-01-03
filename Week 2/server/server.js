@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 
 // middlewares
-const logger = require('./middlewares/logger');
 const morganMiddleware = require('./middlewares/morgan');
 const limiter = require('./middlewares/rateLimiter');
 
