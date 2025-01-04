@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgToastModule } from 'ng-angular-popup';
 import { AuthInterceptor } from './auth.interceptor';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { MainComponent } from './main/main.component';
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { AuthInterceptor } from './auth.interceptor';
     NavbarComponent,
     FooterComponent,
     ProfileComponent,
+    PageNotFoundComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,
