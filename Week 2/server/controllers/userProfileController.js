@@ -1,61 +1,50 @@
-const { db } = require("../utils/dbUtils");
+const { getPaginatedUsers, getUserById } = require('../models/userModel');
 
-const getUsers = (req, res) => {
-  const page = parseInt(req.query.page, 10) || 1; // Default to page 1
-  const limit = parseInt(req.query.limit, 10) || 10; // Default to 10 users per page
-  const offset = (page - 1) * limit;
+const getUsers = async (req, res) => {
+  const page = parseInt(req.query.page, 10) || 1; 
+  const limit = parseInt(req.query.limit, 10) || 10; 
 
-  db.query('SELECT * FROM users LIMIT ? OFFSET ?', [limit, offset], (err, results) => {
-    if (err) {
-      console.error('Error fetching users:', err);
-      return res.status(500).json({ message: 'Internal server error' });
-    }
-
-    db.query('SELECT COUNT(*) as total FROM users', (countErr, countResults) => {
-      if (countErr) {
-        console.error('Error counting users:', countErr);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-
-      const total = countResults[0].total;
-      res.json({
-        users: results,
-        total,
-        page,
-        totalPages: Math.ceil(total / limit),
-      });
+  try {
+    const { users, total } = await getPaginatedUsers(page, limit);
+    res.json({
+      users,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
     });
-  });
+  } 
+  catch (err) {
+    console.error('Error fetching users:', err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
+const getProfile = async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'User not authenticated' });
+  }
 
-const getProfile = (req, res) => {
-    
-    if (!req.user) {
-        return res.status(401).json({ message: 'User not authenticated' });
+  const userId = req.user.id;
+  console.log('User ID:', userId);
+
+  try {
+    const user = await getUserById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-    
-    const userId = req.user.id;
-    console.log('User ID:', userId); 
-    
-    db.query('SELECT * FROM users WHERE id = ?', [userId], (err, results) => {
-      if (err) {
-        console.error('Error fetching user profile:', err);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-  
-      if (results.length === 0) {
-        return res.status(404).json({ message: 'User not found' });
-      }
 
-      console.log('User Profile:', results);
-      return res.json(results[0]);
-    });
+    console.log('User Profile:', user);
+    return res.json(user);
+  } 
+  catch (err) {
+    console.error('Error fetching user profile:', err);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
+const profileUpload = async (req, res) => {
+  res.json(req.file);
+};
 
-const profileUpload = async(req,res) => {
-    res.json(req.file);
-}
-
-module.exports = { getUsers,getProfile,profileUpload };
+module.exports = { getUsers, getProfile, profileUpload };

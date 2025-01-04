@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { createUser, getUserByEmail } = require('../models/userModel'); 
 const { encrypt } = require('../utils/encryptUtils');
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -31,11 +31,11 @@ const register = async (req, res) => {
     const result = await createUser(username, email, hashedPassword); 
     res.status(201).json({ message: 'User registered successfully.'});
   } catch (err) {
-    if (err.code === 'ER_DUP_ENTRY') {
+    if (err.nativeError && err.nativeError.code === 'ER_DUP_ENTRY') {
       return res.status(409).json({ message: 'Username or email already exists.' });
     }
     res.status(500).json({ message: 'Server error.', error: err.message });
-  }
+  }  
 };
 
 const login = async (req, res) => {
@@ -46,13 +46,12 @@ const login = async (req, res) => {
   }
 
   try {
-    const results = await getUserByEmail(email); 
+    const user = await getUserByEmail(email); 
 
-    if (results.length === 0) {
+    if (!user) {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
-    const user = results[0];
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
@@ -65,6 +64,7 @@ const login = async (req, res) => {
 
     res.status(200).json({ message: 'Login successful.', token });
   } catch (err) {
+    console.error('Error during login:', err);
     res.status(500).json({ message: 'Server error.', error: err.message });
   }
 };

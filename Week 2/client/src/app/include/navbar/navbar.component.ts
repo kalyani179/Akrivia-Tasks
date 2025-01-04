@@ -9,8 +9,8 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  data: any = null;  // Initialize as null to handle cases when data is not available yet
-  dropdownOpen = false; // Track the dropdown state
+  data: any = null; 
+  dropdownOpen = false; 
 
   constructor(private auth: AuthService, private router: Router) { }
 
@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
     this.auth.getProfile().subscribe({
       next: (response: any) => {
         console.log('Profile data:', response);
-        this.data = response;  // Update data when response is received
+        this.data = response;  
       },
       error: (err) => {
         console.error('Error while fetching profile:', err);
@@ -30,12 +30,10 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  // Toggle the dropdown visibility
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  // Logout the user
   logout(): void {
     localStorage.removeItem('token');
     this.data = null;  // Clear the data on logout
