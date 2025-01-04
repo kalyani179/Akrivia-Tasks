@@ -4328,3 +4328,38 @@
   level: 'info',
   timestamp: '2025-01-04T10:16:52.757Z'
 }
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"136.536"}',
+  level: 'info',
+  timestamp: '2025-01-04T10:18:17.788Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"200","responseTime":"88.540"}',
+  level: 'info',
+  timestamp: '2025-01-04T10:18:17.793Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=2&limit=10","status":"200","responseTime":"7.417"}',
+  level: 'info',
+  timestamp: '2025-01-04T10:18:20.480Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"8.121"}',
+  level: 'info',
+  timestamp: '2025-01-04T10:18:22.440Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=2&limit=10","status":"304","responseTime":"10.684"}',
+  level: 'info',
+  timestamp: '2025-01-04T10:20:26.650Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"8.939"}',
+  level: 'info',
+  timestamp: '2025-01-04T10:20:28.562Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.659"}',
+  level: 'info',
+  timestamp: '2025-01-04T10:20:36.686Z'
+}
