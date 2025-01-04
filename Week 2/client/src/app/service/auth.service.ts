@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private serverUrl = environment.serverUrl;
 
@@ -20,16 +21,10 @@ export class AuthService {
   }
 
   getProfile(): Observable<any> {
-    const headers = {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    };
-    return this.http.get(`${this.serverUrl}/profile/user`, { headers });
+    return this.http.get(`${this.serverUrl}/profile/user`);
   }
 
   getUsers(page: number, limit: number): Observable<any> {
-    const headers = {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    };
-    return this.http.get(`${this.serverUrl}/profile/users?page=${page}&limit=${limit}`, { headers });
+    return this.http.get(`${this.serverUrl}/profile/users?page=${page}&limit=${limit}`);
   }
 }

@@ -11,8 +11,9 @@ import { NavbarComponent } from './include/navbar/navbar.component';
 import { FooterComponent } from './include/footer/footer.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgToastModule } from 'ng-angular-popup';
+import { AuthInterceptor } from './auth.interceptor';
 
 
 @NgModule({
@@ -35,7 +36,9 @@ import { NgToastModule } from 'ng-angular-popup';
     NgToastModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers:[],
+  providers:[
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
