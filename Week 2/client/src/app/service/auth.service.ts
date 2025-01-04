@@ -1,28 +1,35 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http:HttpClient) { }
-  register(data:any):Observable<any>{
-    return this.http.post('http://localhost:3000/auth/register',data);
+  private serverUrl = environment.serverUrl;
+
+  constructor(private http: HttpClient) { }
+
+  register(data: any): Observable<any> {
+    return this.http.post(`${this.serverUrl}/auth/register`, data);
   }
-  login(data:any):Observable<any>{
-    return this.http.post('http://localhost:3000/auth/login',data);
+
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.serverUrl}/auth/login`, data);
   }
-  getProfile():Observable<any>{
+
+  getProfile(): Observable<any> {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     };
-    return this.http.get('http://localhost:3000/profile/user',{headers:headers});
+    return this.http.get(`${this.serverUrl}/profile/user`, { headers });
   }
+
   getUsers(page: number, limit: number): Observable<any> {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('token')}`
     };
-    return this.http.get(`http://localhost:3000/profile/users?page=${page}&limit=${limit}`, { headers });
-  }  
+    return this.http.get(`${this.serverUrl}/profile/users?page=${page}&limit=${limit}`, { headers });
+  }
 }
