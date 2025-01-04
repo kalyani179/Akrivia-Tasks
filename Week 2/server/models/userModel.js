@@ -49,7 +49,7 @@ const getUserByEmail = async (email) => {
 };
 
 // Get users with pagination
-const getPaginatedtUsers = async (page, limit) => {
+const getPaginatedUsers = async (page, limit) => {
   const offset = (page - 1) * limit;
   const users = await knex('users').limit(limit).offset(offset);
   const totalResults = await knex('users').count('id as total');
@@ -63,4 +63,4 @@ const getUserById = async (userId) => {
   return user;
 };
 
-module.exports = { createUser, getUserByEmail, getPaginatedtUsers, getUserById };
+module.exports = { createUser, getUserByEmail, getPaginatedUsers, getUserById };
