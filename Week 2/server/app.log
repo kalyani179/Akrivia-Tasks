@@ -4223,3 +4223,8 @@
   level: 'info',
   timestamp: '2025-01-04T09:41:05.074Z'
 }
+{
+  message: '{"method":"POST","url":"/auth/register","status":"409","responseTime":"601.538"}',
+  level: 'info',
+  timestamp: '2025-01-04T09:43:52.316Z'
+}
