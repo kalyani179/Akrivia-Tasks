@@ -25,7 +25,7 @@ server.use(morganMiddleware);
 
 // Routes
 server.use('/auth', limiter, authRouter); // Apply limiter only on '/auth' routes
-server.use('/profile',limiter,profileRouter);
+server.use('/profile', limiter, profileRouter);
 
 // Start server
 server.listen(PORT, () => {

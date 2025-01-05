@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { createUser, getUserByEmail } = require('../models/userModel'); 
 const { encrypt } = require('../utils/encryptUtils');
+const { generateAccessToken, generateRefreshToken } = require('../utils/jwtUtils');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -58,11 +59,10 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
-    const userPayload = JSON.stringify({ id: user.id, username: user.username }); 
-    const encryptedPayload = encrypt(userPayload, JWT_SECRET); 
-    const token = jwt.sign({ data: encryptedPayload }, JWT_SECRET, { expiresIn: '1h' });
+    const accessToken = generateAccessToken({ id: user.id, username: user.username });
+    const refreshToken = generateRefreshToken({ id: user.id, username: user.username });
 
-    res.status(200).json({ message: 'Login successful.', token });
+    res.status(200).json({ message: 'Login successful.', accessToken, refreshToken });
   } catch (err) {
     console.error('Error during login:', err);
     res.status(500).json({ message: 'Server error.', error: err.message });
