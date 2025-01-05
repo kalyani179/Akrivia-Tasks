@@ -3,27 +3,51 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { AuthService } from './service/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // Get the token from local storage
-    const token = localStorage.getItem('token');
+    // Get the access token from local storage
+    const accessToken = localStorage.getItem('accessToken');
 
-    // Clone the request and add the authorization header if the token exists
-    if (token) {
-      const clonedRequest = request.clone({
-        headers: request.headers.set('Authorization', `Bearer ${token}`)
+    // Clone the request and add the authorization header if the access token exists
+    let authRequest = request;
+    if (accessToken) {
+      authRequest = request.clone({
+        headers: request.headers.set('Authorization', `Bearer ${accessToken}`)
       });
-      return next.handle(clonedRequest);
-    } else {
-      return next.handle(request);
     }
+
+    return next.handle(authRequest).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 403 && !authRequest.url.includes('/auth/refresh-token')) {
+          // If the access token is expired, try to refresh it
+          return this.authService.refreshToken().pipe(
+            switchMap((response: any) => {
+              // Store the new access token
+              localStorage.setItem('accessToken', response.accessToken);
+
+              // Clone the request with the new access token
+              const newAuthRequest = request.clone({
+                headers: request.headers.set('Authorization', `Bearer ${response.accessToken}`)
+              });
+
+              // Retry the request with the new access token
+              return next.handle(newAuthRequest);
+            })
+          );
+        }
+        return throwError(error);
+      })
+    );
   }
 }

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   
   loginForm !: FormGroup;
 
-  constructor(private auth:AuthService, private router:Router,private toast:NgToastService) {}
+  constructor(private auth: AuthService, private router: Router, private toast: NgToastService) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -37,11 +37,16 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     const data = this.loginForm.value;
     this.auth.login(data).subscribe({
       next: (response: any) => {
-        if (response.token) {
-          localStorage.setItem('token', response.token);
+        if (response.accessToken && response.refreshToken) {
+          localStorage.setItem('accessToken', response.accessToken);
+          localStorage.setItem('refreshToken', response.refreshToken);
         }
         console.log('Login successful:', response);
   
@@ -51,17 +56,16 @@ export class LoginComponent implements OnInit {
           duration: 5000
         });
         this.router.navigate(['/profile']);
-        // window.location.href = '/profile';
         this.loginForm.reset();
       },
       error: (err) => {
         console.error('Error during login:', err);
+        const errorMessage = err.error?.message || 'An error occurred. Please try again.';
         this.toast.error({
           detail: 'Login failed',
-          summary: err.error.message || 'An error occurred. Please try again.',
+          summary: errorMessage,
           duration: 5000
         });
-        this.loginForm.reset();
       }
     });
   }

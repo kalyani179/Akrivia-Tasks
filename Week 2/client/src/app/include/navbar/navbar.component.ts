@@ -35,7 +35,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     this.data = null;  // Clear the data on logout
     this.dropdownOpen = false; // Close the dropdown on logout
     this.router.navigate(['/login']);
