@@ -32,6 +32,7 @@ export class UploadProfileImageComponent {
 
     this.profileService.uploadProfileImage(this.selectedFile).subscribe({
       next: (response) => {
+        console.log(response);
         this.toast.success({
           detail: 'Upload successful',
           summary: 'Image uploaded successfully.',

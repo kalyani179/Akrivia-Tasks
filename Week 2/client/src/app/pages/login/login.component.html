@@ -1,52 +1,61 @@
 <div class="flex flex-col justify-center items-center -my-10 h-screen bg-gray-100">
-    <h1 class="text-center text-3xl mb-6 font-semibold">User Login</h1>
-    <form
-      class="flex flex-col bg-white shadow-lg rounded-lg p-8 space-y-6 w-full max-w-sm"
-      [formGroup]="loginForm"
-      (ngSubmit)="onSubmit()"
+  <h1 class="text-center text-3xl mb-6 font-semibold">User Login</h1>
+  <form
+    class="flex flex-col bg-white shadow-lg rounded-lg p-8 space-y-6 w-full max-w-sm"
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <!-- Email -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        formControlName="email"
+        email
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      />
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-500 text-sm mt-1">
+        <div *ngIf="email.errors?.['required']">Email is required</div>
+        <div *ngIf="email.errors?.['email']">Enter a valid email (e.g., example&#64;gmail.com)</div>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div>
+      <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        formControlName="password"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      />
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-red-500 text-sm mt-1">
+        <div *ngIf="password.errors?.['required']">Password is required</div>
+        <div *ngIf="password.errors?.['pattern']">
+          Password must be at least 6 characters and include 1 capital letter, 1 symbol, and 1 number
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
     >
-      <!-- Email -->
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          formControlName="email"
-          email
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-        />
-        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-500 text-sm mt-1">
-          <div *ngIf="email.errors?.['required']">Email is required</div>
-          <div *ngIf="email.errors?.['email']">Enter a valid email (e.g., example&#64;gmail.com)</div>
-        </div>
-      </div>
-  
-      <!-- Password -->
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          formControlName="password"
-          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-        />
-        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-red-500 text-sm mt-1">
-          <div *ngIf="password.errors?.['required']">Password is required</div>
-          <div *ngIf="password.errors?.['pattern']">
-            Password must be at least 6 characters and include 1 capital letter, 1 symbol, and 1 number
-          </div>
-        </div>
-      </div>
-  
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-      >
-        Login
-      </button>
-    </form>
+      Login
+    </button>
+  </form>
 </div>
-  
+
+<div *ngIf="loginResponse$ | async as response">
+  <div *ngIf="response; else error">
+    <p>Login successful: {{ response.message }}</p>
+  </div>
+</div>
+
+<ng-template #error>
+  <p>Login failed. Please try again.</p>
+</ng-template>

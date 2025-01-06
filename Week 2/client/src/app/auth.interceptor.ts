@@ -29,10 +29,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authRequest).pipe(
       catchError((error: HttpErrorResponse) => {
+        console.log('Error status:', error.status);
         if (error.status === 403 && !authRequest.url.includes('/auth/refresh-token')) {
           // If the access token is expired, try to refresh it
+          console.log('Access token expired. Attempting to refresh token...');
           return this.authService.refreshToken().pipe(
             switchMap((response: any) => {
+              console.log('Token refreshed successfully');
               // Store the new access token
               localStorage.setItem('accessToken', response.accessToken);
 
@@ -43,6 +46,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
               // Retry the request with the new access token
               return next.handle(newAuthRequest);
+            }),
+            catchError((refreshError) => {
+              console.error('Error refreshing token:', refreshError);
+              return throwError(refreshError);
             })
           );
         }

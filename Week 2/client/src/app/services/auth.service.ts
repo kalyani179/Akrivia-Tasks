@@ -75,7 +75,7 @@ export class AuthService {
     }
     return this.http.post(`${this.serverUrl}/auth/refresh-token`, { token: refreshToken }).pipe(
       map((response: any) => {
-        this.storeTokens(response.accessToken, refreshToken);
+        localStorage.setItem('accessToken', response.accessToken);
         return response;
       })
     );
