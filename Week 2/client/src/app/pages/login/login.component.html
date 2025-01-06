@@ -1,41 +1,53 @@
-<div class="flex flex-col justify-center items-center h-screen -my-10">
-    <h1 class="heading">User Login</h1>
+<div class="flex flex-col justify-center items-center -my-10 h-screen bg-gray-100">
+    <h1 class="text-center text-3xl mb-6 font-semibold">User Login</h1>
     <form
-        class="flex flex-col border border-black p-10 py-7 rounded space-y-5 w-96"
-        [formGroup]="loginForm"
-        (ngSubmit)="onSubmit()"
+      class="flex flex-col bg-white shadow-lg rounded-lg p-8 space-y-6 w-full max-w-sm"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
     >
-        <div class="label-input">
-            <label for="email">Email</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                formControlName="email"
-                email
-            />
-            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-                <div *ngIf="email.errors?.['required']" class="text-sm">Email is required</div>
-                <div *ngIf="email.errors?.['email']" class="text-sm">Enter a valid email (e.g., example&#64;gmail.com)</div>
-            </div>
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          formControlName="email"
+          email
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        />
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-500 text-sm mt-1">
+          <div *ngIf="email.errors?.['required']">Email is required</div>
+          <div *ngIf="email.errors?.['email']">Enter a valid email (e.g., example&#64;gmail.com)</div>
         </div>
-
-        <div class="label-input">
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                formControlName="password"
-            />
-            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
-                <div *ngIf="password.errors?.['required']" class="text-sm">Password is required</div>
-                <div *ngIf="password.errors?.['pattern']" class="text-sm">
-                  Password must be at least 6 characters and include 1 capital letter, 1 symbol, and 1 number
-                </div>
-            </div>
+      </div>
+  
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          formControlName="password"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        />
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-red-500 text-sm mt-1">
+          <div *ngIf="password.errors?.['required']">Password is required</div>
+          <div *ngIf="password.errors?.['pattern']">
+            Password must be at least 6 characters and include 1 capital letter, 1 symbol, and 1 number
+          </div>
         </div>
-        <button class="btn btn-warning" type="submit">Login</button>
+      </div>
+  
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        Login
+      </button>
     </form>
+    <ng-toast></ng-toast>
 </div>
-<ng-toast></ng-toast>
+  

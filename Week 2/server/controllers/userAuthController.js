@@ -1,15 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { createUser, getUserByEmail } = require('../models/userModel'); 
-const { encrypt } = require('../utils/encryptUtils');
+
 const { generateAccessToken, generateRefreshToken } = require('../utils/jwtUtils');
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, gender, dob, course, email, password } = req.body;
 
-  if (!username || !email || !password) {
+  if (!username || !email || !password || !dob || !gender || !course) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
 
@@ -29,7 +27,7 @@ const register = async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const result = await createUser(username, email, hashedPassword); 
+    const result = await createUser(username, email, hashedPassword, dob, gender, course); 
     res.status(201).json({ message: 'User registered successfully.'});
   } catch (err) {
     if (err.nativeError && err.nativeError.code === 'ER_DUP_ENTRY') {

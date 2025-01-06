@@ -6,6 +6,9 @@
         <tr>
           <th class="border border-gray-300 px-4 py-2 text-left">Id</th>
           <th class="border border-gray-300 px-4 py-2 text-left">Username</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Gender</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Date of Birth</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Course</th>
           <th class="border border-gray-300 px-4 py-2 text-left">Email</th>
           <th class="border border-gray-300 px-4 py-2 text-left">Created Time</th>
         </tr>
@@ -14,8 +17,11 @@
         <tr *ngFor="let user of users" class="odd:bg-white even:bg-gray-50">
           <td class="border border-gray-300 px-4 py-2">{{ user.id }}</td>
           <td class="border border-gray-300 px-4 py-2">{{ user.username }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ user.gender }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ user.dob | date:'yyyy-MM-dd' }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ user.course }}</td>
           <td class="border border-gray-300 px-4 py-2">{{ user.email }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ user.created_at }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ user.created_at | date:'yyyy-MM-dd' }}</td>
         </tr>
       </tbody>
     </table>
@@ -30,5 +36,4 @@
     <span class="px-4 py-2">{{ page }} / {{ totalPages }}</span>
     <button class="px-4 py-2 bg-gray-300 rounded" (click)="nextPage()" [disabled]="page === totalPages">Next</button>
   </div>
-  
 </div>

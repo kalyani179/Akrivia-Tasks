@@ -14,11 +14,14 @@ class User extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['username', 'email', 'password'],
+      required: ['username', 'email', 'password', 'dob', 'gender', 'course'],
 
       properties: {
         id: { type: 'integer' },
         username: { type: 'string', minLength: 1, maxLength: 255 },
+        gender: { type: 'string', enum: ['male', 'female'] },
+        dob: { type: 'string', format: 'date' },
+        course: { type: 'string', minLength: 1, maxLength: 255 },
         email: { type: 'string', minLength: 1, maxLength: 255 },
         password: { type: 'string', minLength: 1, maxLength: 255 },
         created_at: { type: 'string', format: 'date-time' },
@@ -29,9 +32,9 @@ class User extends Model {
 }
 
 // Create user
-const createUser = async (username, email, password) => {
+const createUser = async (username, email, password, dob, gender, course) => {
   try {
-    const user = await User.query().insert({ username, email, password });
+    const user = await User.query().insert({ username, email, password, dob, gender, course });
     return user;
   } catch (err) {
     throw err;
