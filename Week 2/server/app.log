@@ -6188,3 +6188,198 @@
   level: 'info',
   timestamp: '2025-01-06T09:45:36.662Z'
 }
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.896"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:50:25.828Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"200","responseTime":"229.295"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:50:40.455Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"8.290"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:50:40.521Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"200","responseTime":"12.360"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:50:46.095Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"16.700"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:50:46.105Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"4.885"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:51:02.727Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"5.286"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:51:02.775Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"3.834"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:52:23.540Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"4.917"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:52:23.591Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"14.472"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:52:32.822Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"6.979"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:52:37.533Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"4.553"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:53:39.580Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"6.425"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:53:39.627Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"7.228"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:53:46.076Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"3.323"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:55:05.364Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"4.258"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:55:05.405Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"6.174"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:55:43.306Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"5.915"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:55:43.351Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"6.803"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:55:49.422Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"3.357"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:56:35.979Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"4.482"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:56:36.058Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"5.072"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:56:38.374Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"4.366"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:56:54.791Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"5.357"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:56:54.842Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"4.881"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:57:09.701Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"4.823"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:57:09.759Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"6.825"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:57:18.049Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"200","responseTime":"221.925"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:58:14.704Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"8.798"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:58:14.777Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"10.977"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:58:18.598Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"7.130"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:58:18.612Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.966"}',
+  level: 'info',
+  timestamp: '2025-01-06T09:58:53.046Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"5.067"}',
+  level: 'info',
+  timestamp: '2025-01-06T10:03:19.165Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"1.489"}',
+  level: 'info',
+  timestamp: '2025-01-06T10:03:21.343Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"2.018"}',
+  level: 'info',
+  timestamp: '2025-01-06T10:03:37.817Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.410"}',
+  level: 'info',
+  timestamp: '2025-01-06T10:03:59.907Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.802"}',
+  level: 'info',
+  timestamp: '2025-01-06T10:06:43.358Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.582"}',
+  level: 'info',
+  timestamp: '2025-01-06T10:07:31.745Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"1.653"}',
+  level: 'info',
+  timestamp: '2025-01-06T10:07:54.944Z'
+}
