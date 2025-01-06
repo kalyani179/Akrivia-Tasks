@@ -44,7 +44,16 @@ const getProfile = async (req, res) => {
 };
 
 const profileUpload = async (req, res) => {
-  res.json(req.file);
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+    console.log('Uploaded file:', req.file);
+    res.status(200).json({ message: 'File uploaded successfully', file: req.file });
+  } catch (err) {
+    console.error('Error uploading file:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 module.exports = { getUsers, getProfile, profileUpload };

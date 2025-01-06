@@ -34,6 +34,11 @@ export class NavbarComponent implements OnInit {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
+  
+  navigateToUploadImage(): void {
+    this.router.navigate(['/upload-profile-image']);
+  }
+
   logout(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

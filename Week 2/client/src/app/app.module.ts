@@ -12,6 +12,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { AuthInterceptor } from './auth.interceptor';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { MainComponent } from './main/main.component';
+import { UploadProfileImageComponent } from './pages/upload-profile-image/upload-profile-image.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { MainComponent } from './main/main.component';
     FooterComponent,
     PageNotFoundComponent,
     MainComponent,
+    UploadProfileImageComponent,
   ],
   imports: [
     BrowserModule,
