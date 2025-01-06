@@ -7058,3 +7058,43 @@
   level: 'info',
   timestamp: '2025-01-06T13:01:09.532Z'
 }
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.764"}',
+  level: 'info',
+  timestamp: '2025-01-06T13:02:05.367Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.758"}',
+  level: 'info',
+  timestamp: '2025-01-06T13:02:44.190Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"1.482"}',
+  level: 'info',
+  timestamp: '2025-01-06T13:02:48.465Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"200","responseTime":"173.234"}',
+  level: 'info',
+  timestamp: '2025-01-06T13:02:57.663Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"12.615"}',
+  level: 'info',
+  timestamp: '2025-01-06T13:02:57.740Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"5.580"}',
+  level: 'info',
+  timestamp: '2025-01-06T13:03:14.178Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"200","responseTime":"7.621"}',
+  level: 'info',
+  timestamp: '2025-01-06T13:03:14.267Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"7.786"}',
+  level: 'info',
+  timestamp: '2025-01-06T13:03:14.272Z'
+}
