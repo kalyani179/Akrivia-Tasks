@@ -21,12 +21,8 @@ import { MainComponent } from './main/main.component';
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
-    LoginComponent,
-    DashboardComponent,
     NavbarComponent,
     FooterComponent,
-    ProfileComponent,
     PageNotFoundComponent,
     MainComponent,
   ],

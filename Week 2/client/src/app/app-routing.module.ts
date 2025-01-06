@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { RegisterComponent } from './pages/register/register.component';
 import { AuthGuard } from './auth.guard';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { MainComponent } from './main/main.component';
@@ -11,10 +7,10 @@ import { MainComponent } from './main/main.component';
 const routes: Routes = [
   {
     path: '', component: MainComponent, children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+      { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
+      { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
+      { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+      { path: 'profile', loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule), canActivate: [AuthGuard] }
     ]
   },
   { path: '**', component: PageNotFoundComponent }
@@ -25,4 +21,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
