@@ -5578,3 +5578,78 @@
   level: 'info',
   timestamp: '2025-01-06T05:00:09.682Z'
 }
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"6.911"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:51:53.723Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"1.034"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:52:05.949Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.892"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:52:11.293Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"401","responseTime":"284.804"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:52:20.786Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/login","status":"200","responseTime":"243.689"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:52:26.152Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"20.352"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:52:26.231Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"12.281"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:53:17.456Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"200","responseTime":"37.873"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:53:17.715Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"55.471"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:53:17.721Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"36.308"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:53:21.582Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"33.357"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:53:21.595Z'
+}
+{
+  message: '{"method":"POST","url":"/auth/refresh-token","status":"200","responseTime":"13.720"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:53:45.138Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"304","responseTime":"23.114"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:53:45.250Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/users?page=1&limit=10","status":"304","responseTime":"36.055"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:53:45.273Z'
+}
+{
+  message: '{"method":"GET","url":"/profile/user","status":"403","responseTime":"0.597"}',
+  level: 'info',
+  timestamp: '2025-01-06T06:55:49.559Z'
+}
