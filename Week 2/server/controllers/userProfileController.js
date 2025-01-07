@@ -45,13 +45,22 @@ const getProfile = async (req, res) => {
 
 const profileUpload = async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
+    const { image } = req.body;
+    if (!image) {
+      return res.status(400).json({ message: 'No image provided' });
     }
-    console.log('Uploaded file:', req.file);
-    res.status(200).json({ message: 'File uploaded successfully', file: req.file });
+
+    const user = await getUserById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    await user.$query().patch({ profileImage: image });
+
+    console.log('Uploaded image:', image);
+    res.status(200).json({ message: 'Image uploaded successfully', image });
   } catch (err) {
-    console.error('Error uploading file:', err);
+    console.error('Error uploading image:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

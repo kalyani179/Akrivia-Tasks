@@ -15,7 +15,6 @@ class User extends Model {
     return {
       type: 'object',
       required: ['username', 'email', 'password', 'dob', 'gender', 'course'],
-
       properties: {
         id: { type: 'integer' },
         username: { type: 'string', minLength: 1, maxLength: 255 },
@@ -24,6 +23,7 @@ class User extends Model {
         course: { type: 'string', minLength: 1, maxLength: 255 },
         email: { type: 'string', minLength: 1, maxLength: 255 },
         password: { type: 'string', minLength: 1, maxLength: 255 },
+        profileImage: { type: 'string', minLength: 1 },
         created_at: { type: 'string', format: 'date-time' },
         updated_at: { type: 'string', format: 'date-time' }
       }
@@ -62,8 +62,7 @@ const getPaginatedUsers = async (page, limit) => {
 
 // Get user by ID
 const getUserById = async (userId) => {
-  const user = await knex('users').where({ id: userId }).first();
-  return user;
+  return await User.query().findById(userId);
 };
 
 module.exports = { createUser, getUserByEmail, getPaginatedUsers, getUserById };

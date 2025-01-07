@@ -1,3 +1,4 @@
+// filepath: /c:/Users/lap_2/OneDrive/Documents/AKR/Week 2/client/src/app/pages/upload-profile-image/upload-profile-image.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
@@ -30,24 +31,29 @@ export class UploadProfileImageComponent {
       return;
     }
 
-    this.profileService.uploadProfileImage(this.selectedFile).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.toast.success({
-          detail: 'Upload successful',
-          summary: 'Image uploaded successfully.',
-          duration: 5000
-        });
-        this.router.navigate(['/profile']);
-      },
-      error: (err) => {
-        this.toast.error({
-          detail: 'Upload failed',
-          summary: 'Error uploading image.',
-          duration: 5000
-        });
-        console.error('Error uploading image:', err);
-      }
-    });
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result as string;
+      this.profileService.uploadProfileImage(base64String).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.toast.success({
+            detail: 'Upload successful',
+            summary: 'Image uploaded successfully.',
+            duration: 5000
+          });
+          this.router.navigate(['/profile']);
+        },
+        error: (err) => {
+          this.toast.error({
+            detail: 'Upload failed',
+            summary: 'Error uploading image.',
+            duration: 5000
+          });
+          console.error('Error uploading image:', err);
+        }
+      });
+    };
+    reader.readAsDataURL(this.selectedFile);
   }
 }

@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgToastService } from 'ng-angular-popup';
-import { Observable, catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',

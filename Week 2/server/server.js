@@ -18,8 +18,9 @@ const PORT = process.env.PORT || 3000; //  object in Node.js that provides acces
 
 // Middlewares
 server.use(cors()); // allows the server to handle requests from different origins (domains).
-server.use(bodyParser.json()); 
-server.use(bodyParser.urlencoded({ extended: true }));
+// Increase payload size limit
+server.use(bodyParser.json({ limit: '10mb' }));
+server.use(bodyParser.urlencoded({ limit: '10mb', extended: true })); 
 server.use(morganMiddleware);
 
 // Routes

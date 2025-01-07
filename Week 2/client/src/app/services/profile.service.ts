@@ -27,6 +27,11 @@ export class ProfileService {
         })
       );
     }
+
+    uploadProfileImage(base64String: string): Observable<any> {
+      const payload = { image: base64String };
+      return this.http.post(`${environment.serverUrl}/profile/upload`, payload);
+    }
   
     getUsers(page: number, limit: number): Observable<any> {
       return this.http.get(`${this.serverUrl}/profile/users?page=${page}&limit=${limit}`, {
@@ -42,7 +47,6 @@ export class ProfileService {
         })
       );
     }
-
     
     private getAuthHeaders(): HttpHeaders {
       const accessToken = localStorage.getItem('accessToken');
@@ -50,11 +54,4 @@ export class ProfileService {
         'Authorization': `Bearer ${accessToken}`
       });
     }
-
-  uploadProfileImage(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('avatar', file);
-
-    return this.http.post(`${environment.serverUrl}/profile/upload`, formData);
-  }
 }
