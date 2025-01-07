@@ -12,7 +12,6 @@ import { Observable, catchError, of, tap } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  loginResponse$!: Observable<any>;
 
   constructor(public router: Router, private auth: AuthService, private toast: NgToastService) {}
 
@@ -42,31 +41,31 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const data = this.loginForm.value;
+  const data = this.loginForm.value;
 
-    this.loginResponse$ = this.auth.login(data).pipe(
-      tap(response => {
-        if (response.refreshToken && response.accessToken) {
-          // On success, show the success toast and redirect
-          this.toast.success({
-            detail: 'Login successful',
-            summary: response.message,
-            duration: 5000
-          });
-          localStorage.setItem('accessToken', response.accessToken);
-          localStorage.setItem('refreshToken', response.refreshToken);
-          this.router.navigate(['/profile']);
-        }
-      }),
-      catchError(err => {
-        const errorMessage = err.error?.message || 'An error occurred. Please try again.';
-        this.toast.error({
-          detail: 'Login failed',
-          summary: errorMessage,
+  this.auth.login(data).subscribe({
+    next: (response) => {
+      if (response.refreshToken && response.accessToken) {
+        // On success, show the success toast and redirect
+        this.toast.success({
+          detail: 'Login successful',
+          summary: response.message,
           duration: 5000
         });
-        return of(null); // Return null observable to continue the stream
-      })
-    );
-  }
+        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
+        // this.router.navigate(['/profile']);
+        window.location.href='/profile';
+      }
+    },
+    error: (err) => {
+      const errorMessage = err.error?.message || 'An error occurred. Please try again.';
+      this.toast.error({
+        detail: 'Login failed',
+        summary: errorMessage,
+        duration: 5000
+      });
+    }
+  });
+}
 }

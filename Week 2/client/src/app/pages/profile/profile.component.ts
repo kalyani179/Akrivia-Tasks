@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,14 +13,14 @@ export class ProfileComponent implements OnInit {
   limit: number = 10;
   totalPages: number = 1;
 
-  constructor(private authService: AuthService) {}
+  constructor(private profileService:ProfileService) {}
 
   ngOnInit(): void {
     this.getUsers(this.page);
   }
 
   getUsers(page: number): void {
-    this.authService.getUsers(page, this.limit).subscribe({
+    this.profileService.getUsers(page, this.limit).subscribe({
       next: (response: any) => {
         this.users = response.users;
         this.totalPages = response.totalPages;

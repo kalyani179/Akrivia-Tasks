@@ -5,7 +5,8 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-// Initialize knex.
+// Initialize knex - creates a Knex instance that serves as the interface to interact with your database
+// It provides methods for building and executing SQL queries
 const knex = Knex({
     client: 'mysql2',
     connection: {
@@ -16,7 +17,7 @@ const knex = Knex({
     },
 });
 
-// Give the knex instance to objection.
+// Gives the Knex instance to Objection.js so that Objection can use it to interact with the database.
 Model.knex(knex);
 
 module.exports = { knex };

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,14 +12,14 @@ export class NavbarComponent implements OnInit {
   data: any = null; 
   dropdownOpen = false; 
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private profileService: ProfileService, private router: Router) { }
 
   ngOnInit(): void {
     this.getProfiler();
   }
 
   getProfiler(): void {
-    this.auth.getProfile().subscribe({
+    this.profileService.getProfile().subscribe({
       next: (response: any) => {
         console.log('Profile data:', response);
         this.data = response;  

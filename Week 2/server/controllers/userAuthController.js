@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const { createUser, getUserByEmail } = require('../models/userModel'); 
 
 const { generateAccessToken, generateRefreshToken } = require('../utils/jwtUtils');
@@ -26,7 +25,7 @@ const register = async (req, res) => {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10); // sets 10 rounds the algorithm uses
     const result = await createUser(username, email, hashedPassword, dob, gender, course); 
     res.status(201).json({ message: 'User registered successfully.'});
   } catch (err) {
@@ -51,7 +50,7 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password); // rehashes the password and compare 
 
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password.' });

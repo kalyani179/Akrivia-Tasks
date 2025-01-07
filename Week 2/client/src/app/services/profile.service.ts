@@ -1,14 +1,55 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { catchError, switchMap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
+  private serverUrl = environment.serverUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService:AuthService) {}
+
+   getProfile(): Observable<any> {
+      return this.http.get(`${this.serverUrl}/profile/user`, {
+        headers: this.getAuthHeaders()
+      }).pipe(
+        catchError(error => {
+          if (error.status === 403) {
+            return this.authService.refreshToken().pipe(
+              switchMap(() => this.getProfile())
+            );
+          }
+          return throwError(()=> new Error(error));
+        })
+      );
+    }
+  
+    getUsers(page: number, limit: number): Observable<any> {
+      return this.http.get(`${this.serverUrl}/profile/users?page=${page}&limit=${limit}`, {
+        headers: this.getAuthHeaders()
+      }).pipe(
+        catchError(error => {
+          if (error.status === 403) {
+            return this.authService.refreshToken().pipe(
+              switchMap(() => this.getUsers(page, limit))
+            );
+          }
+          return throwError(()=>new Error(error));
+        })
+      );
+    }
+
+    
+    private getAuthHeaders(): HttpHeaders {
+      const accessToken = localStorage.getItem('accessToken');
+      return new HttpHeaders({
+        'Authorization': `Bearer ${accessToken}`
+      });
+    }
 
   uploadProfileImage(file: File): Observable<any> {
     const formData = new FormData();

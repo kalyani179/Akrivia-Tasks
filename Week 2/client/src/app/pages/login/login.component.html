@@ -49,13 +49,3 @@
     </button>
   </form>
 </div>
-
-<div *ngIf="loginResponse$ | async as response">
-  <div *ngIf="response; else error">
-    <p>Login successful: {{ response.message }}</p>
-  </div>
-</div>
-
-<ng-template #error>
-  <p>Login failed. Please try again.</p>
-</ng-template>

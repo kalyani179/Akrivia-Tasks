@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate {
 
     if (accessToken) {
       if (this.authService.isTokenValid(accessToken)) {
-        // Access token is valid
         return true;
       } else if (refreshToken) {
         // Access token is expired, try to refresh it
@@ -25,7 +24,7 @@ export class AuthGuard implements CanActivate {
             if (response.accessToken) {
               localStorage.setItem('accessToken', response.accessToken);
               return true;
-            } else {
+            } else { // if the refreshToken is invalid or expired
               this.router.navigate(['/login']);
               return false;
             }
