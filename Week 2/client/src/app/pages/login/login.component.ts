@@ -53,8 +53,8 @@ export class LoginComponent implements OnInit {
         });
         localStorage.setItem('accessToken', response.accessToken);
         localStorage.setItem('refreshToken', response.refreshToken);
-        // this.router.navigate(['/profile']);
-        window.location.href='/profile';
+        this.router.navigate(['/profile']);
+        // window.location.href='/profile';
       }
     },
     error: (err) => {

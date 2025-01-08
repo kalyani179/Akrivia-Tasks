@@ -14,6 +14,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { MainComponent } from './main/main.component';
 import { UploadProfileImageComponent } from './pages/upload-profile-image/upload-profile-image.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
+import { RegisterComponent } from './pages/register/register.component';
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FooterComponent,
     PageNotFoundComponent,
     MainComponent,
-    UploadProfileImageComponent
+    UploadProfileImageComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -33,10 +36,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     HttpClientModule,
     NgToastModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers:[
+    UnsavedChangesGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

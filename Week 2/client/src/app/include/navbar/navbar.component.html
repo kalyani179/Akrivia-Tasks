@@ -1,35 +1,35 @@
-<div class="relative">
+<div class="relative shadow-lg">
   <!-- Sidebar -->
   <div 
     [ngClass]="{ 'w-64': sidebarOpen, 'w-0': !sidebarOpen }" 
-    class="absolute inset-y-0 right-0 bg-gray-800 text-white transition-all duration-300 ease-in-out z-50 overflow-hidden">
-    <div class="flex flex-col h-full">
+    class="fixed inset-y-0 right-0 bg-gray-900 text-white transition-all duration-300 ease-in-out z-50 h-screen overflow-hidden">
+    <div class="flex flex-col h-screen">
       <!-- Close Button -->
       <button 
         class="self-end p-4 text-2xl text-gray-400 hover:text-white focus:outline-none"
         (click)="toggleSidebar()">
         <i class="fas fa-times"></i>
       </button>
-      <ul class="flex-1 mt-4 space-y-2">
+      <ul class="flex-1 mt-4 space-y-6">
         <li *ngIf="!isLoggedIn && currentRoute !== '/register'">
           <a 
             routerLink="/register" 
-            class="block px-4 py-2 hover:bg-gray-700 rounded">Register</a>
+            class="block px-4 py-2 hover:bg-gray-700 rounded" (click)="closeSidebar()">Register</a>
         </li>
         <li *ngIf="!isLoggedIn && currentRoute !== '/login'">
           <a 
             routerLink="/login" 
-            class="block px-4 py-2 hover:bg-gray-700 rounded">Login</a>
+            class="block px-4 py-2 hover:bg-gray-700 rounded" (click)="closeSidebar()">Login</a>
         </li>
         <li>
           <a 
             routerLink="/profile" 
-            class="block px-4 py-2 hover:bg-gray-700 rounded">Profile</a>
+            class="block px-4 py-2 hover:bg-gray-700 rounded" (click)="closeSidebar()">Profile</a>
         </li>
         <li>
           <a 
             routerLink="/dashboard" 
-            class="block px-4 py-2 hover:bg-gray-700 rounded">Dashboard</a>
+            class="block px-4 py-2 hover:bg-gray-700 rounded" (click)="closeSidebar()">Dashboard</a>
         </li>
       </ul>
       <button 
@@ -41,7 +41,7 @@
   <!-- Main Content -->
   <div>
     <nav class="bg-info p-3 flex justify-between items-center">
-      <span class="text-white text-lg font-semibold">AkriviaHCM</span>
+      <span class="text-white text-lg font-semibold tracking-wide">Akrivia HCM</span>
       <button 
         (click)="toggleSidebar()" 
         class="text-white text-2xl focus:outline-none">

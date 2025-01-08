@@ -32,6 +32,11 @@ export class NavbarComponent implements OnInit {
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
   }
+
+  closeSidebar() {
+    this.sidebarOpen = false;
+  }
+  
   getProfiler(): void {
     this.profileService.getProfile().subscribe({
       next: (response: any) => {
@@ -62,6 +67,7 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('refreshToken');
     this.data = null;  // Clear the data on logout
     this.dropdownOpen = false; // Close the dropdown on logout
+    this.sidebarOpen = false;
     this.router.navigate(['/login']);
   }
 }

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class NoAuthGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {}
 
   canActivate(): Observable<boolean> | boolean {
@@ -16,33 +16,27 @@ export class AuthGuard implements CanActivate {
 
     if (accessToken) {
       if (this.authService.isTokenValid(accessToken)) {
-        return true;
+        // If the token is valid, redirect to the profile page
+        this.router.navigate(['/profile']);
+        return false;
       } else if (refreshToken) {
         // Access token is expired, try to refresh it
         return this.authService.refreshToken().pipe(
           map((response: any) => {
-            if (response.accessToken) {
-              localStorage.setItem('accessToken', response.accessToken);
-              return true;
-            } else { // if the refreshToken is invalid or expired
-              this.router.navigate(['/login']);
-              return false;
-            }
+            localStorage.setItem('accessToken', response.accessToken);
+            // If the token is refreshed successfully, redirect to the profile page
+            this.router.navigate(['/profile']);
+            return false;
           }),
           catchError(() => {
-            this.router.navigate(['/login']);
-            return of(false);
+            // If refreshing the token fails, allow access to the route
+            return of(true);
           })
         );
-      } else {
-        // No refresh token available
-        this.router.navigate(['/login']);
-        return false;
       }
-    } else {
-      // No access token available
-      this.router.navigate(['/login']);
-      return false;
     }
+
+    // If no access token is present, allow access to the route
+    return true;
   }
 }
