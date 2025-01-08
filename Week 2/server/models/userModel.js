@@ -62,6 +62,7 @@ const getPaginatedUsers = async (page, limit) => {
 
 // Get user by ID
 const getUserById = async (userId) => {
+  console.log("user", user)
   return await User.query().findById(userId);
 };
 

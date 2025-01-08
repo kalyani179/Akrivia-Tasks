@@ -13,6 +13,7 @@ import { AuthInterceptor } from './auth.interceptor';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { MainComponent } from './main/main.component';
 import { UploadProfileImageComponent } from './pages/upload-profile-image/upload-profile-image.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { UploadProfileImageComponent } from './pages/upload-profile-image/upload
     FooterComponent,
     PageNotFoundComponent,
     MainComponent,
-    UploadProfileImageComponent,
+    UploadProfileImageComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +32,8 @@ import { UploadProfileImageComponent } from './pages/upload-profile-image/upload
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgToastModule
+    NgToastModule,
+    BrowserAnimationsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers:[

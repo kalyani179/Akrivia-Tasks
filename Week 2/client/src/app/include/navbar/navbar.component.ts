@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,NavigationEnd } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
@@ -10,14 +11,27 @@ import { ProfileService } from 'src/app/services/profile.service';
 export class NavbarComponent implements OnInit {
 
   data: any = null; 
+  sidebarOpen = false;
   dropdownOpen = false; 
+  currentRoute: string = '';
+  isLoggedIn: boolean = false;
 
-  constructor(private profileService: ProfileService, private router: Router) { }
+  constructor(private authService:AuthService, private profileService: ProfileService, private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.urlAfterRedirects;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.getProfiler();
+    this.checkLoginStatus();
   }
 
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
   getProfiler(): void {
     this.profileService.getProfile().subscribe({
       next: (response: any) => {
@@ -34,6 +48,10 @@ export class NavbarComponent implements OnInit {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
+  checkLoginStatus(): void {
+    const accessToken = localStorage.getItem('accessToken');
+    this.isLoggedIn = !!(accessToken && this.authService.isTokenValid(accessToken));
+  }
   
   navigateToUploadImage(): void {
     this.router.navigate(['/upload-profile-image']);

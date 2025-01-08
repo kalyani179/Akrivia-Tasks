@@ -49,7 +49,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }),
             catchError((refreshError) => {
               console.error('Error refreshing token:', refreshError);
-              return throwError(refreshError);
+              return throwError( () => new Error("refresh token error " + refreshError));
             })
           );
         }

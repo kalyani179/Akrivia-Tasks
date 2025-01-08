@@ -34,7 +34,7 @@ const getProfile = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    console.log('User Profile:', user);
+    // console.log('User Profile:', user);
     return res.json(user);
   } 
   catch (err) {
@@ -57,7 +57,7 @@ const profileUpload = async (req, res) => {
 
     await user.$query().patch({ profileImage: image });
 
-    console.log('Uploaded image:', image);
+    // console.log('Uploaded image:', image);
     res.status(200).json({ message: 'Image uploaded successfully', image });
   } catch (err) {
     console.error('Error uploading image:', err);

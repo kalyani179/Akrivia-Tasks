@@ -6,7 +6,6 @@ const dotenv = require('dotenv'); // To manage the env variables locally
 // middlewares
 const morganMiddleware = require('./middlewares/morgan');
 const limiter = require('./middlewares/rateLimiter');
-
 // routes
 const authRouter = require('./routers/userAuthRouter');
 const profileRouter = require('./routers/userProfileRouter');
