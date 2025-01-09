@@ -11,6 +11,9 @@
           <th class="border border-gray-300 px-4 py-2 text-left">Course</th>
           <th class="border border-gray-300 px-4 py-2 text-left">Email</th>
           <th class="border border-gray-300 px-4 py-2 text-left">Created Time</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">View</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Edit</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +25,15 @@
           <td class="border border-gray-300 px-4 py-2">{{ user.course }}</td>
           <td class="border border-gray-300 px-4 py-2">{{ user.email }}</td>
           <td class="border border-gray-300 px-4 py-2">{{ user.created_at | date:'yyyy-MM-dd' }}</td>
+          <td class="border border-gray-300 px-4 py-2">
+            <button class="px-2 py-1 bg-blue-500 text-white rounded" (click)="viewUser(user.id)">View</button>
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            <button class="px-2 py-1 bg-yellow-500 text-white rounded" (click)="editUser(user.id)">Edit</button>
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            <button class="px-2 py-1 bg-red-500 text-white rounded" (click)="deleteUser(user.id)">Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>

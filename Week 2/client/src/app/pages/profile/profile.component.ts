@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +15,11 @@ export class ProfileComponent implements OnInit {
   limit: number = 10;
   totalPages: number = 1;
 
-  constructor(private profileService:ProfileService) {}
+  constructor(
+    private profileService: ProfileService,
+    private router: Router,
+    private toast: NgToastService
+  ) {}
 
   ngOnInit(): void {
     this.getUsers(this.page);
@@ -43,5 +49,26 @@ export class ProfileComponent implements OnInit {
       this.page--;
       this.getUsers(this.page);
     }
+  }
+
+  viewUser(userId: number): void {
+    this.router.navigate(['/view-user', userId]);
+  }
+
+  editUser(userId: number): void {
+    this.router.navigate(['/edit-user', userId]);
+  }
+
+  deleteUser(userId: number): void {
+    this.profileService.deleteUser(userId).subscribe({
+      next: () => {
+        this.toast.success({ detail: 'Success', summary: 'User deleted successfully', duration: 5000 });
+        this.getUsers(this.page);
+      },
+      error: (err) => {
+        this.toast.error({ detail: 'Error', summary: 'Failed to delete user', duration: 5000 });
+        console.error('Error deleting user:', err);
+      }
+    });
   }
 }

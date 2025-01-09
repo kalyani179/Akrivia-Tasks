@@ -47,6 +47,14 @@ export class ProfileService {
       );
     }
     
+    getUserById(userId: string): Observable<any> {
+      return this.http.get(`${environment.serverUrl}/profile/user/${userId}`);
+    }
+
+    deleteUser(userId: number): Observable<any> {
+      return this.http.delete(`${environment.serverUrl}/profile/user/${userId}`);
+    }
+    
     private getAuthHeaders(): HttpHeaders {
       const accessToken = localStorage.getItem('accessToken');
       return new HttpHeaders({

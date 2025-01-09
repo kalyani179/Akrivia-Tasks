@@ -16,6 +16,7 @@ import { UploadProfileImageComponent } from './pages/upload-profile-image/upload
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
 import { RegisterComponent } from './pages/register/register.component';
+import { ViewUserComponent } from './pages/view-user/view-user.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { RegisterComponent } from './pages/register/register.component';
     PageNotFoundComponent,
     MainComponent,
     UploadProfileImageComponent,
-    RegisterComponent
+    RegisterComponent,
+    ViewUserComponent
   ],
   imports: [
     BrowserModule,

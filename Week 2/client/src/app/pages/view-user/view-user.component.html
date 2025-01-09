@@ -1,0 +1,37 @@
+<div class="flex flex-col items-center min-h-screen mb-5 mx-5">
+    <h1 class="text-center text-3xl my-3 font-medium">User Details</h1>
+    <div *ngIf="user" class="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+      <div class="flex justify-center mb-4">
+        <img [src]="user.profileImage" alt="Profile Image" class="w-32 h-32 rounded-full">
+      </div>
+      <div class="text-center mb-4">
+        <h2 class="text-2xl font-semibold">{{ user.username }}</h2>
+      </div>
+      <div class="space-y-2">
+        <div class="flex justify-between">
+          <span class="font-medium">Id:</span>
+          <span>{{ user.id }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-medium">Gender:</span>
+          <span>{{ user.gender }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-medium">Date of Birth:</span>
+          <span>{{ user.dob | date:'yyyy-MM-dd' }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-medium">Course:</span>
+          <span>{{ user.course }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-medium">Email:</span>
+          <span>{{ user.email }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-medium">Created Time:</span>
+          <span>{{ user.created_at | date:'yyyy-MM-dd' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>

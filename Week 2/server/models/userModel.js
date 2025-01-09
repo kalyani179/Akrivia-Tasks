@@ -81,4 +81,23 @@ const getUserById = async (userId) => {
   return user;
 };
 
-module.exports = { createUser, getUserByEmail, getPaginatedUsers, getUserById };
+// Update user by ID
+const updateUserById = async (id, userData) => {
+  try {
+    const updatedUser = await User.query().patchAndFetchById(id, userData);
+    return updatedUser;
+  } catch (err) {
+    throw err;
+  }
+};
+
+// Delete user by ID
+const deleteUserById = async (id) => {
+  try {
+    await User.query().deleteById(id);
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = { createUser, getUserByEmail, getPaginatedUsers, getUserById, updateUserById, deleteUserById };
