@@ -9,6 +9,7 @@ const limiter = require('./middlewares/rateLimiter');
 // routes
 const authRouter = require('./routers/userAuthRouter');
 const profileRouter = require('./routers/userProfileRouter');
+const fileRouter = require('./routers/fileRouter');
 
 dotenv.config(); // To Load environment variables from .env to process.env
 
@@ -25,6 +26,7 @@ server.use(morganMiddleware);
 // Routes
 server.use('/auth', limiter, authRouter); 
 server.use('/profile', limiter, profileRouter);
+server.use('/file',fileRouter);
 
 // Start server
 server.listen(PORT, () => {

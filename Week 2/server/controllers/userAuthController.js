@@ -1,28 +1,15 @@
 const bcrypt = require('bcrypt');
 const { createUser, getUserByEmail } = require('../models/userModel'); 
-
 const { generateAccessToken, generateRefreshToken } = require('../utils/jwtUtils');
+const { registerSchema, loginSchema } = require('../validators/authValidators');
 
 const register = async (req, res) => {
+  const { error } = registerSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   const { username, gender, dob, course, email, password } = req.body;
-
-  if (!username || !email || !password || !dob || !gender || !course) {
-    return res.status(400).json({ message: 'All fields are required.' });
-  }
-
-  if (username.length < 3) {
-    return res.status(400).json({ message: 'Username must be at least 3 characters' });
-  }
-
-  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  if (!emailPattern.test(email)) {
-    return res.status(400).json({ message: 'Invalid email format.' });
-  }
-
-  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  if (!passwordPattern.test(password)) {
-    return res.status(400).json({ message: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character, with a minimum length of 8 characters.' });
-  }
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10); // sets 10 rounds the algorithm uses
@@ -37,11 +24,12 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: 'All fields are required.' });
+  const { error } = loginSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
   }
+
+  const { email, password } = req.body;
 
   try {
     const user = await getUserByEmail(email); 

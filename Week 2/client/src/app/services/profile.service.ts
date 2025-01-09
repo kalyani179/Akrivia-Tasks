@@ -28,9 +28,8 @@ export class ProfileService {
       );
     }
 
-    uploadProfileImage(base64String: string): Observable<any> {
-      const payload = { image: base64String };
-      return this.http.post(`${environment.serverUrl}/profile/upload`, payload);
+    generatePresignedUrl(fileName: string, fileType: string): Observable<any> {
+      return this.http.post(`${this.serverUrl}/file/generate-presigned-url`, { fileName, fileType });
     }
   
     getUsers(page: number, limit: number): Observable<any> {

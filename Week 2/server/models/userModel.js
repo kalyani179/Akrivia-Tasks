@@ -1,7 +1,9 @@
 const { Model } = require('objection');
-const { knex } = require('../utils/database'); 
+const { knex } = require('../utils/database'); // Correctly import the knex instance
+const File = require('./fileModel'); // Import the File model
 
-// Define the User model.
+Model.knex(knex);
+
 class User extends Model {
   static get tableName() {
     return 'users';
@@ -26,6 +28,19 @@ class User extends Model {
         profileImage: { type: 'string', minLength: 1 },
         created_at: { type: 'string', format: 'date-time' },
         updated_at: { type: 'string', format: 'date-time' }
+      }
+    };
+  }
+
+  static get relationMappings() {
+    return {
+      files: {
+        relation: Model.HasManyRelation,
+        modelClass: File,
+        join: {
+          from: 'users.id',
+          to: 'files.userId'
+        }
       }
     };
   }
@@ -54,16 +69,16 @@ const getUserByEmail = async (email) => {
 // Get users with pagination
 const getPaginatedUsers = async (page, limit) => {
   const offset = (page - 1) * limit;
-  const users = await knex('users').limit(limit).offset(offset);
-  const totalResults = await knex('users').count('id as total');
+  const users = await User.query().limit(limit).offset(offset);
+  const totalResults = await User.query().count('id as total');
   const total = totalResults[0].total;
   return { users, total };
 };
 
 // Get user by ID
 const getUserById = async (userId) => {
-  console.log("user", user)
-  return await User.query().findById(userId);
+  const user = await User.query().findById(userId);
+  return user;
 };
 
 module.exports = { createUser, getUserByEmail, getPaginatedUsers, getUserById };

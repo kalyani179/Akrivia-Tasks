@@ -16,6 +16,13 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+   
+    if (request.headers.has('Skip-Auth')) {
+      const headers = request.headers.delete('Skip-Auth');
+      const authReq = request.clone({ headers });
+      return next.handle(authReq);
+    }
+    
     // Get the access token from local storage
     const accessToken = localStorage.getItem('accessToken');
 

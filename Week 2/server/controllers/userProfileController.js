@@ -1,4 +1,6 @@
+const dotenv = require('dotenv');
 const { getPaginatedUsers, getUserById } = require('../models/userModel');
+dotenv.config();
 
 const getUsers = async (req, res) => {
   const page = parseInt(req.query.page, 10) || 1; 
@@ -34,7 +36,6 @@ const getProfile = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // console.log('User Profile:', user);
     return res.json(user);
   } 
   catch (err) {
@@ -43,26 +44,5 @@ const getProfile = async (req, res) => {
   }
 };
 
-const profileUpload = async (req, res) => {
-  try {
-    const { image } = req.body;
-    if (!image) {
-      return res.status(400).json({ message: 'No image provided' });
-    }
 
-    const user = await getUserById(req.user.id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    await user.$query().patch({ profileImage: image });
-
-    // console.log('Uploaded image:', image);
-    res.status(200).json({ message: 'Image uploaded successfully', image });
-  } catch (err) {
-    console.error('Error uploading image:', err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-module.exports = { getUsers, getProfile, profileUpload };
+module.exports = { getUsers, getProfile };
