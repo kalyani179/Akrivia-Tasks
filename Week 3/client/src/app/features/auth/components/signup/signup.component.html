@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-4">
+            <div class="p-4">
+                <h3>Sign up</h3>
+                <p>Start Your 30 day free trail</p>
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">First Name*</label>
+                    <input type="text" class="form-control" formControlName="firstname" />
+                    <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                        <div *ngIf="firstname.errors?.['required']">FirstName is required</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Last Name*</label>
+                    <input type="text" class="form-control" formControlName="lastname" />
+                    <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                        <div *ngIf="lastname.errors?.['required']">LastName is required</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email*</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" />
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                        <div *ngIf="email.errors?.['required']">Email is required</div>
+                        <div *ngIf="email.errors?.['email']">Enter a valid email (e.g., example&#64;gmail.com)</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password*</label>
+                    <input type="password" class="form-control" id="password" formControlName="password"/>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                        <div *ngIf="password.errors?.['required']">Password is required</div>
+                        <div *ngIf="password.errors?.['minlength']">
+                          Password must be at least 8 characters
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn w-100 mt-1">Sign Up</button>
+                <!-- <button type="button" class="btn btn-outline-secondary w-100 mt-2">Sign up with Google</button> -->
+                <p class="mt-3 text-center">Already have an account? <a routerLink="/login" class="text-primary">Log in</a></p>
+            </form>
+        </div>
+    </div>
+        <div class="col">
+            <img src="" />
+        </div>
+    </div>
+</div>

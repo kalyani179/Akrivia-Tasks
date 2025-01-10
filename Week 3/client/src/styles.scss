@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+a {
+    text-decoration: none;
+    color:#8054dc;
+    cursor: pointer;
+}
+.text-primary {
+    color:#6a3fb8;
+}
+.bg-primary {
+    background-color: #8054dc;
+}
+.btn {
+    background-color: #8054dc;
+    color: white;
+  }
+  
+.btn:hover {
+    background-color: #6a3fb8;
+    color: white;
+}
