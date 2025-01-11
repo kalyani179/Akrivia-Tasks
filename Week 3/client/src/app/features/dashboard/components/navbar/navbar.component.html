@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+  <div class="container-fluid px-4">
+    <!-- Profile Dropdown -->
+    <div class="ms-auto position-relative">
+      <button 
+        style="cursor: pointer;"
+        class="btn btn-link text-dark text-decoration-none d-flex align-items-center hover-primary"
+        type="button"
+        (click)="toggleDropdown()">
+        <!-- Profile Icon instead of Image -->
+        <i class="bi bi-person-circle fs-4 me-2"></i>
+        
+        <!-- User Info -->
+        <div>
+          <div class="fw-medium" style="font-size: 12px;">{{user.username}}</div>
+          <div class="text-muted" style="font-size: 10px;">{{user.email}}</div>
+        </div>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu position-absolute end-0 mt-2" [class.show]="isDropdownOpen">
+        <!-- Username -->
+        <div class="dropdown-item-text">
+          <small class="text-muted">#{{user.username}}</small>
+        </div>
+        
+        <!-- Update Profile Picture -->
+        <label class="dropdown-item mb-0 cursor-pointer">
+          <input 
+            type="file" 
+            class="d-none" 
+            accept="image/*"
+            (change)="onFileSelected($event)">
+          Update profile picture
+        </label>
+        
+        <!-- Logout -->
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item text-danger" (click)="logout()">
+          Log out
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

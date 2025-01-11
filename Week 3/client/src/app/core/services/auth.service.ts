@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +12,18 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   signup(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, userData,{
-      headers: {
-        'Content-Type': 'application/json' 
-      }});
+    return this.http.post(`${this.apiUrl}/signup`, userData);
+  }
+
+  login(loginData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, loginData);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('accessToken');
+  }
+
+  logout(): void {
+    localStorage.removeItem('accessToken');
   }
 }

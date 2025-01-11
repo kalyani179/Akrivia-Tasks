@@ -1,0 +1,39 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+button.btn-link {
+  &:hover {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+  }
+}
+
+.dropdown-menu {
+  min-width: 200px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.1);
+  
+  &.show {
+    display: block;
+  }
+}
+
+.dropdown-item {
+  &:hover {
+    background-color: #f8f9fa;
+  }
+  
+  &.text-danger:hover {
+    background-color: #fff5f5;
+  }
+}
+
+// Ensure the profile picture has consistent dimensions
+img.rounded-circle {
+  object-fit: cover;
+}
+
+.hover-primary:hover {
+  background-color: #f8f9fa;
+}

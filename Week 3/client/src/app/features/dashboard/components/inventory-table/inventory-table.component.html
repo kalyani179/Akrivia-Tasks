@@ -1,0 +1,73 @@
+<div class="card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <h5 class="mb-0 me-2">Inventory movements</h5>
+        <span class="badge bg-light text-dark">240 vendors</span>
+      </div>
+      <div>
+        <button class="btn btn-outline-secondary me-2">Move to cart</button>
+        <button class="btn btn-outline-secondary me-2">Download All</button>
+        <button class="btn btn-outline-secondary me-2">Import</button>
+        <button class="btn btn-primary">Add Product</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="d-flex justify-content-between mb-3">
+        <div class="btn-group">
+          <button class="btn btn-outline-secondary active">View all</button>
+          <button class="btn btn-outline-secondary">Cart</button>
+        </div>
+        <div class="d-flex">
+          <input type="search" class="form-control me-2" placeholder="Search">
+          <button class="btn btn-outline-secondary">
+            <i class="bi bi-funnel"></i> Filters
+          </button>
+        </div>
+      </div>
+  
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" class="form-check-input">
+              </th>
+              <th>Product Name</th>
+              <th>Status</th>
+              <th>Category</th>
+              <th>Vendors</th>
+              <th>Quantity</th>
+              <th>Unit</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of inventoryItems">
+              <td>
+                <input type="checkbox" class="form-check-input">
+              </td>
+              <td>{{item.productName}}</td>
+              <td>
+                <span class="badge" [ngClass]="{'bg-success': item.status === 'Available'}">
+                  {{item.status}}
+                </span>
+              </td>
+              <td>{{item.category}}</td>
+              <td>
+                <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
+                  {{vendor}}
+                </span>
+              </td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.unit}}</td>
+              <td>
+                <button class="btn btn-sm btn-link"><i class="bi bi-download"></i></button>
+                <button class="btn btn-sm btn-link"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-sm btn-link"><i class="bi bi-pencil"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

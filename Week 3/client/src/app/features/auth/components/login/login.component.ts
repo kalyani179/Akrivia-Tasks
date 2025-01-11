@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +13,31 @@ import { NgToastService } from 'ng-angular-popup';
 export class LoginComponent implements OnInit {
 
   loginForm !: FormGroup;
+  isSubmitted = false;
 
-  constructor(private toast: NgToastService) {}
+  constructor(private toast: NgToastService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('',[Validators.required, Validators.minLength(8)])
     });
+
+    this.loadFormState();
+    this.loginForm.valueChanges.subscribe(() => {
+      this.saveFormState();
+    });
+  }
+
+  saveFormState(): void {
+    sessionStorage.setItem('loginForm', JSON.stringify(this.loginForm.value));
+  }
+
+  loadFormState(): void {
+    const savedForm = sessionStorage.getItem('loginForm');
+    if (savedForm) {
+      this.loginForm.setValue(JSON.parse(savedForm));
+    }
   }
 
   get email(): FormControl {
@@ -30,11 +49,48 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      // Handle login logic here
-      this.toast.success({ detail: 'Success', summary: 'Login successful', duration: 5000 });
-    } else {
-      this.toast.error({ detail: 'Error', summary: 'Invalid login credentials', duration: 5000 });
+    this.isSubmitted = true;
+
+    if (this.loginForm.invalid) {
+      this.toast.error({
+        detail: 'Error',
+        summary: 'Please fill out the form correctly.',
+        duration: 5000
+      });
+      return;
     }
+
+    const loginData = this.loginForm.value;
+
+    this.authService.login(loginData).subscribe({
+      next: (response: any) => {
+        this.toast.success({
+          detail: 'Success',
+          summary: response.message,
+          duration: 5000
+        });
+        this.isSubmitted = true;
+        this.loginForm.reset();
+        localStorage.setItem('accessToken', response.token);
+        console.log('Token saved:', localStorage.getItem('accessToken'));
+        sessionStorage.removeItem('loginForm'); // Clear the form state
+        this.router.navigate(['/dashboard']); // Adjust the navigation path as needed
+      },  
+      error: (err: HttpErrorResponse) => {
+        console.error('Error during login:', err);
+        const errorMessage = err.error?.error || 'An error occurred. Please try again.';
+        this.toast.error({
+          detail: 'Login failed',
+          summary: errorMessage,
+          duration: 5000
+        });
+      }
+    });
+  }
+  canDeactivate(): boolean {
+    if (this.loginForm.dirty && !this.isSubmitted) {
+      return false;
+    }
+    return true;
   }
 }

@@ -2,6 +2,10 @@ const { signupSchema, loginSchema } = require('./dto/auth.joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const knex = require('../../mysql/knex'); // Adjust the path to your Knex instance
+const dotenv = require('dotenv');
+dotenv.config({ path: '../../.env' });
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const generateUsername = async (firstname, lastname) => {
     let baseUsername = `${firstname.toLowerCase()}${lastname.toLowerCase()}`;
@@ -89,12 +93,16 @@ const login = async (req, res) => {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
 
+    console.log(JWT_SECRET);  
     // Generate a JWT token
-    const token = jwt.sign({ userId: user.user_id }, 'kalyani@179', {
-      expiresIn: '1h',
+    const token = jwt.sign({ userId: user.user_id }, JWT_SECRET, {
+      expiresIn: '24h'
     });
 
-    res.status(200).json({ token });
+    res.status(200).json({ 
+      token,
+      message: 'Login successful'
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

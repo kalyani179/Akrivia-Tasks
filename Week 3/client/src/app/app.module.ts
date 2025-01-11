@@ -7,14 +7,22 @@ import { SignupComponent } from './features/auth/components/signup/signup.compon
 import { LoginComponent } from './features/auth/components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './features/dashboard/components/navbar/navbar.component';
+import { InventoryTableComponent } from './features/dashboard/components/inventory-table/inventory-table.component';
+import { FileUploadComponent } from './features/dashboard/components/file-upload/file-upload.component';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent,
+    InventoryTableComponent,
+    FileUploadComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +33,13 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
