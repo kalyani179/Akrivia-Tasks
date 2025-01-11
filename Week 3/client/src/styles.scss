@@ -21,3 +21,12 @@ a {
     background-color: #6a3fb8;
     color: white;
 }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Hides both vertical and horizontal scrollbars */
+    width: 100%;
+    height: 100%;
+  }
+  

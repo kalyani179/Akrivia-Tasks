@@ -7,6 +7,7 @@ import { SignupComponent } from './features/auth/components/signup/signup.compon
 import { LoginComponent } from './features/auth/components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { NgToastModule } from 'ng-angular-popup';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgToastModule
+    NgToastModule,
+    HttpClientModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
