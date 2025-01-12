@@ -94,7 +94,7 @@ export class NavbarComponent implements OnInit {
       this.toast.error({
         detail: 'Upload failed',
         summary: 'Please select a file to upload.',
-        duration: 5000
+        duration: 1000
       });
       return;
     }
@@ -116,7 +116,7 @@ export class NavbarComponent implements OnInit {
         this.toast.error({
           detail: 'Upload failed',
           summary: 'Error generating pre-signed URL.',
-          duration: 5000
+          duration: 1000
         });
         console.error('Error generating pre-signed URL:', err);
       }
@@ -140,7 +140,7 @@ export class NavbarComponent implements OnInit {
         this.toast.error({
           detail: 'Upload failed',
           summary: 'Error uploading image.',
-          duration: 5000
+          duration: 1000
         });
         console.error('Error uploading image:', err);
       }
@@ -160,7 +160,7 @@ export class NavbarComponent implements OnInit {
         this.toast.success({
           detail: 'Success',
           summary: 'Profile picture updated successfully.',
-          duration: 5000
+          duration: 1000
         });
       },
       error: (err) => {
@@ -168,7 +168,7 @@ export class NavbarComponent implements OnInit {
         this.toast.error({
           detail: 'Save metadata failed',
           summary: 'Error saving file metadata.',
-          duration: 5000
+          duration: 1000
         });
         console.error('Error saving file metadata:', err);
       }

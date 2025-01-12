@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       this.toast.error({
         detail: 'Error',
         summary: 'Please fill out the form correctly.',
-        duration: 5000
+        duration: 1000
       });
       return;
     }
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
         this.toast.success({
           detail: 'Success',
           summary: response.message,
-          duration: 5000
+          duration: 1000
         });
         this.isSubmitted = true;
         this.loginForm.reset();
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
         this.toast.error({
           detail: 'Login failed',
           summary: errorMessage,
-          duration: 5000
+          duration: 1000
         });
       }
     });

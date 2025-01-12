@@ -69,7 +69,7 @@ export class SignupComponent implements OnInit,CanComponentDeactivate {
       this.toast.error({
         detail: 'Error',
         summary: 'Please fill out the form correctly.',
-        duration: 5000
+        duration: 1000
       });
       return;
     }
@@ -82,7 +82,7 @@ export class SignupComponent implements OnInit,CanComponentDeactivate {
         this.toast.success({
           detail: 'Registration successful',
           summary: response.message,
-          duration: 5000
+          duration: 1000
         });
         this.isSubmitted = true; // Set the custom property to true on successful submission
         this.signupForm.reset();
@@ -95,7 +95,7 @@ export class SignupComponent implements OnInit,CanComponentDeactivate {
         this.toast.error({
           detail: 'Registration failed',
           summary: errorMessage,
-          duration: 5000
+          duration: 1000
         });
       }
     });
