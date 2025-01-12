@@ -9,6 +9,13 @@
         (click)="toggleDropdown($event)">
         <!-- Profile Picture or Default Icon -->
         <div class="profile-image me-2">
+           <!-- Loading Spinner -->
+          <div *ngIf="imageLoading" class="spinner-wrapper">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <!-- Profile Image -->
           <img *ngIf="user.thumbnail" 
                [src]="user.thumbnail" 
                [alt]="user.firstname + '\'s profile picture'"

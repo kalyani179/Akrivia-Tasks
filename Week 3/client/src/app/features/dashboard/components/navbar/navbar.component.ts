@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   isDropdownOpen = false;
   showUploadModal = false;
   isDragging = false;
+  imageLoading = false;
 
   constructor(
     private profileService: ProfileService,
@@ -67,6 +68,21 @@ export class NavbarComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  onImageLoad(): void {
+    this.imageLoading = false;
+  }
+
+  onImageError(): void {
+    this.imageLoading = false;
+    this.user.thumbnail = ''; // Reset to show default icon
+    this.toast.error({
+      detail: 'Error',
+      summary: 'Failed to load profile picture',
+      duration: 3000
+    });
+  }
+
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -88,6 +104,7 @@ export class NavbarComponent implements OnInit {
 
     this.profileService.generatePresignedUrl(fileName, fileType).subscribe({
       next: (response) => {
+        this.imageLoading = true;
         const uploadUrl = response.uploadUrl;
         if (this.selectedFile) {
           this.uploadToS3(uploadUrl, this.selectedFile, fileName);
@@ -95,6 +112,7 @@ export class NavbarComponent implements OnInit {
         }
       },
       error: (err) => {
+        this.imageLoading = false;
         this.toast.error({
           detail: 'Upload failed',
           summary: 'Error generating pre-signed URL.',
@@ -109,17 +127,16 @@ export class NavbarComponent implements OnInit {
     const headers = new HttpHeaders()
       .set('Content-Type', file.type)
       .set('Skip-Auth', 'true');
+    
+    this.imageLoading = true; // Start loading state
+    
     this.http.put(uploadUrl, file, { headers }).subscribe({
       next: () => {
-        this.toast.success({
-          detail: 'Upload successful',
-          summary: 'Image uploaded successfully.',
-          duration: 5000
-        });
         const fileUrl = uploadUrl.split('?')[0]; // Extract the file URL without query parameters
         this.saveFileMetadata(fileName, fileUrl);
       },
       error: (err) => {
+        this.imageLoading = false;
         this.toast.error({
           detail: 'Upload failed',
           summary: 'Error uploading image.',
@@ -133,11 +150,21 @@ export class NavbarComponent implements OnInit {
   saveFileMetadata(fileName: string, fileUrl: string): void {
     const body = { fileName, fileUrl };
     this.http.post(`http://localhost:3000/api/profile/save-file-metadata`, body).subscribe({
-      next: (response) => {
-        console.log('File metadata saved successfully:', response);
-        this.router.navigate(['/profile']);
+      next: (response: any) => {
+        // Update the user object with the new profile picture
+        this.user.thumbnail = response.thumbnail;
+        
+        this.imageLoading = false;
+        this.showUploadModal = false;
+        
+        this.toast.success({
+          detail: 'Success',
+          summary: 'Profile picture updated successfully.',
+          duration: 5000
+        });
       },
       error: (err) => {
+        this.imageLoading = false;
         this.toast.error({
           detail: 'Save metadata failed',
           summary: 'Error saving file metadata.',
