@@ -19,6 +19,11 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (request.headers.has('Skip-Auth')) {
+      const headers = request.headers.delete('Skip-Auth');
+      const authReq = request.clone({ headers });
+      return next.handle(authReq);
+    }
     const token = this.authService.getToken();
     console.log('Interceptor token:', token);
 

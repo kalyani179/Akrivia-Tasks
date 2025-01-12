@@ -14,11 +14,7 @@ export class ProfileService {
     return this.http.get(this.apiUrl);
   }
 
-  updateProfile(profileData: any): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/update`, profileData);
-  }
-
-  updateProfilePicture(formData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/upload-picture`, formData);
+  generatePresignedUrl(fileName: string, fileType: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/generate-presigned-url`, { fileName, fileType });
   }
 }

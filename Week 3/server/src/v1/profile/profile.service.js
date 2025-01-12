@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 const getProfile = async (userId) => {
   try {
     const user = await knex('users')
-      .select('username', 'email', 'thumbnail')
+      .select('firstname','lastname','username', 'email', 'thumbnail')
       .where('user_id', userId)
       .first();
 
