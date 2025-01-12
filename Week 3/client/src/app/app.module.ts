@@ -13,6 +13,7 @@ import { InventoryTableComponent } from './features/dashboard/components/invento
 import { FileUploadComponent } from './features/dashboard/components/file-upload/file-upload.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { UploadComponent } from './core/shared/components/upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     NavbarComponent,
     InventoryTableComponent,
     FileUploadComponent,
-    DashboardComponent
+    DashboardComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
