@@ -28,48 +28,61 @@ const generatePresignedUrl = async (req, res) => {
 
 // Add new product
 const addProduct = async (req, res) => {
+  const { productName, category, vendors, quantity, unit, status } = req.body;
+  const trx = await knex.transaction();
+
   try {
-    const {
-      productName,
-      category,
-      vendor,
-      quantity,
-      unit,
-      status,
-      imageUrl  // This will be the S3 URL after upload
-    } = req.body;
+    // Get category_id from category name
+    const [categoryResult] = await trx('categories')
+      .select('category_id')
+      .where('category_name', category);
 
-    // Get category_id from categories table
-    const categoryRecord = await knex('categories')
-      .where('category_name', category)
-      .first();
-
-    if (!categoryRecord) {
-      return res.status(400).json({ error: 'Invalid category' });
+    if (!categoryResult) {
+      throw new Error('Invalid category');
     }
 
-    const productData = {
-      product_name: productName,
-      category_id: categoryRecord.category_id,
-      quantity_in_stock: quantity,
-      unit_price: parseFloat(unit),
-      product_image: imageUrl || '',
-      status: status === 'Available' ? 1 : status === 'Out of Stock' ? 2 : 0
-    };
+    // Insert into products table
+    const [productId] = await trx('products')
+      .insert({
+        product_name: productName,
+        category_id: categoryResult.category_id,
+        quantity_in_stock: quantity,
+        unit_price: unit,
+        status: status === 'Active' ? 1 : status === 'Inactive' ? 2 : status === 'Deleted' ? 99 : 0,
+        created_at: new Date(),
+        updated_at: new Date()
+      });
 
-    const [productId] = await knex('products')
-      .insert(productData)
-      .returning('product_id');
+    // Get vendor IDs from vendor names
+    const vendorIds = await trx('vendors')
+      .select('vendor_id')
+      .whereIn('vendor_name', vendors);
 
-    const newProduct = await knex('products')
-      .join('categories', 'products.category_id', '=', 'categories.category_id')
-      .where('product_id', productId)
-      .first();
+    // Insert into product_to_vendor table
+    const productVendorRecords = vendorIds.map(({ vendor_id }) => ({
+      product_id: productId,
+      vendor_id: vendor_id,
+      created_at: new Date(),
+      updated_at: new Date()
+    }));
 
-    res.status(201).json(newProduct);
+    await trx('product_to_vendor').insert(productVendorRecords);
+
+    await trx.commit();
+
+    res.status(201).json({
+      success: true,
+      message: 'Product added successfully',
+      productId
+    });
   } catch (error) {
+    await trx.rollback();
     console.error('Error adding product:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error.message
+    });
   }
 };
 
@@ -267,8 +280,8 @@ const inventoryController = {
   generatePresignedUrl,
   addProduct,
   getInventory,
-  getAllInventory,
-  getVendorCount
+  getVendorCount,
+  getAllInventory
 };
 
 module.exports = inventoryController;

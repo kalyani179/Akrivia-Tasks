@@ -26,12 +26,28 @@
       <!-- Vendor -->
       <div class="mb-3">
         <label class="form-label">Vendor</label>
-        <select class="form-select" formControlName="vendor">
-          <option value="">Select vendor</option>
-          <option *ngFor="let vendor of vendors" [value]="vendor">
-            {{vendor}}
-          </option>
-        </select>
+        <div ngbDropdown class="d-inline-block w-100">
+          <button type="button" class="form-control text-start" id="vendorDropdown" ngbDropdownToggle>
+            {{ productForm.get('vendors')?.value?.length ? productForm.get('vendors')?.value?.join(', ') : 'Select vendors' }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="vendorDropdown" class="w-100">
+            <div *ngFor="let vendor of vendors" class="px-3 py-1">
+              <div class="form-check">
+                <input class="form-check-input" 
+                       type="checkbox" 
+                       [id]="'vendor-' + vendor"
+                       [checked]="isVendorSelected(vendor)"
+                       (change)="toggleVendor(vendor)">
+                <label class="form-check-label" [for]="'vendor-' + vendor">
+                  {{ vendor }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="invalid-feedback" *ngIf="productForm.get('vendors')?.errors?.['required'] && productForm.get('vendors')?.touched">
+          Please select at least one vendor
+        </div>
       </div>
 
       <!-- Quantity -->
@@ -93,7 +109,7 @@
       <div class="d-flex justify-content-end mt-4">
         <button type="button" 
                 class="btn btn-light me-2" 
-                (click)="closeModal()">
+                (click)="handleModalClose()">
           Cancel
         </button>
         <button type="submit" 

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { NgToastService } from 'ng-angular-popup';
-import { ProductService } from '../../../../../core/services/product.service';
+import { ProductService } from '../../../../../../core/services/product.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -21,7 +22,7 @@ export class AddProductComponent {
   selectedVendors: string[] = [];
 
   // Mock data - replace with actual data from your service
-  categories = ['Electronics', 'Clothing', 'Food', 'Books'];
+  categories = ['Product Designer', 'Product Manager', 'Frontend Developer', 'Backend Developer'];
   vendors = ['Swiggy','Zepto','Fresh Meat','Blinkit'];
   statuses = ['Created','Active', 'Inactive', 'Deleted'];
 
@@ -70,7 +71,7 @@ export class AddProductComponent {
     }
   }
 
-  closeModal(): void {
+  handleModalClose(): void {
     this.modalClosed.emit();
     this.productForm.reset();
     this.selectedFile = null;
@@ -94,58 +95,40 @@ export class AddProductComponent {
   }
 
   async onSubmit(): Promise<void> {
-    if (this.productForm.invalid) {
+    if (this.productForm.invalid || this.isSubmitting) {
       return;
     }
 
     try {
       this.isSubmitting = true;
-      let imageUrl = '';
 
-      // Handle file upload to S3 if file is selected
-      if (this.selectedFile) {
-        // Get presigned URL
-        const presignedData = await firstValueFrom(
-          this.productService.getPresignedUrl(
-            this.selectedFile.name,
-            this.selectedFile.type
-          )
-        );
-
-        // Upload to S3
-        await firstValueFrom(
-          this.productService.uploadToS3(presignedData.uploadUrl, this.selectedFile)
-        );
-
-        // Get the S3 URL (this would be the URL where the file will be accessible)
-        imageUrl = presignedData.uploadUrl.split('?')[0];
-      }
-
-      // Prepare product data
-      const productData = {
-        ...this.productForm.value,
-        imageUrl
+      const formData = {
+        productName: this.productForm.get('productName')?.value,
+        category: this.productForm.get('category')?.value,
+        vendors: this.productForm.get('vendors')?.value,
+        quantity: this.productForm.get('quantity')?.value,
+        unit: this.productForm.get('unit')?.value,
+        status: this.productForm.get('status')?.value
       };
 
-      // Add product
-      const response = await firstValueFrom(
-        this.productService.addProduct(productData)
-      );
+      const response = await firstValueFrom(this.productService.addProduct(formData));
 
-      this.toast.success({
-        detail: 'Success',
-        summary: 'Product added successfully',
-        duration: 3000
-      });
-      
-      this.productAdded.emit(response);
-      this.closeModal();
-    } catch (error) {
-      console.error('Error adding product:', error);
+      if (response.success) {
+        this.toast.success({
+          detail: 'Success',
+          summary: 'Product added successfully',
+          duration: 3000
+        });
+        // Emit an event to refresh the inventory table
+        this.productService.refreshInventory();
+      } else {
+        throw new Error(response.message || 'Failed to add product');
+      }
+    } catch (error: any) {
       this.toast.error({
         detail: 'Error',
-        summary: 'Failed to add product',
-        duration: 3000
+        summary: error.message || 'Failed to add product',
+        duration: 5000
       });
     } finally {
       this.isSubmitting = false;

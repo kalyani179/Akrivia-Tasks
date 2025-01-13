@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from 'src/app/core/services/product.service';
 import * as XLSX from 'xlsx';
 
@@ -33,13 +33,14 @@ interface ColumnFilter {
   templateUrl: './inventory-table.component.html',
   styleUrls: ['./inventory-table.component.scss']
 })
-export class InventoryTableComponent implements OnInit {
+export class InventoryTableComponent implements OnInit, OnDestroy {
   inventoryItems: InventoryItem[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 0;
   totalPages = 0;
   showAddProductModal = false;
+  showImportModal = false;
   loading = false;
   error = '';
   Math = Math;
@@ -57,11 +58,26 @@ export class InventoryTableComponent implements OnInit {
     { key: 'unit_price', label: 'Unit Price', checked: true }
   ];
 
+  refreshSubscription: any;
+
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.loadInventoryItems();
     this.loadVendorCount();
+
+    // Subscribe to refresh events
+    this.refreshSubscription = this.productService.refreshInventory$.subscribe(() => {
+      this.loadInventoryItems();
+      this.loadVendorCount();
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscriptions
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
   }
 
   loadInventoryItems(): void {
@@ -141,6 +157,22 @@ export class InventoryTableComponent implements OnInit {
 
   closeAddProductModal(): void {
     this.showAddProductModal = false;
+  }
+
+  openImportModal(): void {
+    console.log('Opening import modal');
+    this.showImportModal = true;
+  }
+
+  closeImportModal(): void {
+    console.log('Closing import modal');
+    this.showImportModal = false;
+  }
+
+  importProducts(): void {
+    console.log('Import button clicked');
+    this.showImportModal = true;
+    console.log('showImportModal set to:', this.showImportModal);
   }
 
   onProductAdded(newProduct: any): void {
@@ -246,7 +278,4 @@ export class InventoryTableComponent implements OnInit {
     });
   }
 
-  importProducts(): void {
-    // Implement import functionality
-  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 
@@ -25,7 +25,7 @@ export class ProductService {
   }
 
   addProduct(productData: any): Observable<any> {
-    return this.http.post(this.apiUrl, productData);
+    return this.http.post(`${this.apiUrl}`, productData);
   }
 
   getInventoryItems(params: {
@@ -51,4 +51,13 @@ export class ProductService {
   getAllInventoryItems(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/inventory/all`);
   }
+
+  refreshInventory() {
+    // Implement a way to notify subscribers that inventory needs to be refreshed
+    // This could be using a Subject/BehaviorSubject
+    this.refreshInventorySubject.next();
+  }
+
+  private refreshInventorySubject = new Subject<void>();
+  refreshInventory$ = this.refreshInventorySubject.asObservable();
 }

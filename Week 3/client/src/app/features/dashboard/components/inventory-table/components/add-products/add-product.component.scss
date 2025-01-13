@@ -61,3 +61,48 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+.form-control {
+  &[ngbDropdownToggle] {
+    position: relative;
+    padding-right: 30px;
+    
+    &::after {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+:host ::ng-deep .dropdown-menu {
+  padding: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  
+  .form-check {
+    margin: 0;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: rgba(128, 84, 220, 0.1);
+    }
+    
+    .form-check-input {
+      &:checked {
+        background-color: #8054dc;
+        border-color: #8054dc;
+      }
+    }
+    
+    .form-check-label {
+      cursor: pointer;
+      user-select: none;
+      margin-left: 8px;
+    }
+  }
+}
