@@ -13,6 +13,7 @@ import { InventoryTableComponent } from './features/dashboard/components/invento
 import { FileUploadComponent } from './features/dashboard/components/file-upload/file-upload.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { AddProductComponent } from './features/dashboard/components/inventory-table/components/add-product.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     InventoryTableComponent,
     FileUploadComponent,
     DashboardComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

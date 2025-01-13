@@ -8,7 +8,7 @@
         <button class="btn btn-outline-secondary me-2">Move to cart</button>
         <button class="btn btn-outline-secondary me-2">Download All</button>
         <button class="btn btn-outline-secondary me-2">Import</button>
-        <button class="btn btn-primary">Add Product</button>
+        <button class="btn btn-primary" (click)="openAddProductModal()">Add Product</button>
       </div>
     </div>
     <div class="card-body">
@@ -71,3 +71,8 @@
       </div>
     </div>
   </div>
+
+<app-add-product
+  [showModal]="showAddProductModal"
+  (modalClosed)="closeAddProductModal()">
+</app-add-product>

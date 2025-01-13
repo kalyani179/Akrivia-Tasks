@@ -25,4 +25,14 @@ export class InventoryTableComponent {
       unit: '1 piece'
     }
   ];
+
+  showAddProductModal = false;
+
+  openAddProductModal(): void {
+    this.showAddProductModal = true;
+  }
+
+  closeAddProductModal(): void {
+    this.showAddProductModal = false;
+  }
 }
