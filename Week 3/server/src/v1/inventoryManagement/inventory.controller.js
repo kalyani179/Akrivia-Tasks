@@ -78,18 +78,85 @@ const getInventory = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search || '';
+    const columns = req.query.columns ? req.query.columns.split(',') : [];
     const offset = (page - 1) * limit;
 
-    // Get total count
-    const [{ total }] = await knex('products')
-      .where('status', '!=', 99)
-      .count('* as total');
-
-    // Get paginated data
-    const inventory = await knex('products')
+    let query = knex('products')
       .join('categories', 'products.category_id', '=', 'categories.category_id')
       .leftJoin('product_to_vendor', 'products.product_id', '=', 'product_to_vendor.product_id')
       .leftJoin('vendors', 'product_to_vendor.vendor_id', '=', 'vendors.vendor_id')
+      .where('products.status', '!=', 99);
+
+    // Apply search filter if search text is provided
+    if (search) {
+      if (columns.length > 0) {
+        // Search in specific columns
+        query = query.andWhere(function() {
+          columns.forEach(column => {
+            switch(column) {
+              case 'product_name':
+                this.orWhere('products.product_name', 'like', `%${search}%`);
+                break;
+              case 'category':
+                this.orWhere('categories.category_name', 'like', `%${search}%`);
+                break;
+              case 'status':
+                const statusSearch = search.toLowerCase();
+                if (statusSearch.includes('available')) {
+                  this.orWhere('products.status', '=', 1);
+                } else if (statusSearch.includes('out')) {
+                  this.orWhere('products.status', '=', 2);
+                } else if (statusSearch.includes('low')) {
+                  this.orWhere('products.status', '=', 3);
+                }
+                break;
+              case 'vendors':
+                this.orWhere('vendors.vendor_name', 'like', `%${search}%`);
+                break;
+              case 'quantity_in_stock':
+                if (!isNaN(search)) {
+                  this.orWhere('products.quantity_in_stock', '=', parseInt(search));
+                }
+                break;
+              case 'unit_price':
+                if (!isNaN(search)) {
+                  this.orWhere('products.unit_price', '=', parseFloat(search));
+                }
+                break;
+            }
+          });
+        });
+      } else {
+        // Search in all searchable columns if no specific columns selected
+        query = query.andWhere(function() {
+          this.where('products.product_name', 'like', `%${search}%`)
+            .orWhere('categories.category_name', 'like', `%${search}%`)
+            .orWhere('vendors.vendor_name', 'like', `%${search}%`)
+            .orWhere(function() {
+              const statusSearch = search.toLowerCase();
+              if (statusSearch.includes('available')) {
+                this.orWhere('products.status', '=', 1);
+              } else if (statusSearch.includes('out')) {
+                this.orWhere('products.status', '=', 2);
+              } else if (statusSearch.includes('low')) {
+                this.orWhere('products.status', '=', 3);
+              }
+            });
+          
+          if (!isNaN(search)) {
+            this.orWhere('products.quantity_in_stock', '=', parseInt(search))
+              .orWhere('products.unit_price', '=', parseFloat(search));
+          }
+        });
+      }
+    }
+
+    // Get total count
+    const [{ total }] = await query.clone().count('* as total');
+
+    // Get paginated data
+    const inventory = await query
       .select(
         'products.product_id',
         'products.product_name',
@@ -102,7 +169,6 @@ const getInventory = async (req, res) => {
         'products.updated_at',
         knex.raw('GROUP_CONCAT(DISTINCT vendors.vendor_name) as vendors')
       )
-      .where('products.status', '!=', 99)
       .groupBy(
         'products.product_id',
         'products.product_name',
@@ -136,11 +202,26 @@ const getInventory = async (req, res) => {
   }
 };
 
+// Get vendor count
+const getVendorCount = async (req, res) => {
+  try {
+    const [{ count }] = await knex('vendors')
+      .where('status', '!=', 99)
+      .count('* as count');
+
+    res.json({ count: parseInt(count) });
+  } catch (error) {
+    console.error('Error getting vendor count:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 // Export all functions
 const inventoryController = {
   generatePresignedUrl,
   addProduct,
-  getInventory
+  getInventory,
+  getVendorCount
 };
 
 module.exports = inventoryController;

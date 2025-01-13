@@ -1,34 +1,70 @@
 <div class="card">
-  <div class="card-header bg-white d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center">
-      <h5 class="mb-0 me-2">Inventory movements</h5>
-      <span class="badge bg-light text-dark">{{inventoryItems.length}} items</span>
-    </div>
-    <div>
-      <button class="btn btn-outline-secondary me-2">Move to cart</button>
-      <button class="btn btn-outline-secondary me-2">Download All</button>
-      <button class="btn btn-outline-secondary me-2">Import</button>
-      <button class="btn btn-primary" (click)="openAddProductModal()">Add Product</button>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="d-flex justify-content-between mb-3">
-      <div class="btn-group filter-group">
-        <button class="btn btn-light active">View all</button>
-        <button class="btn btn-light">Cart</button>
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-2">
+        <h5 class="mb-0">Inventory movements</h5>
+        <span class="vendor-count">{{ totalVendors }} vendors</span>
       </div>
-      <div class="d-flex align-items-center">
-        <div class="search-box me-2">
-          <i class="bi bi-search"></i>
-          <input type="search" class="form-control" placeholder="Search">
-        </div>
-        <button class="btn btn-light">
-          <i class="bi bi-funnel"></i>
-          <span>Filters</span>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-outline" (click)="downloadAll()">
+          <i class="bi bi-download me-2"></i>
+          Download All
+        </button>
+        <button class="btn btn-outline" (click)="importProducts()">
+          <i class="bi bi-upload me-2"></i>
+          Import
+        </button>
+        <button class="btn btn-primary" (click)="openAddProductModal()">
+          <i class="bi bi-plus-lg me-2"></i>
+          Add Product
         </button>
       </div>
     </div>
 
+    <!-- Filters and Search -->
+    <div class="controls-row mt-4">
+      <div class="view-controls">
+        <button class="btn btn-light active">View all</button>
+        <button class="btn btn-light">Cart</button>
+      </div>
+      
+      <div class="d-flex align-items-center gap-3">
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Search..." 
+            (input)="onSearch($event)"
+          >
+        </div>
+        <div class="filter-dropdown">
+          <button class="btn btn-light" (click)="toggleFilters()">
+            <i class="bi bi-funnel me-2"></i>
+            Filters
+          </button>
+          <div class="filter-menu" *ngIf="showFilters">
+            <div class="filter-header">
+              <h6 class="mb-0">Columns</h6>
+            </div>
+            <div class="filter-options">
+              <label *ngFor="let column of columns" class="filter-option">
+                <input 
+                  type="checkbox" 
+                  [checked]="column.checked"
+                  (change)="onColumnToggle(column)"
+                >
+                <span>{{ column.label }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Content -->
+  <div class="card-body">
     <!-- Loading State -->
     <div *ngIf="loading" class="text-center py-4">
       <div class="spinner-border text-primary" role="status">
@@ -52,7 +88,7 @@
             <th>Product Name</th>
             <th>Status</th>
             <th>Category</th>
-              <th>Vendors</th>
+            <th>Vendors</th>
             <th>Quantity</th>
             <th>Unit</th>
             <th></th>
@@ -71,55 +107,54 @@
               </div>
             </td>
             <td>
-                <span class="badge" [ngClass]="{'bg-success': item.status === 'Available'}">
+              <span class="badge" [ngClass]="{'bg-success': item.status === 'Available'}">
                 {{item.status}}
               </span>
             </td>
             <td>{{item.category}}</td>
-              <td>
-                <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
-                  {{vendor}}
-                </span>
-              </td>
-              <td>{{item.quantity_in_stock}}</td>
-              <td>{{item.unit}}</td>
             <td>
-                <button class="btn btn-sm border-0"><i class="bi bi-download"></i></button>
-                <button class="btn btn-sm border-0"><i class="bi bi-trash"></i></button>
-                <button class="btn btn-sm border-0"><i class="bi bi-pencil"></i></button>
+              <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
+                {{vendor}}
+              </span>
+            </td>
+            <td>{{item.quantity_in_stock}}</td>
+            <td>{{item.unit}}</td>
+            <td>
+              <button class="btn btn-sm border-0"><i class="bi bi-download"></i></button>
+              <button class="btn btn-sm border-0"><i class="bi bi-trash"></i></button>
+              <button class="btn btn-sm border-0"><i class="bi bi-pencil"></i></button>
             </td>
           </tr>
         </tbody>
       </table>
-            <!-- Pagination -->
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <button class="btn btn-light" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
-                <i class="bi bi-chevron-left me-1"></i>
-                Previous
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <button class="btn btn-light" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+          <i class="bi bi-chevron-left me-1"></i>
+          Previous
+        </button>
+        <div class="pagination-numbers">
+          <ng-container *ngFor="let page of pages">
+            <ng-container *ngIf="page === -1; else pageNumber">
+              <span class="page-dot">...</span>
+            </ng-container>
+            <ng-template #pageNumber>
+              <button class="btn btn-light" 
+                      [class.active]="page === currentPage"
+                      (click)="onPageChange(page)">
+                {{ page }}
               </button>
-              <div class="pagination-numbers">
-                <ng-container *ngFor="let page of pages">
-                  <ng-container *ngIf="page === -1; else pageNumber">
-                    <span class="page-dot">...</span>
-                  </ng-container>
-                  <ng-template #pageNumber>
-                    <button class="btn btn-light" 
-                            [class.active]="page === currentPage"
-                            (click)="onPageChange(page)">
-                      {{ page }}
-                    </button>
-                  </ng-template>
-                </ng-container>
-              </div>
-              <button class="btn btn-light" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
-                Next
-                <i class="bi bi-chevron-right ms-1"></i>
-              </button>
-            </div>
-          </div>      
+            </ng-template>
+          </ng-container>
+        </div>
+        <button class="btn btn-light" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+          Next
+          <i class="bi bi-chevron-right ms-1"></i>
+        </button>
+      </div>
     </div>
   </div>
-
+</div>
 
 <!-- Add Product Modal -->
 <app-add-product

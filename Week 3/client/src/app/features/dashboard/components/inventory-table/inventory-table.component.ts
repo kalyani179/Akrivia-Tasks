@@ -21,6 +21,12 @@ interface InventoryResponse {
   totalPages: number;
 }
 
+interface ColumnFilter {
+  key: string;
+  label: string;
+  checked: boolean;
+}
+
 @Component({
   selector: 'app-inventory-table',
   templateUrl: './inventory-table.component.html',
@@ -36,18 +42,39 @@ export class InventoryTableComponent implements OnInit {
   loading = false;
   error = '';
   Math = Math;
+  totalVendors = 0;
+
+  showFilters = false;
+  searchText = '';
+  selectedColumns: string[] = [];
+  columns: ColumnFilter[] = [
+    { key: 'product_name', label: 'Product Name', checked: true },
+    { key: 'status', label: 'Status', checked: true },
+    { key: 'category', label: 'Category', checked: true },
+    { key: 'vendors', label: 'Vendors', checked: true },
+    { key: 'quantity_in_stock', label: 'Quantity', checked: true },
+    { key: 'unit_price', label: 'Unit Price', checked: true }
+  ];
 
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.loadInventoryItems();
+    this.loadVendorCount();
   }
 
   loadInventoryItems(): void {
+    const params = {
+      page: this.currentPage,
+      limit: this.itemsPerPage,
+      search: this.searchText,
+      columns: this.selectedColumns.join(',')
+    };
+
     this.loading = true;
     this.error = '';
-    
-    this.productService.getInventoryItems(this.currentPage, this.itemsPerPage).subscribe({
+
+    this.productService.getInventoryItems(params).subscribe({
       next: (response: InventoryResponse) => {
         this.inventoryItems = response.items;
         this.totalItems = response.total;
@@ -142,5 +169,41 @@ export class InventoryTableComponent implements OnInit {
       style: 'currency',
       currency: 'USD'
     }).format(price);
+  }
+
+  toggleFilters(): void {
+    this.showFilters = !this.showFilters;
+  }
+
+  onColumnToggle(column: ColumnFilter): void {
+    column.checked = !column.checked;
+    this.selectedColumns = this.columns
+      .filter(col => col.checked)
+      .map(col => col.key);
+  }
+
+  onSearch(event: Event): void {
+    const searchValue = (event.target as HTMLInputElement).value;
+    this.searchText = searchValue;
+    this.loadInventoryItems();
+  }
+
+  loadVendorCount(): void {
+    this.productService.getVendorCount().subscribe({
+      next: (count: number) => {
+        this.totalVendors = count;
+      },
+      error: (error: Error) => {
+        console.error('Error loading vendor count:', error);
+      }
+    });
+  }
+
+  downloadAll(): void {
+    // Implement download functionality
+  }
+
+  importProducts(): void {
+    // Implement import functionality
   }
 }

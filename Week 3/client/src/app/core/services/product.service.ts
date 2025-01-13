@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,23 @@ export class ProductService {
     return this.http.post(this.apiUrl, productData);
   }
 
-  getInventoryItems(page: number = 1, limit: number = 10): Observable<any> {
-    return this.http.get(`${this.apiUrl}/inventory?page=${page}&limit=${limit}`);
+  getInventoryItems(params: {
+    page: number;
+    limit: number;
+    search?: string;
+    columns?: string;
+  }): Observable<any> {
+    const queryParams = new HttpParams()
+      .set('page', params.page.toString())
+      .set('limit', params.limit.toString())
+      .set('search', params.search || '')
+      .set('columns', params.columns || '');
+
+    return this.http.get(`${this.apiUrl}/inventory`, { params: queryParams });
+  }
+
+  getVendorCount(): Observable<number> {
+    return this.http.get<{ count: number }>(`${this.apiUrl}/vendors/count`)
+      .pipe(map(response => response.count));
   }
 }
