@@ -6,6 +6,10 @@ const JWT_SECRET = process.env.JWT_SECRET;
 console.log(JWT_SECRET);
 
 const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'No authorization header' });
+  }
   const token = req.headers['authorization'];
   if (!token) return res.status(403).json({ message: 'Token required' });
 
