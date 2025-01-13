@@ -1,0 +1,133 @@
+.filter-group {
+    .btn {
+      padding: 4px 12px;
+      font-size: 13px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      
+      &.active {
+        background: #f8f9fa;
+        border-color: #e0e0e0;
+      }
+      
+      &:hover {
+        background: #f8f9fa;
+      }
+    }
+  }
+  
+  .search-box {
+    position: relative;
+    
+    i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+      font-size: 14px;
+    }
+    
+    .form-control {
+      padding: 4px 12px 4px 32px;
+      height: 32px;
+      font-size: 13px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      width: 240px;
+      
+      &::placeholder {
+        color: #a0a0a0;
+      }
+    }
+  }
+  
+  .btn {
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    padding: 4px 12px;
+    border: 1px solid #e0e0e0;
+    
+    i {
+      font-size: 14px;
+    }
+    
+    &.btn-light {
+      background: #fff;
+      
+      &:hover {
+        background: #f8f9fa;
+      }
+    }
+  }
+  
+  .pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .btn {
+      min-width: 32px;
+      height: 32px;
+      padding: 4px 8px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e0e0e0;
+      background: white;
+      color: #666;
+      border-radius: 4px;
+
+      &.active {
+        background: #6366f1;
+        border-color: #6366f1;
+        color: white;
+      }
+
+      &:hover:not(.active):not(:disabled) {
+        background: #f8f9fa;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    .page-dot {
+      color: #666;
+      font-weight: bold;
+      padding: 0 4px;
+    }
+  }
+
+  .btn-light {
+    height: 32px;
+    padding: 4px 12px;
+    font-size: 13px;
+    border: 1px solid #e0e0e0;
+    background: white;
+    color: #666;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+
+    &:hover:not(:disabled) {
+      background: #f8f9fa;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    i {
+      font-size: 12px;
+    }
+  }
+

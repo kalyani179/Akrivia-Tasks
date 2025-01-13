@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { ProductService } from '../../../../../core/services/product.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
@@ -10,6 +12,7 @@ import { NgToastService } from 'ng-angular-popup';
 export class AddProductComponent {
   @Input() showModal = false;
   @Output() modalClosed = new EventEmitter<void>();
+  @Output() productAdded = new EventEmitter<any>();
 
   productForm: FormGroup;
   selectedFile: File | null = null;
@@ -23,7 +26,8 @@ export class AddProductComponent {
 
   constructor(
     private fb: FormBuilder,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private productService: ProductService
   ) {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
@@ -71,29 +75,62 @@ export class AddProductComponent {
     this.selectedFile = null;
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.productForm.invalid) {
       return;
     }
 
-    this.isSubmitting = true;
-    const formData = {
-      ...this.productForm.value,
-      image: this.selectedFile
-    };
+    try {
+      this.isSubmitting = true;
+      let imageUrl = '';
 
-    // Replace with your actual API call
-    console.log('Submitting:', formData);
-    
-    // Simulate API call
-    setTimeout(() => {
-      this.isSubmitting = false;
+      // Handle file upload to S3 if file is selected
+      if (this.selectedFile) {
+        // Get presigned URL
+        const presignedData = await firstValueFrom(
+          this.productService.getPresignedUrl(
+            this.selectedFile.name,
+            this.selectedFile.type
+          )
+        );
+
+        // Upload to S3
+        await firstValueFrom(
+          this.productService.uploadToS3(presignedData.uploadUrl, this.selectedFile)
+        );
+
+        // Get the S3 URL (this would be the URL where the file will be accessible)
+        imageUrl = presignedData.uploadUrl.split('?')[0];
+      }
+
+      // Prepare product data
+      const productData = {
+        ...this.productForm.value,
+        imageUrl
+      };
+
+      // Add product
+      const response = await firstValueFrom(
+        this.productService.addProduct(productData)
+      );
+
       this.toast.success({
         detail: 'Success',
         summary: 'Product added successfully',
         duration: 3000
       });
+      
+      this.productAdded.emit(response);
       this.closeModal();
-    }, 1000);
+    } catch (error) {
+      console.error('Error adding product:', error);
+      this.toast.error({
+        detail: 'Error',
+        summary: 'Failed to add product',
+        duration: 3000
+      });
+    } finally {
+      this.isSubmitting = false;
+    }
   }
 }
