@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/core/services/product.service';
+import * as XLSX from 'xlsx';
 
 interface InventoryItem {
   product_id: number;
@@ -200,7 +201,49 @@ export class InventoryTableComponent implements OnInit {
   }
 
   downloadAll(): void {
-    // Implement download functionality
+    // Get all inventory items without pagination
+    this.productService.getAllInventoryItems().subscribe({
+      next: (inventoryData: any[]) => {
+        const formattedData = inventoryData.map((item: any) => ({
+          'Product Name': item.product_name,
+          'Category': item.category,
+          'Status': item.status,
+          'Vendors': Array.isArray(item.vendors) ? item.vendors.join(', ') : item.vendors,
+          'Quantity': item.quantity_in_stock,
+          'Unit Price': item.unit_price,
+          'Created At': new Date(item.created_at).toLocaleDateString(),
+          'Updated At': new Date(item.updated_at).toLocaleDateString()
+        }));
+
+        // Create workbook and worksheet
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Inventory');
+
+        // Generate Excel file
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { 
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+        });
+        
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `inventory_${new Date().toISOString().split('T')[0]}.xlsx`;
+        
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        
+        // Cleanup
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error: Error) => {
+        console.error('Error downloading inventory:', error);
+      }
+    });
   }
 
   importProducts(): void {

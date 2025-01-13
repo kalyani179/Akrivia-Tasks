@@ -47,4 +47,8 @@ export class ProductService {
     return this.http.get<{ count: number }>(`${this.apiUrl}/vendors/count`)
       .pipe(map(response => response.count));
   }
+
+  getAllInventoryItems(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/inventory/all`);
+  }
 }

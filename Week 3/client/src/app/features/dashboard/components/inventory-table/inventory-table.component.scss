@@ -14,8 +14,8 @@
 
     .vendor-count {
       font-size: 13px;
-      color: #6366f1;
-      background: rgba(99, 102, 241, 0.1);
+      color: #8054dc;
+      background: rgba(128, 84, 220, 0.1);
       padding: 4px 8px;
       border-radius: 4px;
     }
@@ -53,7 +53,7 @@
     }
 
     &.active {
-      background: #6366f1;
+      background: #8054dc;
       color: white;
     }
   }
@@ -98,7 +98,7 @@
     width: 100%;
     
     &:focus {
-      border-color: #6366f1;
+      border-color: #8054dc;
       box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.2);
     }
   }
@@ -124,7 +124,7 @@
   }
   
   &.btn-primary {
-    background: #6366f1;
+    background: #8054dc;
     border: none;
     color: white;
     
@@ -252,8 +252,8 @@
     padding: 0 8px;
     
     &.active {
-      background: #6366f1;
-      border-color: #6366f1;
+      background: #8054dc;
+      border-color: #8054dc;
       color: white;
     }
   }

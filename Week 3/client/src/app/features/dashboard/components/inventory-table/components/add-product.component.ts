@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { ProductService } from '../../../../../core/services/product.service';
 import { firstValueFrom } from 'rxjs';
@@ -18,11 +18,12 @@ export class AddProductComponent {
   selectedFile: File | null = null;
   isDragging = false;
   isSubmitting = false;
+  selectedVendors: string[] = [];
 
   // Mock data - replace with actual data from your service
   categories = ['Electronics', 'Clothing', 'Food', 'Books'];
-  vendors = ['Vendor A', 'Vendor B', 'Vendor C'];
-  statuses = ['Available', 'Out of Stock', 'Low Stock'];
+  vendors = ['Swiggy','Zepto','Fresh Meat','Blinkit'];
+  statuses = ['Created','Active', 'Inactive', 'Deleted'];
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +33,7 @@ export class AddProductComponent {
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
       category: ['', Validators.required],
-      vendor: ['', Validators.required],
+      vendors: [[], Validators.required],
       quantity: ['', [Validators.required, Validators.min(0)]],
       unit: ['', Validators.required],
       status: ['', Validators.required]
@@ -73,6 +74,23 @@ export class AddProductComponent {
     this.modalClosed.emit();
     this.productForm.reset();
     this.selectedFile = null;
+  }
+
+  toggleVendor(vendor: string): void {
+    const currentVendors = this.productForm.get('vendors')?.value || [];
+    const index = currentVendors.indexOf(vendor);
+    
+    if (index === -1) {
+      currentVendors.push(vendor);
+    } else {
+      currentVendors.splice(index, 1);
+    }
+    
+    this.productForm.patchValue({ vendors: currentVendors });
+  }
+
+  isVendorSelected(vendor: string): boolean {
+    return (this.productForm.get('vendors')?.value || []).includes(vendor);
   }
 
   async onSubmit(): Promise<void> {

@@ -202,6 +202,52 @@ const getInventory = async (req, res) => {
   }
 };
 
+// Get all inventory items
+const getAllInventory = async (req, res) => {
+  try {
+    const inventory = await knex('products')
+      .join('categories', 'products.category_id', '=', 'categories.category_id')
+      .leftJoin('product_to_vendor', 'products.product_id', '=', 'product_to_vendor.product_id')
+      .leftJoin('vendors', 'product_to_vendor.vendor_id', '=', 'vendors.vendor_id')
+      .select(
+        'products.product_id',
+        'products.product_name',
+        'categories.category_name as category',
+        'products.quantity_in_stock',
+        'products.unit_price',
+        'products.product_image',
+        'products.status',
+        'products.created_at',
+        'products.updated_at',
+        knex.raw('GROUP_CONCAT(DISTINCT vendors.vendor_name) as vendors')
+      )
+      .where('products.status', '!=', 99)
+      .groupBy(
+        'products.product_id',
+        'products.product_name',
+        'categories.category_name',
+        'products.quantity_in_stock',
+        'products.unit_price',
+        'products.product_image',
+        'products.status',
+        'products.created_at',
+        'products.updated_at'
+      )
+      .orderBy('products.created_at', 'desc');
+
+    const formattedInventory = inventory.map(item => ({
+      ...item,
+      vendors: item.vendors ? item.vendors.split(',') : [],
+      status: item.status === 1 ? 'Available' : item.status === 2 ? 'Out of Stock' : 'Low Stock'
+    }));
+
+    res.json(formattedInventory);
+  } catch (error) {
+    console.error('Error fetching all inventory:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 // Get vendor count
 const getVendorCount = async (req, res) => {
   try {
@@ -221,6 +267,7 @@ const inventoryController = {
   generatePresignedUrl,
   addProduct,
   getInventory,
+  getAllInventory,
   getVendorCount
 };
 
