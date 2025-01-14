@@ -42,11 +42,11 @@
           >
         </div>
         <div class="filter-dropdown">
-          <button class="btn btn-light" (click)="toggleFilters()">
+          <button class="btn btn-light" (click)="toggleFilters()" (click)="$event.stopPropagation()">
             <i class="bi bi-funnel me-2"></i>
             Filters
           </button>
-          <div class="filter-menu" *ngIf="showFilters">
+          <div class="filter-menu" *ngIf="showFilters" (click)="$event.stopPropagation()">
             <div class="filter-header">
               <h6 class="mb-0">Columns</h6>
             </div>
@@ -110,9 +110,9 @@
               </div>
             </td>
             <td>
-              <span class="badge" [ngClass]="{'bg-success': item.status === 'Available'}">
-                {{item.status}}
-              </span>
+              <span class="badge" [ngClass]="{'bg-success': item.quantity_in_stock > 0, 'bg-danger': item.quantity_in_stock <= 0 }">
+                {{item.quantity_in_stock > 0 ? 'Available' : 'Sold Out'}}
+              </span>              
             </td>
             <td>{{item.category}}</td>
             <td>

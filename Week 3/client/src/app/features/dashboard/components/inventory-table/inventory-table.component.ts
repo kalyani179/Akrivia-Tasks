@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import jsPDF from 'jspdf';
 import { ProductService } from 'src/app/core/services/product.service';
 import * as XLSX from 'xlsx';
@@ -52,6 +52,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   isDragging = false;
   showDeleteModal = false;
   selectedItem: InventoryItem | null = null;
+  status = 'Available';
 
   showFilters = false;
   searchText = '';
@@ -62,13 +63,13 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     { key: 'category', label: 'Category', checked: true },
     { key: 'vendors', label: 'Vendors', checked: true },
     { key: 'quantity_in_stock', label: 'Quantity', checked: true },
-    { key: 'unit_price', label: 'Unit Price', checked: true }
+    { key: 'unit', label: 'Unit', checked: true }
   ];
 
 
   refreshSubscription: any;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private elementRef: ElementRef) {}
 
   ngOnInit(): void {
     this.loadInventoryItems();
@@ -88,6 +89,16 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: Event) {
+    const filtersMenu = this.elementRef.nativeElement.querySelector('.filter-menu');
+    console.log('Clicked target:', event.target);
+    console.log('Is target inside menu:', filtersMenu?.contains(event.target as Node));
+    if (!filtersMenu?.contains(event.target as Node)) {
+      this.showFilters = false;
+    }
+  }
+  
   
   toggleAll(){
     this.showAll = true;
@@ -161,12 +172,11 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       page: this.currentPage,
       limit: this.itemsPerPage,
       search: this.searchText,
-      columns: this.selectedColumns.join(',')
+      columns: this.selectedColumns.join(','),
     };
 
     this.loading = true;
     this.error = '';
-
     this.productService.getInventoryItems(params).subscribe({
       next: (response: InventoryResponse) => {
         this.inventoryItems = response.items;
@@ -256,18 +266,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     this.closeAddProductModal();
   }
 
-  getStatusClass(status: string): string {
-    switch (status) {
-      case 'Available':
-        return 'bg-success';
-      case 'Out of Stock':
-        return 'bg-danger';
-      case 'Low Stock':
-        return 'bg-warning';
-      default:
-        return 'bg-secondary';
-    }
-  }
 
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString();
@@ -315,7 +313,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
         const formattedData = inventoryData.map((item: any) => ({
           'Product Name': item.product_name,
           'Category': item.category,
-          'Status': item.status,
+          'Status': item.quantity_in_stock > 0 ? 'Available' : 'Sold Out',
           'Vendors': Array.isArray(item.vendors) ? item.vendors.join(', ') : item.vendors,
           'Quantity': item.quantity_in_stock,
           'Unit Price': item.unit_price,

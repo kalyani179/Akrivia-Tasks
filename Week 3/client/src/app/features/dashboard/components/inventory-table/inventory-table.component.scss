@@ -1,5 +1,4 @@
 .card {
-  border: none;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
   
   .card-header {
@@ -238,7 +237,10 @@
         background: rgba(16, 185, 129, 0.1) !important;
         color: #059669;
       }
-      
+      &.bg-danger {
+        background: rgba(220, 38, 38, 0.1) !important;
+        color: #991b1b;
+      }
       &.bg-light {
         background: #f3f4f6 !important;
         color: #4b5563;

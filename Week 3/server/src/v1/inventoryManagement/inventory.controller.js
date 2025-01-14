@@ -175,7 +175,7 @@ const getInventory = async (req, res) => {
         'products.product_name',
         'categories.category_name as category',
         'products.quantity_in_stock',
-        'products.unit_price',
+        'products.unit',
         'products.product_image',
         'products.status',
         'products.created_at',
