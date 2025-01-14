@@ -48,6 +48,8 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   totalVendors = 0;
   showCart = false;
   showAll = true;
+  selectedFile : File | null = null;
+  isDragging = false;
 
   showFilters = false;
   searchText = '';
@@ -96,6 +98,51 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     this.showCart = true;
     console.log('showCart', this.showCart);
   } 
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+    
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      this.selectedFile = files[0];
+      this.uploadFile();
+    }
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
+  uploadFile(): void {
+    console.log('File uploaded:', this.selectedFile);
+    this.showImportModal = false;
+  }
+  
+  openUploadModal(): void {
+    this.showImportModal = true;
+  }
+
+  closeUploadModal(): void {
+    this.showImportModal = false;
+    this.selectedFile = null;
+  }
 
   loadInventoryItems(): void {
     const params = {
