@@ -6,7 +6,7 @@
         <span class="vendor-count">{{ totalVendors }} vendors</span>
       </div>
       <div class="d-flex align-items-center gap-2" *ngIf="!showCart">
-        <button class="btn btn-outline">
+        <button class="btn btn-outline" (click)="openMoveToCartModal()">
           Move To Cart
         </button>
         <button class="btn btn-outline" (click)="downloadAll()" *ngIf="!showCart">
@@ -303,5 +303,101 @@
       <button class="btn btn-danger d-flex justify-content-center" style="width: 50%;" (click)="deleteProduct()">Delete</button>
     </div>
     
+  </div>
+</div>
+
+<!--move to cart modal-->
+<div class="upload-modal"  *ngIf="showMoveToCartModal">
+  <div class="upload-modal-content" style="max-width: 80%; max-height: 73%;">
+    <div class="table-responsive" style="width: 100%; max-height: 50%;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" class="form-check-input">
+            </th>
+            <th>Product Name</th>
+            <th>Created At</th>
+            <th>Category</th>
+            <th>Vendors</th>
+            <th>Quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of inventoryItems">
+            <td>
+              <input type="checkbox" class="form-check-input">
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <img *ngIf="item.product_image" [src]="item.product_image" 
+                     class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                {{item.product_name}}
+              </div>
+            </td>
+            <td>{{item.created_at | date:'MM/dd/yyyy'}}</td>
+            <td>{{item.category}}</td>
+            <td>
+              <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
+                {{vendor}}
+              </span>
+            </td>
+            <td>
+              <div class="input-group input-group-sm" style="width: 120px;">
+                <button 
+                  class="btn btn-outline-secondary btn-sm" 
+                  (click)="decreaseQuantity(item)"
+                >-</button>
+                <input 
+                type="text" 
+                class="form-control text-center px-2 border-secondary" 
+                style="border-left: none; border-right: none;"
+                [value]="item.quantity_in_stock" 
+                readonly
+              />              
+                <button 
+                  class="btn btn-outline-secondary btn-sm" 
+                  (click)="increaseQuantity(item)"
+                >+</button>
+              </div>
+            </td>
+                     
+            <td>
+              <button class="btn btn-sm border-0" (click)="openDeleteModal(item)"><i class="bi bi-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <button class="btn btn-light" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+          <i class="bi bi-chevron-left me-1"></i>
+          Previous
+        </button>
+        <div class="pagination-numbers">
+          <ng-container *ngFor="let page of pages">
+            <ng-container *ngIf="page === -1; else pageNumber">
+              <span class="page-dot">...</span>
+            </ng-container>
+            <ng-template #pageNumber>
+              <button class="btn btn-light" 
+                      [class.active]="page === currentPage"
+                      (click)="onPageChange(page)">
+                {{ page }}
+              </button>
+            </ng-template>
+          </ng-container>
+        </div>
+        <button class="btn btn-light" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+          Next
+          <i class="bi bi-chevron-right ms-1"></i>
+        </button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4" style="width: 100%;">
+      <button class="btn btn-light d-flex justify-content-center me-2" style="width: 50%;" (click)="closeMoveToCartModal()">Cancel</button>
+      <button class="btn btn-primary d-flex justify-content-center" style="width: 50%;" (click)="deleteProduct()">Move</button>
+    </div>
   </div>
 </div>

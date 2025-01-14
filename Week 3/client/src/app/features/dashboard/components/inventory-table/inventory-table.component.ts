@@ -37,7 +37,7 @@ interface ColumnFilter {
 export class InventoryTableComponent implements OnInit, OnDestroy {
   inventoryItems: InventoryItem[] = [];
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 3;
   totalItems = 0;
   totalPages = 0;
   showAddProductModal = false;
@@ -53,6 +53,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   showDeleteModal = false;
   selectedItem: InventoryItem | null = null;
   status = 'Available';
+  showMoveToCartModal = false;
 
   showFilters = false;
   searchText = '';
@@ -171,8 +172,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     const params = {
       page: this.currentPage,
       limit: this.itemsPerPage,
-      search: this.searchText,
-      columns: this.selectedColumns.join(','),
     };
 
     this.loading = true;
@@ -385,7 +384,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     } 
   }
 
-
+ // cart functions
   increaseQuantity(item: any): void {
     item.quantity_in_stock++;
   }
@@ -394,5 +393,13 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     if (item.quantity_in_stock > 0) {
       item.quantity_in_stock--;
     }
+  }
+
+  openMoveToCartModal(): void {   
+    this.showMoveToCartModal = true;
+  }
+
+  closeMoveToCartModal(): void {
+    this.showMoveToCartModal = false;
   }
 }
