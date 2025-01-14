@@ -21,6 +21,7 @@
     "@ng-bootstrap/ng-bootstrap": "^13.1.1",
     "bootstrap": "^5.3.3",
     "file-saver": "^2.0.5",
+    "jspdf": "^2.5.2",
     "jszip": "^3.10.1",
     "ng-angular-popup": "^0.2.0",
     "rxjs": "~7.5.0",

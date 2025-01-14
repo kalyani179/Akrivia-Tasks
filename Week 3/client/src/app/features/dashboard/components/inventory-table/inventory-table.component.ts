@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import jsPDF from 'jspdf';
 import { ProductService } from 'src/app/core/services/product.service';
 import * as XLSX from 'xlsx';
 
@@ -45,6 +46,8 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   error = '';
   Math = Math;
   totalVendors = 0;
+  showCart = false;
+  showAll = true;
 
   showFilters = false;
   searchText = '';
@@ -57,6 +60,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     { key: 'quantity_in_stock', label: 'Quantity', checked: true },
     { key: 'unit_price', label: 'Unit Price', checked: true }
   ];
+
 
   refreshSubscription: any;
 
@@ -79,6 +83,19 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       this.refreshSubscription.unsubscribe();
     }
   }
+
+  
+  toggleAll(){
+    this.showAll = true;
+    this.showCart = false;
+    console.log('showAll', this.showAll);
+  }
+
+  toggleCart(){
+    this.showAll = false;
+    this.showCart = true;
+    console.log('showCart', this.showCart);
+  } 
 
   loadInventoryItems(): void {
     const params = {
@@ -277,5 +294,24 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  downloadField(item: any): void {
+    const doc = new jsPDF();
+    const data: { [key: string]: any } = {
+      'Product Name': item.product_name,
+      'Category': item.category,
+      'Status': item.status,
+      'Vendors': Array.isArray(item.vendors) ? item.vendors.join(', ') : item.vendors,
+      'Quantity': item.quantity_in_stock,
+      'Unit Price': item.unit_price
+    };
+  
+    let yOffset = 10; // Start position for text
+  
+    Object.keys(data).forEach((key) => {
+      doc.text(`${key}: ${data[key]}`, 10, yOffset);
+      yOffset += 10; // Move down for the next line
+    });
+  
+    doc.save(`${item.product_name}.pdf`); // Save as PDF with dynamic filename
+  }   
 }

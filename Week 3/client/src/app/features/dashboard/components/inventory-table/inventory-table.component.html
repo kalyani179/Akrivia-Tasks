@@ -6,6 +6,9 @@
         <span class="vendor-count">{{ totalVendors }} vendors</span>
       </div>
       <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-outline">
+          Move To Cart
+        </button>
         <button class="btn btn-outline" (click)="downloadAll()">
           <i class="bi bi-download me-2"></i>
           Download All
@@ -24,8 +27,8 @@
     <!-- Filters and Search -->
     <div class="controls-row mt-4">
       <div class="view-controls">
-        <button class="btn btn-light active">View all</button>
-        <button class="btn btn-light">Cart</button>
+        <button class="btn btn-light" [class.active]="showAll"  (click)="toggleAll()">View all</button>
+        <button class="btn btn-light" [class.active]="showCart" (click)="toggleCart()">Cart</button>
       </div>
       
       <div class="d-flex align-items-center gap-3">
@@ -78,7 +81,7 @@
     </div>
 
     <!-- Table -->
-    <div class="table-responsive" *ngIf="!loading && !error">
+    <div class="table-responsive" *ngIf="!loading && !error && showAll">
       <table class="table">
         <thead>
           <tr>
@@ -120,9 +123,76 @@
             <td>{{item.quantity_in_stock}}</td>
             <td>{{item.unit}}</td>
             <td>
-              <button class="btn btn-sm border-0"><i class="bi bi-download"></i></button>
+              <button class="btn btn-sm border-0" (click)="downloadField(item)"><i class="bi bi-download"></i></button>
               <button class="btn btn-sm border-0"><i class="bi bi-trash"></i></button>
               <button class="btn btn-sm border-0"><i class="bi bi-pencil"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <button class="btn btn-light" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+          <i class="bi bi-chevron-left me-1"></i>
+          Previous
+        </button>
+        <div class="pagination-numbers">
+          <ng-container *ngFor="let page of pages">
+            <ng-container *ngIf="page === -1; else pageNumber">
+              <span class="page-dot">...</span>
+            </ng-container>
+            <ng-template #pageNumber>
+              <button class="btn btn-light" 
+                      [class.active]="page === currentPage"
+                      (click)="onPageChange(page)">
+                {{ page }}
+              </button>
+            </ng-template>
+          </ng-container>
+        </div>
+        <button class="btn btn-light" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+          Next
+          <i class="bi bi-chevron-right ms-1"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Cart Table -->
+    <div class="table-responsive" *ngIf="!loading && !error && showCart">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" class="form-check-input">
+            </th>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Vendors</th>
+            <th>Quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of inventoryItems">
+            <td>
+              <input type="checkbox" class="form-check-input">
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <img *ngIf="item.product_image" [src]="item.product_image" 
+                     class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                {{item.product_name}}
+              </div>
+            </td>
+            <td>{{item.category}}</td>
+            <td>
+              <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
+                {{vendor}}
+              </span>
+            </td>
+            <td>{{item.quantity_in_stock}}</td>
+            <td>
+              <button class="btn btn-sm border-0"><i class="bi bi-trash"></i></button>
             </td>
           </tr>
         </tbody>
