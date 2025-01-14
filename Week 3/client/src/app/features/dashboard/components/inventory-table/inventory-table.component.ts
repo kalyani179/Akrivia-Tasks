@@ -50,6 +50,8 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   showAll = true;
   selectedFile : File | null = null;
   isDragging = false;
+  showDeleteModal = false;
+  selectedItem: InventoryItem | null = null;
 
   showFilters = false;
   searchText = '';
@@ -142,6 +144,16 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   closeUploadModal(): void {
     this.showImportModal = false;
     this.selectedFile = null;
+  }
+
+  openDeleteModal(item: InventoryItem): void {
+    this.showDeleteModal = true;
+    this.selectedItem = item;
+  } 
+
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+    this.selectedItem = null;
   }
 
   loadInventoryItems(): void {
@@ -361,4 +373,9 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   
     doc.save(`${item.product_name}.pdf`); // Save as PDF with dynamic filename
   }   
+
+  deleteProduct(): void {
+    console.log('Deleting product:', this.selectedItem);
+    this.closeDeleteModal();
+  }
 }
