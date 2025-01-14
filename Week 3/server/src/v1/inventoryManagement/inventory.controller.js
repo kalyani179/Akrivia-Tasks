@@ -275,13 +275,20 @@ const getVendorCount = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  const { productId } = req.params;
+  await knex('products').where('product_id', productId).update({ status: 99 });
+  res.json({ message: 'Product deleted successfully' });
+};
+
 // Export all functions
 const inventoryController = {
   generatePresignedUrl,
   addProduct,
   getInventory,
   getVendorCount,
-  getAllInventory
+  getAllInventory,
+  deleteProduct
 };
 
 module.exports = inventoryController;

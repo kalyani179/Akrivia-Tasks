@@ -61,7 +61,6 @@ export class ProductService {
   private refreshInventorySubject = new Subject<void>();
   refreshInventory$ = this.refreshInventorySubject.asObservable();
 
-
   
 	getAllProducts(): Observable<any[]> {
 		return this.http.get<any[]>(`${this.apiUrl}/inventory`);
@@ -78,4 +77,8 @@ export class ProductService {
 	removeFromCart(productId: string): Observable<any> {
 		return this.http.delete(`${this.apiUrl}/inventory/cart/${productId}`);
 	}
+
+  deleteProduct(productId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/inventory/${productId}`);
+  }
 }

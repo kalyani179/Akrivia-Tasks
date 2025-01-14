@@ -375,7 +375,15 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   }   
 
   deleteProduct(): void {
-    console.log('Deleting product:', this.selectedItem);
-    this.closeDeleteModal();
+    if (this.selectedItem) {
+      this.productService.deleteProduct(this.selectedItem.product_id.toString()).subscribe({
+        next: () => {
+          this.loadInventoryItems();
+          this.closeDeleteModal();
+        }
+      });
+    } else {
+      console.error('No product selected for deletion');
+    } 
   }
 }
