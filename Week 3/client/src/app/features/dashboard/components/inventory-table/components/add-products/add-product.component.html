@@ -114,7 +114,8 @@
         </button>
         <button type="submit" 
                 class="btn btn-primary"
-                [disabled]="productForm.invalid || isSubmitting">
+                [disabled]="productForm.invalid || isSubmitting"
+                (click)="onSubmit()">
           {{ isSubmitting ? 'Adding...' : 'Add' }}
         </button>
       </div>

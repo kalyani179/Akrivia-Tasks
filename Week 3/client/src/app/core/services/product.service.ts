@@ -25,7 +25,7 @@ export class ProductService {
   }
 
   addProduct(productData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, productData);
+    return this.http.post(`${this.apiUrl}/add`, productData);
   }
 
   getInventoryItems(params: {
@@ -61,7 +61,6 @@ export class ProductService {
   private refreshInventorySubject = new Subject<void>();
   refreshInventory$ = this.refreshInventorySubject.asObservable();
 
-  
 	getAllProducts(): Observable<any[]> {
 		return this.http.get<any[]>(`${this.apiUrl}/inventory`);
 	}

@@ -47,7 +47,7 @@ const addProduct = async (req, res) => {
         product_name: productName,
         category_id: categoryResult.category_id,
         quantity_in_stock: quantity,
-        unit_price: unit,
+        unit: unit,
         status: status === 'Active' ? 1 : status === 'Inactive' ? 2 : status === 'Deleted' ? 99 : 0,
         created_at: new Date(),
         updated_at: new Date()

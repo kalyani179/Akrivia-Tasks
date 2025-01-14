@@ -15,7 +15,7 @@ router.use(authenticateToken);
 router.post('/presigned-url', inventoryController.generatePresignedUrl);
 
 // Add new product
-router.post('/', inventoryController.addProduct);
+router.post('/add', inventoryController.addProduct);
 
 // Get all inventory items
 router.get('/inventory', inventoryController.getInventory);

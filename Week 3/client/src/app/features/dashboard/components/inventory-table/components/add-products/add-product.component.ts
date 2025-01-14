@@ -94,44 +94,18 @@ export class AddProductComponent {
     return (this.productForm.get('vendors')?.value || []).includes(vendor);
   }
 
-  async onSubmit(): Promise<void> {
-    if (this.productForm.invalid || this.isSubmitting) {
-      return;
-    }
-
-    try {
-      this.isSubmitting = true;
-
-      const formData = {
-        productName: this.productForm.get('productName')?.value,
-        category: this.productForm.get('category')?.value,
-        vendors: this.productForm.get('vendors')?.value,
-        quantity: this.productForm.get('quantity')?.value,
-        unit: this.productForm.get('unit')?.value,
-        status: this.productForm.get('status')?.value
-      };
-
-      const response = await firstValueFrom(this.productService.addProduct(formData));
-
-      if (response.success) {
-        this.toast.success({
-          detail: 'Success',
-          summary: 'Product added successfully',
-          duration: 3000
-        });
-        // Emit an event to refresh the inventory table
-        this.productService.refreshInventory();
-      } else {
-        throw new Error(response.message || 'Failed to add product');
+  onSubmit(): void {
+    this.isSubmitting = true;
+    this.productService.addProduct(this.productForm.value).subscribe({
+      next: (response) => {
+        this.isSubmitting = false;
+        this.productAdded.emit(response);
+        this.handleModalClose();
+      },
+      error: (error) => {
+        this.isSubmitting = false;
+        console.error('Error adding product:', error);
       }
-    } catch (error: any) {
-      this.toast.error({
-        detail: 'Error',
-        summary: error.message || 'Failed to add product',
-        duration: 5000
-      });
-    } finally {
-      this.isSubmitting = false;
-    }
+    });
   }
 }
