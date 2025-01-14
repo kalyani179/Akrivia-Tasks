@@ -384,4 +384,15 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       console.error('No product selected for deletion');
     } 
   }
+
+
+  increaseQuantity(item: any): void {
+    item.quantity_in_stock++;
+  }
+  
+  decreaseQuantity(item: any): void {
+    if (item.quantity_in_stock > 0) {
+      item.quantity_in_stock--;
+    }
+  }
 }

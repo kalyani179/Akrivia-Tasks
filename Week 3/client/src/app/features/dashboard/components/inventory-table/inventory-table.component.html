@@ -5,19 +5,19 @@
         <h5 class="mb-0">Inventory movements</h5>
         <span class="vendor-count">{{ totalVendors }} vendors</span>
       </div>
-      <div class="d-flex align-items-center gap-2">
+      <div class="d-flex align-items-center gap-2" *ngIf="!showCart">
         <button class="btn btn-outline">
           Move To Cart
         </button>
-        <button class="btn btn-outline" (click)="downloadAll()">
+        <button class="btn btn-outline" (click)="downloadAll()" *ngIf="!showCart">
           <i class="bi bi-download me-2"></i>
           Download All
         </button>
-        <button class="btn btn-outline" (click)="importProducts()">
+        <button class="btn btn-outline" (click)="importProducts()" *ngIf="!showCart">
           <i class="bi bi-upload me-2"></i>
           Import
         </button>
-        <button class="btn btn-primary" (click)="openAddProductModal()">
+        <button class="btn btn-primary" (click)="openAddProductModal()" *ngIf="!showCart">
           <i class="bi bi-plus-lg me-2"></i>
           Add Product
         </button>
@@ -190,7 +190,26 @@
                 {{vendor}}
               </span>
             </td>
-            <td>{{item.quantity_in_stock}}</td>
+            <td>
+              <div class="input-group input-group-sm" style="width: 120px;">
+                <button 
+                  class="btn btn-outline-secondary btn-sm" 
+                  (click)="decreaseQuantity(item)"
+                >-</button>
+                <input 
+                type="text" 
+                class="form-control text-center px-2 border-secondary" 
+                style="border-left: none; border-right: none;"
+                [value]="item.quantity_in_stock" 
+                readonly
+              />              
+                <button 
+                  class="btn btn-outline-secondary btn-sm" 
+                  (click)="increaseQuantity(item)"
+                >+</button>
+              </div>
+            </td>
+                     
             <td>
               <button class="btn btn-sm border-0" (click)="openDeleteModal(item)"><i class="bi bi-trash"></i></button>
             </td>
