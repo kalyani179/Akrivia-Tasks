@@ -399,7 +399,7 @@ const updateCartProduct = async (req, res) => {
 // Add this to your inventory controller
 const updateProduct = async (req, res) => {
   const { productId } = req.params;
-  const { productName, category, vendors, quantity, unit, status } = req.body;
+  const { productName, category, vendors, quantity, unit, status,product_image } = req.body;
   const trx = await knex.transaction();
 
   console.log(req.body);
@@ -420,6 +420,7 @@ const updateProduct = async (req, res) => {
       .where('product_id', productId)
       .update({
         product_name: productName,
+        product_image: product_image,
         category_id: categoryResult.category_id,
         quantity_in_stock: quantity,
         unit: unit,

@@ -104,15 +104,27 @@
             </td>
             <td>
               <div class="d-flex align-items-center">
-                <img *ngIf="item.product_image" [src]="item.product_image" 
-                     class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
-                <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayName">
-                  <input type="text" class="form-control form-control-sm" 
+                <!-- Show image and file input when editing -->
+                <ng-container *ngIf="editingItem?.product_id === item.product_id">
+                  <div class="d-flex flex-column">
+                    <img *ngIf="item.product_image" [src]="item.product_image" 
+                         class="rounded me-2 mb-2" style="width: 40px; height: 40px; object-fit: cover;">
+                    <input type="file" 
+                           class="form-control form-control-sm" 
+                           accept="image/*"
+                           (change)="onImageSelected($event)"
+                           style="margin-left:-10px; font-size:12px;">
+                  </div>
+                  <input type="text" class="form-control form-control-sm ms-2" 
                          [(ngModel)]="editForm.product_name">
                 </ng-container>
-                <ng-template #displayName>
+                
+                <!-- Show only image and name when not editing -->
+                <ng-container *ngIf="editingItem?.product_id !== item.product_id">
+                  <img *ngIf="item.product_image" [src]="item.product_image" 
+                       class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
                   {{item.product_name}}
-                </ng-template>
+                </ng-container>
               </div>
             </td>
             <td>
@@ -503,5 +515,7 @@
     </div>
   </div>
 </div>
+
+
 
 

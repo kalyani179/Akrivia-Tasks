@@ -4,6 +4,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { ProductService } from 'src/app/core/services/product.service';
 import * as XLSX from 'xlsx';
 import { firstValueFrom } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface InventoryItem {
   product_id: number;
@@ -138,7 +139,8 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService, 
     private elementRef: ElementRef,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -741,35 +743,116 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       status: item.status
     };
   }
+  selectedImage: File | null = null;
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.selectedImage = file;
+    }
+  }
 
   saveEdit(item: InventoryItem): void {
-    const updatedProduct = {
-      ...item,
-      product_name: this.editForm.product_name,
-      category: this.editForm.category,
-      vendors: this.editForm.selectedVendors,
-      quantity_in_stock: Number(this.editForm.quantity_in_stock),
-      unit: this.editForm.unit,
-      status: this.editForm.status
-    };
-    this.productService.updateProduct(item.product_id.toString(), updatedProduct).subscribe({
-      next: () => {
-        this.toast.success({
-          detail: 'Product updated successfully',
-          summary: 'Success',
-          duration: 3000
+    if (this.selectedImage) {
+      const fileName = this.selectedImage.name;
+      const fileType = this.selectedImage.type;
+      
+      // First get the presigned URL
+      this.productService.getPresignedUrlProductImage(fileName, fileType)
+        .subscribe({
+          next: (response) => {
+            const uploadUrl = response.uploadUrl;
+            // Upload to S3 with Skip-Auth header
+            const headers = new HttpHeaders()
+              .set('Content-Type', fileType)
+              .set('Skip-Auth', 'true');
+
+            this.http.put(uploadUrl, this.selectedImage, { headers })
+              .subscribe({
+                next: () => {
+                  // After successful upload, update the product with the image URL
+                  const updatedProduct = {
+                    ...item,
+                    product_name: this.editForm.product_name,
+                    category: this.editForm.category,
+                    vendors: this.editForm.selectedVendors,
+                    quantity_in_stock: Number(this.editForm.quantity_in_stock),
+                    unit: this.editForm.unit,
+                    status: this.editForm.status,
+                    product_image: response.imageUrl
+                  };
+
+                  this.productService.updateProduct(item.product_id.toString(), updatedProduct)
+                    .subscribe({
+                      next: () => {
+                        this.toast.success({
+                          detail: 'Product updated successfully',
+                          summary: 'Success',
+                          duration: 3000
+                        });
+                        this.loadInventoryItems();
+                        this.editingItem = null;
+                        this.selectedImage = null;
+                      },
+                      error: (error) => {
+                        this.toast.error({
+                          detail: 'Failed to update product',
+                          summary: 'Error',
+                          duration: 3000
+                        });
+                      }
+                    });
+                },
+                error: (err) => {
+                  console.error('Error uploading image:', err);
+                  this.toast.error({
+                    detail: 'Upload failed',
+                    summary: 'Error uploading image.',
+                    duration: 3000
+                  });
+                }
+              });
+          },
+          error: (err) => {
+            console.error('Error getting presigned URL:', err);
+            this.toast.error({
+              detail: 'Upload failed',
+              summary: 'Error generating pre-signed URL.',
+              duration: 3000
+            });
+          }
         });
-        this.loadInventoryItems();
-        this.editingItem = null;
-      },
-      error: (error) => {
-        this.toast.error({
-          detail: 'Failed to update product',
-          summary: 'Error',
-          duration: 3000
+    } else {
+      // If no new image is selected, just update the product without changing the image
+      const updatedProduct = {
+        ...item,
+        product_name: this.editForm.product_name,
+        category: this.editForm.category,
+        vendors: this.editForm.selectedVendors,
+        quantity_in_stock: Number(this.editForm.quantity_in_stock),
+        unit: this.editForm.unit,
+        status: this.editForm.status
+      };
+
+      this.productService.updateProduct(item.product_id.toString(), updatedProduct)
+        .subscribe({
+          next: () => {
+            this.toast.success({
+              detail: 'Product updated successfully',
+              summary: 'Success',
+              duration: 3000
+            });
+            this.loadInventoryItems();
+            this.editingItem = null;
+          },
+          error: (error) => {
+            this.toast.error({
+              detail: 'Failed to update product',
+              summary: 'Error',
+              duration: 3000
+            });
+          }
         });
-      }
-    });
+    }
   }
 
   cancelEdit(): void {

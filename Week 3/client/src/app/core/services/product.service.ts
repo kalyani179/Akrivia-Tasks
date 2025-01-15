@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -123,5 +124,25 @@ export class ProductService {
 
   getCategories(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/categories`);
+  }
+
+  updateProductWithImage(id: string, productData: any, file: File): Observable<any> {
+    // First get presigned URL for image
+    return this.getPresignedUrlProductImage(file.name, file.type).pipe(
+      switchMap(response => {
+        // Upload image to S3
+        const headers = new HttpHeaders()
+          .set('Content-Type', file.type)
+          .set('Skip-Auth', 'true');
+
+        return this.http.put(response.uploadUrl, file, { headers }).pipe(
+          // After image upload, update product with new image URL
+          switchMap(() => this.updateProduct(id, {
+            ...productData,
+            product_image: response.imageUrl
+          }))
+        );
+      })
+    );
   }
 }
