@@ -86,7 +86,7 @@
         <thead>
           <tr>
             <th>
-              <input type="checkbox" class="form-check-input">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="isAllSelected" (change)="toggleSelectAll()">
             </th>
             <th>Product Name</th>
             <th>Status</th>
@@ -100,7 +100,7 @@
         <tbody>
           <tr *ngFor="let item of inventoryItems">
             <td>
-              <input type="checkbox" class="form-check-input">
+              <input type="checkbox" [(ngModel)]="item.isChecked" (change)="toggleFileSelection(item)">
             </td>
             <td>
               <div class="d-flex align-items-center">
@@ -270,12 +270,12 @@
           <span class="text-purple cursor-pointer" (click)="fileInput.click()">Click to upload</span>
           or drag and drop
         </p>
-        <small class="text-muted">SVG, PNG, JPG or GIF (max. 800x400px)</small>
+        <small class="text-muted">Only Excel files (.xlsx, .xls) are allowed</small>
       </div>
       <input #fileInput
              type="file"
              class="d-none"
-             accept="image/*"
+             accept=".xlsx,.xls"
              (change)="onFileSelected($event)">
     </div>
     <!-- Buttons -->
@@ -287,22 +287,6 @@
         Upload files
       </button>
     </div>
-  </div>
-</div>
-
-<!-- Delete Modal -->
-<div class="upload-modal" *ngIf="showDeleteModal">
-  <div class="upload-modal-content justify-content-center d-flex flex-column align-items-center" style="padding: 1.5rem; width: 30%;">
-    <i class="bi bi-exclamation-circle text-danger mb-4 text-center" style="font-size: 1.2rem; padding:0.25rem"></i>
-    <h5 class="mb-3 text-center">Delete Product</h5>
-    <p class="text-muted mb-2 text-center">Are you sure you want to delete this product? This action cannot be undone.</p>
-    
-    <!-- Buttons -->
-    <div class="d-flex justify-content-center mt-4" style="width: 100%;">
-      <button class="btn btn-light d-flex justify-content-center me-2" style="width: 50%;" (click)="closeDeleteModal()">Cancel</button>
-      <button class="btn btn-danger d-flex justify-content-center" style="width: 50%;" (click)="deleteProduct()">Delete</button>
-    </div>
-    
   </div>
 </div>
 
@@ -401,3 +385,20 @@
     </div>
   </div>
 </div>
+
+<!-- Delete Modal -->
+<div class="upload-modal" *ngIf="showDeleteModal">
+  <div class="upload-modal-content justify-content-center d-flex flex-column align-items-center" style="padding: 1.5rem; width: 30%;">
+    <i class="bi bi-exclamation-circle text-danger mb-4 text-center" style="font-size: 1.2rem; padding:0.25rem"></i>
+    <h5 class="mb-3 text-center">Delete Product</h5>
+    <p class="text-muted mb-2 text-center">Are you sure you want to delete this product? This action cannot be undone.</p>
+    
+    <!-- Buttons -->
+    <div class="d-flex justify-content-center mt-4" style="width: 100%;">
+      <button class="btn btn-light d-flex justify-content-center me-2" style="width: 50%;" (click)="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger d-flex justify-content-center" style="width: 50%;" (click)="deleteProduct()">Delete</button>
+    </div>
+    
+  </div>
+</div>
+

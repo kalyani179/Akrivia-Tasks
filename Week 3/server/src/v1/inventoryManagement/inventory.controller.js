@@ -281,6 +281,75 @@ const deleteProduct = async (req, res) => {
   res.json({ message: 'Product deleted successfully' });
 };
 
+// Add this new function to handle bulk product upload
+const bulkAddProducts = async (req, res) => {
+  const { products } = req.body;
+  const trx = await knex.transaction();
+
+  try {
+    // Array to store all product insertion promises
+    const productInsertions = products.map(async (product) => {
+      // Get category_id from category name
+      const [categoryResult] = await trx('categories')
+        .select('category_id')
+        .where('category_name', product.category);
+
+      if (!categoryResult) {
+        throw new Error(`Invalid category: ${product.category}`);
+      }
+
+      // Insert into products table
+      const [productId] = await trx('products')
+        .insert({
+          product_name: product.productName,
+          category_id: categoryResult.category_id,
+          quantity_in_stock: product.quantity,
+          unit: product.unit,
+          status: product.status === 'Active' ? 1 : product.status === 'Inactive' ? 2 : 0,
+          created_at: new Date(),
+          updated_at: new Date()
+        });
+
+      // Get vendor IDs from vendor names
+      const vendorNames = Array.isArray(product.vendors) ? product.vendors : product.vendors.split(',').map(v => v.trim());
+      const vendorIds = await trx('vendors')
+        .select('vendor_id')
+        .whereIn('vendor_name', vendorNames);
+
+      // Insert into product_to_vendor table
+      const productVendorRecords = vendorIds.map(({ vendor_id }) => ({
+        product_id: productId,
+        vendor_id: vendor_id,
+        created_at: new Date(),
+        updated_at: new Date()
+      }));
+
+      await trx('product_to_vendor').insert(productVendorRecords);
+
+      return productId;
+    });
+
+    // Wait for all product insertions to complete
+    const insertedProductIds = await Promise.all(productInsertions);
+
+    await trx.commit();
+
+    res.status(201).json({
+      success: true,
+      message: 'Products added successfully',
+      productIds: insertedProductIds
+    });
+  } catch (error) {
+    await trx.rollback();
+    console.error('Error adding products:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error.message
+    });
+  }
+};
+
 // Export all functions
 const inventoryController = {
   generatePresignedUrl,
@@ -288,7 +357,8 @@ const inventoryController = {
   getInventory,
   getVendorCount,
   getAllInventory,
-  deleteProduct
+  deleteProduct,
+  bulkAddProducts
 };
 
 module.exports = inventoryController;

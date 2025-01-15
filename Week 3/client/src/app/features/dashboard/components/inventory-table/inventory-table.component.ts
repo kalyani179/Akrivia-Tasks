@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import jsPDF from 'jspdf';
+import { NgToastService } from 'ng-angular-popup';
 import { ProductService } from 'src/app/core/services/product.service';
 import * as XLSX from 'xlsx';
 
@@ -15,6 +16,7 @@ interface InventoryItem {
   created_at: string;
   updated_at: string;
   vendors: string[];
+  isChecked?: boolean;
 }
 
 interface InventoryResponse {
@@ -27,6 +29,21 @@ interface ColumnFilter {
   key: string;
   label: string;
   checked: boolean;
+}
+
+interface ExcelProduct {
+  'Product Name'?: string;
+  'productName'?: string;
+  'Category'?: string;
+  'category'?: string;
+  'Vendors'?: string | string[];
+  'vendors'?: string | string[];
+  'Quantity'?: number;
+  'quantity'?: number;
+  'Unit'?: string;
+  'unit'?: string;
+  'Status'?: string;
+  'status'?: string;
 }
 
 @Component({
@@ -55,6 +72,9 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   status = 'Available';
   showMoveToCartModal = false;
 
+  isAllSelected = false;
+
+
   showFilters = false;
   searchText = '';
   selectedColumns: string[] = [];
@@ -66,11 +86,16 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     { key: 'quantity_in_stock', label: 'Quantity', checked: true },
     { key: 'unit', label: 'Unit', checked: true }
   ];
-
+ 
 
   refreshSubscription: any;
+  selectedItems: InventoryItem[] = [];
 
-  constructor(private productService: ProductService, private elementRef: ElementRef) {}
+  constructor(
+    private productService: ProductService, 
+    private elementRef: ElementRef,
+    private toast: NgToastService
+  ) {}
 
   ngOnInit(): void {
     this.loadInventoryItems();
@@ -99,6 +124,23 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       this.showFilters = false;
     }
   }
+
+  toggleSelectAll(): void {
+    this.isAllSelected = !this.isAllSelected;
+    
+    // Clear the selectedItems array first if we're deselecting all
+    if (!this.isAllSelected) {
+      this.selectedItems = [];
+    } else {
+      // If selecting all, replace selectedItems with all current inventory items
+      this.selectedItems = [...this.inventoryItems];
+    }
+
+    // Update the isChecked property for all items
+    this.inventoryItems.forEach(item => {
+      item.isChecked = this.isAllSelected;
+    });
+  }  
   
   
   toggleAll(){
@@ -132,16 +174,123 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
-      this.selectedFile = files[0];
-      this.uploadFile();
+      const file = files[0];
+      if (this.isExcelFile(file)) {
+        this.selectedFile = file;
+      } else {
+        this.toast.error({
+          detail: 'Please upload only Excel files (.xlsx, .xls)',
+          summary: 'Invalid File',
+          duration: 3000
+        });
+      }
     }
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+      const file = input.files[0];
+      if (this.isExcelFile(file)) {
+        this.selectedFile = file;
+        this.readExcelFile(file);
+      } else {
+        this.toast.error({
+          detail: 'Please upload only Excel files (.xlsx, .xls)',
+          summary: 'Invalid File',
+          duration: 3000
+        });
+        input.value = ''; // Clear the input
+        this.selectedFile = null;
+      }
     }
+  }
+
+  isExcelFile(file: File): boolean {
+    const allowedTypes = [
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+      'application/vnd.ms-excel' // .xls
+    ];
+    return allowedTypes.includes(file.type);
+  }
+
+  readExcelFile(file: File): void {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      try {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet) as ExcelProduct[];
+        
+        console.log('Raw Excel Data:', jsonData); // Debug log
+
+        // Format the data with proper type checking
+        const formattedProducts = jsonData.map(row => {
+          // Handle vendors field safely
+          let vendorsList: string[] = [];
+          if (row.Vendors || row.vendors) {
+            const vendorsData = row.Vendors || row.vendors;
+            if (typeof vendorsData === 'string') {
+              vendorsList = vendorsData.split(',').map((vendor: string) => vendor.trim());
+            } else if (Array.isArray(vendorsData)) {
+              vendorsList = vendorsData;
+            }
+          }
+
+          return {
+            productName: row['Product Name'] || row.productName || '',
+            category: row['Category'] || row.category || '',
+            vendors: vendorsList,
+            quantity: Number(row['Quantity'] || row.quantity || 0),
+            unit: row['Unit'] || row.unit || '',
+            status: row['Status'] || row.status || 'Active'
+          };
+        });
+
+        console.log('Formatted Products:', formattedProducts); // Debug log
+
+        // Use bulk upload
+        this.productService.bulkAddProducts(formattedProducts).subscribe({
+          next: (response) => {
+            this.toast.success({
+              detail: 'Products added successfully',
+              summary: 'Success',
+              duration: 3000
+            });
+            this.loadInventoryItems();
+            this.closeUploadModal();
+          },
+          error: (error) => {
+            console.error('Upload error:', error);
+            this.toast.error({
+              detail: `Failed to add products: ${error.message}`,
+              summary: 'Error',
+              duration: 3000
+            });
+          }
+        });
+      } catch (error) {
+        console.error('Error processing Excel file:', error);
+        this.toast.error({
+          detail: 'Error processing Excel file. Please check the file format.',
+          summary: 'Error',
+          duration: 3000
+        });
+      }
+    };
+
+    reader.onerror = (error) => {
+      console.error('FileReader error:', error);
+      this.toast.error({
+        detail: 'Error reading file',
+        summary: 'Error',
+        duration: 3000
+      });
+    };
+
+    reader.readAsArrayBuffer(file);
   }
 
   uploadFile(): void {
@@ -183,7 +332,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
         this.totalPages = response.totalPages;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: Error) => {
         console.error('Error loading inventory items:', err);
         this.error = 'Failed to load inventory items. Please try again.';
         this.loading = false;
@@ -194,42 +343,38 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   onPageChange(page: number): void {
     this.currentPage = page;
     this.loadInventoryItems();
+    if (this.inventoryItems && this.selectedItems) {
+      this.isAllSelected = this.inventoryItems.every(item => this.selectedItems.includes(item));
+    }
   }
 
   get pages(): number[] {
-    const totalPages = Math.min(5, this.totalPages); // Show max 5 pages
+    const totalPages = Math.min(5, this.totalPages || 0);
     const currentPage = this.currentPage;
     const pages: number[] = [];
     
-    if (this.totalPages <= 5) {
-      // If total pages is 5 or less, show all pages
+    if (this.totalPages && this.totalPages <= 5) {
       for (let i = 1; i <= this.totalPages; i++) {
         pages.push(i);
       }
-    } else {
-      // Always show first page
+    } else if (this.totalPages) {
       pages.push(1);
       
-      // Calculate start and end of the middle pages
       let start = Math.max(2, currentPage - 1);
-      let end = Math.min(this.totalPages - 1, currentPage + 1);
+      let end = Math.min((this.totalPages - 1), currentPage + 1);
       
-      // Add ellipsis after first page if needed
       if (start > 2) {
-        pages.push(-1); // -1 represents ellipsis
+        pages.push(-1);
       }
       
-      // Add middle pages
       for (let i = start; i <= end; i++) {
         pages.push(i);
       }
       
-      // Add ellipsis before last page if needed
       if (end < this.totalPages - 1) {
-        pages.push(-1); // -1 represents ellipsis
+        pages.push(-1);
       }
       
-      // Always show last page
       pages.push(this.totalPages);
     }
     
@@ -358,7 +503,9 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       'Status': item.status,
       'Vendors': Array.isArray(item.vendors) ? item.vendors.join(', ') : item.vendors,
       'Quantity': item.quantity_in_stock,
-      'Unit Price': item.unit_price
+      'Unit': item.unit,
+      'Created At': new Date(item.created_at).toLocaleDateString(),
+      'Updated At': new Date(item.updated_at).toLocaleDateString()
     };
   
     let yOffset = 10; // Start position for text
@@ -401,5 +548,25 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
 
   closeMoveToCartModal(): void {
     this.showMoveToCartModal = false;
+  }
+
+  toggleFileSelection(item: InventoryItem): void {
+    if (!this.selectedItems) {
+      this.selectedItems = [];
+    }
+
+    item.isChecked = !item.isChecked;
+
+    if (item.isChecked) {
+      if (!this.selectedItems.includes(item)) {
+        this.selectedItems.push(item);
+      }
+    } else {
+      this.selectedItems = this.selectedItems.filter(selectedItem => selectedItem.product_id !== item.product_id);
+    }
+
+    if (this.inventoryItems) {
+      this.isAllSelected = this.inventoryItems.every(item => item.isChecked);
+    }
   }
 }
