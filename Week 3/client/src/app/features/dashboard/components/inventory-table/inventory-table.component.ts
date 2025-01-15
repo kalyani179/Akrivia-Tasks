@@ -19,6 +19,7 @@ interface InventoryItem {
   updated_at: string;
   vendors: string[];
   isChecked?: boolean;
+  original_quantity?: number;
 }
 
 interface InventoryResponse {
@@ -572,21 +573,76 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
 
  // cart functions
   increaseQuantity(item: InventoryItem): void {
-    if (this.showMoveToCartModal) {
-      // When in move-to-cart modal, we can only increase up to the original quantity
-      const originalItem = this.inventoryItems.find(i => i.product_id === item.product_id);
-      if (originalItem && item.quantity_in_stock < originalItem.quantity_in_stock) {
+    const originalItem = this.inventoryItems.find(i => i.product_id === item.product_id);
+    
+    if (this.showCart) {
+      // In cart view
+      if (originalItem && originalItem.quantity_in_stock > 0) {
         item.quantity_in_stock++;
+        originalItem.quantity_in_stock--;
+        
+        // Update session storage
+        this.saveCartToSession(this.cartItems);
+        
+        // Update the product in backend
+        const updatePayload = {
+          product_id: originalItem.product_id,
+          quantity_in_stock: originalItem.quantity_in_stock
+        };
+        
+        firstValueFrom(this.productService.updateProduct(originalItem.product_id.toString(), updatePayload))
+          .catch(error => {
+            console.error('Error updating quantity:', error);
+            // Revert changes if update fails
+            item.quantity_in_stock--;
+            originalItem.quantity_in_stock++;
+            this.saveCartToSession(this.cartItems);
+          });
       }
     } else {
-      // In cart view, we can increase freely
-      item.quantity_in_stock++;
+      // In move-to-cart modal
+      const maxQuantity = item.original_quantity || item.quantity_in_stock;
+      if (item.quantity_in_stock < maxQuantity) {
+        item.quantity_in_stock++;
+      }
     }
   }
   
   decreaseQuantity(item: InventoryItem): void {
-    if (item.quantity_in_stock > 0) {
-      item.quantity_in_stock--;
+    if (item.quantity_in_stock <= 0) {
+      return;
+    }
+
+    if (this.showCart) {
+      // In cart view
+      const originalItem = this.inventoryItems.find(i => i.product_id === item.product_id);
+      if (originalItem) {
+        item.quantity_in_stock--;
+        originalItem.quantity_in_stock++;
+        
+        // Update session storage
+        this.saveCartToSession(this.cartItems);
+        
+        // Update the product in backend
+        const updatePayload = {
+          product_id: originalItem.product_id,
+          quantity_in_stock: originalItem.quantity_in_stock
+        };
+        
+        firstValueFrom(this.productService.updateProduct(originalItem.product_id.toString(), updatePayload))
+          .catch(error => {
+            console.error('Error updating quantity:', error);
+            // Revert changes if update fails
+            item.quantity_in_stock++;
+            originalItem.quantity_in_stock--;
+            this.saveCartToSession(this.cartItems);
+          });
+      }
+    } else {
+      // In move-to-cart modal
+      if (item.quantity_in_stock > 0) {
+        item.quantity_in_stock--;
+      }
     }
   }
 
@@ -599,11 +655,22 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       });
       return;
     }
+
+    // Filter out items with quantity <= 0
+    const validItems = this.selectedItems.filter(item => item.quantity_in_stock > 0);
+    if (validItems.length === 0) {
+      this.toast.error({
+        detail: 'Selected items have sold out',
+        summary: 'Select available items',
+        duration: 3000
+      });
+      return;
+    }
     
-    // Create a copy of selected items with their full quantities
-    this.selectedItemsForCart = this.selectedItems.map(item => ({
+    this.selectedItemsForCart = validItems.map(item => ({
       ...item,
-      quantity_in_stock: item.quantity_in_stock // Use full quantity by default
+      original_quantity: item.quantity_in_stock, // Store original quantity
+      quantity_in_stock: item.quantity_in_stock
     }));
 
     this.cartTotalPages = Math.ceil(this.selectedItemsForCart.length / this.cartItemsPerPage);
@@ -767,15 +834,27 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
 
     Promise.all(itemsForCart)
       .then(() => {
-        // Add items to cart and save to session storage
+        // Get current cart items
         const currentCart = this.getCartFromSession();
-        this.cartItems = [
-          ...currentCart,
-          ...this.selectedItemsForCart.map(item => ({
-            ...item,
-            quantity_in_stock: item.quantity_in_stock
-          }))
-        ];
+        
+        // Update or add items to cart
+        this.selectedItemsForCart.forEach(selectedItem => {
+          const existingCartItem = currentCart.find(item => item.product_id === selectedItem.product_id);
+          
+          if (existingCartItem) {
+            // Update quantity if item exists
+            existingCartItem.quantity_in_stock += selectedItem.quantity_in_stock;
+          } else {
+            // Add new item if it doesn't exist
+            currentCart.push({
+              ...selectedItem,
+              quantity_in_stock: selectedItem.quantity_in_stock
+            });
+          }
+        });
+
+        // Save updated cart to session storage
+        this.cartItems = currentCart;
         this.saveCartToSession(this.cartItems);
 
         // Clear selections
