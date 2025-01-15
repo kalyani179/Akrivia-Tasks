@@ -721,7 +721,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     this.editForm.vendors = this.editForm.selectedVendors.join(',');
   }
 
-  get cartPages(): number[] {
+  get cartPaginationPages(): number[] {
     const pages: number[] = [];
     for (let i = 1; i <= this.cartTotalPages; i++) {
       pages.push(i);
@@ -732,6 +732,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   onCartPageChange(page: number): void {
     if (page >= 1 && page <= this.cartTotalPages) {
       this.cartCurrentPage = page;
+      this.loadCartItems(); // Reload items for the new page
     }
   }
 
@@ -808,16 +809,15 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     // Get cart items from session storage
     this.cartItems = this.getCartFromSession();
     
-    // Calculate pagination
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    // Calculate pagination for cart view
+    const startIndex = (this.cartCurrentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.inventoryItems = this.cartItems.slice(startIndex, endIndex);
-    this.totalItems = this.cartItems.length;
-    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.cartTotalPages = Math.ceil(this.cartItems.length / this.itemsPerPage);
     
     // Reset page if needed
-    if (this.currentPage > this.totalPages && this.totalPages > 0) {
-      this.currentPage = 1;
+    if (this.cartCurrentPage > this.cartTotalPages && this.cartTotalPages > 0) {
+      this.cartCurrentPage = 1;
       this.loadCartItems();
     }
     

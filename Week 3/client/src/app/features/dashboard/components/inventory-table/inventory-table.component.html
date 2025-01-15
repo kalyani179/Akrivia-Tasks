@@ -301,28 +301,22 @@
       <!-- Cart Pagination -->
       <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="cartItems.length > 0">
         <button class="btn btn-light" 
-                (click)="onPageChange(currentPage - 1)" 
-                [disabled]="currentPage === 1">
+                (click)="onCartPageChange(cartCurrentPage - 1)" 
+                [disabled]="cartCurrentPage === 1">
           <i class="bi bi-chevron-left me-1"></i>
           Previous
         </button>
         <div class="pagination-numbers">
-          <ng-container *ngFor="let page of pages">
-            <ng-container *ngIf="page === -1; else pageNumber">
-              <span class="page-dot">...</span>
-            </ng-container>
-            <ng-template #pageNumber>
-              <button class="btn btn-light" 
-                      [class.active]="page === currentPage"
-                      (click)="onPageChange(page)">
-                {{ page }}
-              </button>
-            </ng-template>
-          </ng-container>
+          <button *ngFor="let page of cartPaginationPages" 
+                  class="btn btn-light" 
+                  [class.active]="page === cartCurrentPage"
+                  (click)="onCartPageChange(page)">
+            {{ page }}
+          </button>
         </div>
         <button class="btn btn-light" 
-                (click)="onPageChange(currentPage + 1)" 
-                [disabled]="currentPage === totalPages">
+                (click)="onCartPageChange(cartCurrentPage + 1)" 
+                [disabled]="cartCurrentPage === cartTotalPages">
           Next
           <i class="bi bi-chevron-right ms-1"></i>
         </button>
@@ -432,7 +426,7 @@
           Previous
         </button>
         <div class="pagination-numbers">
-          <button *ngFor="let page of cartPages" 
+          <button *ngFor="let page of cartPaginationPages" 
                   class="btn btn-light" 
                   [class.active]="page === cartCurrentPage"
                   (click)="onCartPageChange(page)">
