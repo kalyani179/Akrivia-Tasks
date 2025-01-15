@@ -64,7 +64,7 @@ interface EditForm {
 export class InventoryTableComponent implements OnInit, OnDestroy {
   inventoryItems: InventoryItem[] = [];
   currentPage = 1;
-  itemsPerPage = 3;
+  itemsPerPage = 10;
   totalItems = 0;
   totalPages = 0;
   showAddProductModal = false;
@@ -83,7 +83,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   showMoveToCartModal = false;
 
   isAllSelected = false;
-
 
   showFilters = false;
   searchText = '';
@@ -172,18 +171,19 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       item.isChecked = this.isAllSelected;
     });
   }  
-  
+
+  allFieldsSelected(): boolean {
+    return this.inventoryItems.every(item => item.isChecked);
+  }
   
   toggleAll(){
     this.showAll = true;
     this.showCart = false;
-    console.log('showAll', this.showAll);
   }
 
   toggleCart(){
     this.showAll = false;
     this.showCart = true;
-    console.log('showCart', this.showCart);
   } 
 
   onDragOver(event: DragEvent): void {
@@ -441,17 +441,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     this.closeAddProductModal();
   }
 
-
-  formatDate(date: string): string {
-    return new Date(date).toLocaleDateString();
-  }
-
-  formatPrice(price: number): string {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(price);
-  }
 
   toggleFilters(): void {
     this.showFilters = !this.showFilters;

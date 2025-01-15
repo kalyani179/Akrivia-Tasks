@@ -51,7 +51,7 @@ export class FileUploadComponent implements OnInit {
         this.toast.error({
           detail: 'Error',
           summary: 'Failed to load files',
-          duration: 3000
+          duration: 1000
         });
       }
     });

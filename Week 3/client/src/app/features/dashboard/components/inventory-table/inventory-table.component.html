@@ -86,7 +86,7 @@
         <thead>
           <tr>
             <th>
-              <input type="checkbox" class="form-check-input" [(ngModel)]="isAllSelected" (change)="toggleSelectAll()">
+              <input type="checkbox" class="form-check-input"  [checked]="allFieldsSelected()" (change)="toggleSelectAll()">
             </th>
             <th>Product Name</th>
             <th>Status</th>
