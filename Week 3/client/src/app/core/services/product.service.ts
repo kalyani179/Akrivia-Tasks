@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
@@ -28,6 +28,18 @@ export class ProductService {
   addProduct(productData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/add`, productData);
   }
+
+  getPresignedUrlProductImage(fileName: string, fileType: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/add-prodcut-image`, { fileName, fileType });
+  }
+
+  uploadProductImage(url: string, file: File): Observable<any> {
+    return this.http.put(url, file, {
+      headers: new HttpHeaders(),
+      withCredentials: false
+    });
+  }
+
 
   getInventoryItems(params: {
     page: number;

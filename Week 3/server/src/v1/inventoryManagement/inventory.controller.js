@@ -26,9 +26,40 @@ const generatePresignedUrl = async (req, res) => {
   }
 };
 
+const generatePresignedUrlProductImage = async (req, res) => {
+  try {
+    const { fileName, fileType } = req.body;
+    const userId = req.user.userId;
+    const key = `products/${userId}/${Date.now()}_${fileName}`;
+    
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: key,
+      ContentType: fileType,
+    };
+    
+    const command = new PutObjectCommand(params);
+    const uploadUrl = await getSignedUrl(s3Client, command, { 
+      expiresIn: 60,
+      signableHeaders: new Set(['host'])
+    });
+    
+    // Generate the permanent URL for the image
+    const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+    
+    res.status(200).json({ 
+      uploadUrl,
+      imageUrl 
+    });
+  } catch (err) {
+    console.error('Error generating pre-signed URL:', err);
+    res.status(500).json({ message: err.message });
+  }
+};  
+
 // Add new product
 const addProduct = async (req, res) => {
-  const { productName, category, vendors, quantity, unit, status } = req.body;
+  const { productName, product_image,category, vendors, quantity, unit, status } = req.body;
   const trx = await knex.transaction();
 
   try {
@@ -45,6 +76,7 @@ const addProduct = async (req, res) => {
     const [productId] = await trx('products')
       .insert({
         product_name: productName,
+        product_image: product_image,
         category_id: categoryResult.category_id,
         quantity_in_stock: quantity,
         unit: unit,
@@ -457,6 +489,7 @@ const getCategories = async (req, res) => {
 // Export all functions
 const inventoryController = {
   generatePresignedUrl,
+  generatePresignedUrlProductImage,
   addProduct,
   getInventory,
   getVendorCount,

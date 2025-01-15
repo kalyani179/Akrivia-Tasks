@@ -88,14 +88,33 @@
              (drop)="onDrop($event)"
              [class.drag-over]="isDragging">
           <div class="text-center">
-            <i class="bi bi-cloud-upload fs-2 mb-2"></i>
-            <p class="mb-2">
-              <span class="text-purple cursor-pointer" (click)="fileInput.click()">
-                Click to upload
-              </span>
-              or drag and drop
-            </p>
-            <small class="text-muted">SVG, PNG, JPG or GIF (max. 800x400px)</small>
+            <!-- Show preview if image is selected -->
+            <div *ngIf="selectedFile" class="mb-3">
+              <img [src]="previewUrl" 
+                   class="img-preview mb-2" 
+                   alt="Preview"
+                   style="max-width: 200px; max-height: 200px; object-fit: contain;">
+              <div>
+                <small class="text-muted">{{ selectedFile.name }}</small>
+                <button type="button" 
+                        class="btn btn-link text-danger p-0 ms-2" 
+                        (click)="removeSelectedFile()">
+                  <i class="bi bi-x-circle"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Upload controls -->
+            <div *ngIf="!selectedFile">
+              <i class="bi bi-cloud-upload fs-2 mb-2"></i>
+              <p class="mb-2">
+                <span class="text-purple cursor-pointer" (click)="fileInput.click()">
+                  Click to upload
+                </span>
+                or drag and drop
+              </p>
+              <small class="text-muted">SVG, PNG, JPG or GIF (max. 800x400px)</small>
+            </div>
           </div>
         </div>
         <input #fileInput

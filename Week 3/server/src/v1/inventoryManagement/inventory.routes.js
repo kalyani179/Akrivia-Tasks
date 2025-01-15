@@ -14,6 +14,9 @@ router.use(authenticateToken);
 // Generate presigned URL for S3 upload
 router.post('/presigned-url', inventoryController.generatePresignedUrl);
 
+// Generate presigned URL for product image upload
+router.post('/add-prodcut-image', inventoryController.generatePresignedUrlProductImage);
+
 // Add new product
 router.post('/add', inventoryController.addProduct);
 
