@@ -3,6 +3,8 @@ const router = express.Router();
 const { generatePresignedUrl, downloadFiles,listFiles } = require('./files.controller');
 const authenticateToken = require('../../middleware/jwt/jwt.middleware');
 
+require('./api-docs/filesUploaded.docs');
+
 router.use(authenticateToken);
 
 // Generate presigned URL for upload

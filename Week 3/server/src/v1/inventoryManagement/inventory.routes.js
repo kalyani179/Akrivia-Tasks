@@ -8,6 +8,8 @@ if (!inventoryController.generatePresignedUrl || !inventoryController.addProduct
   throw new Error('Required controller functions are not properly exported');
 }
 
+require('./api-docs/inventory.docs');
+
 // Apply authentication middleware to all routes
 router.use(authenticateToken);
 

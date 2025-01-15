@@ -5,10 +5,17 @@ const profileUpdateSchema = Joi.object({
   email: Joi.string().email().max(255)
 }).min(1);
 
-const validateProfileUpdate = (data) => {
-  return profileUpdateSchema.validate(data, { abortEarly: false });
-};
+const generatePresignedUrlSchema = Joi.object({
+  fileName: Joi.string().required()
+});
+
+const saveFileMetadataSchema = Joi.object({
+  fileUrl: Joi.string().required(),
+  fileName: Joi.string().required()
+});
 
 module.exports = {
-  validateProfileUpdate
+  profileUpdateSchema,
+  generatePresignedUrlSchema,
+  saveFileMetadataSchema
 };
