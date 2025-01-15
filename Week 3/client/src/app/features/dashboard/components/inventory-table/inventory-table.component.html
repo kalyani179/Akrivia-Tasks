@@ -11,7 +11,7 @@
         </button>
         <button class="btn btn-outline" (click)="downloadAll()" *ngIf="!showCart">
           <i class="bi bi-download me-2"></i>
-          Download All
+          Download All {{selectedItems.length > 0 ? '(' + selectedItems.length + ')'  : ''}}
         </button>
         <button class="btn btn-outline" (click)="importProducts()" *ngIf="!showCart">
           <i class="bi bi-upload me-2"></i>
@@ -194,8 +194,8 @@
             </td>
             <td>
               <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayActions">
-                <button class="btn btn-sm border-0 text-success" (click)="saveEdit(item)">
-                  <i class="bi bi-check-lg"></i>
+                <button class="btn border-0 text-success" (click)="saveEdit(item)">
+                  <i class="bi bi-check-lg" style="font-size: 22px;"></i>
                 </button>
                 <button class="btn btn-sm border-0 text-danger" (click)="cancelEdit()">
                   <i class="bi bi-x-lg"></i>
