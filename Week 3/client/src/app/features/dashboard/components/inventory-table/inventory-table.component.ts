@@ -129,6 +129,12 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   selectedItemsForCart: InventoryItem[] = [];
   cartTotalPages = 0;
 
+  showCartDeleteModal = false;
+  itemToDeleteFromCart: InventoryItem | null = null;
+
+  showMoveToCartDeleteModal = false;
+  itemToDeleteFromMoveToCart: InventoryItem | null = null;
+
   constructor(
     private productService: ProductService, 
     private elementRef: ElementRef,
@@ -470,7 +476,12 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   onSearch(event: Event): void {
     const searchValue = (event.target as HTMLInputElement).value;
     this.searchText = searchValue;
-    this.loadInventoryItems();
+    
+    if (this.showCart) {
+      this.loadCartItems();
+    } else {
+      this.loadInventoryItems();
+    }
   }
 
   loadVendorCount(): void {
@@ -562,12 +573,28 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     if (this.selectedItem) {
       this.productService.deleteProduct(this.selectedItem.product_id.toString()).subscribe({
         next: () => {
+          this.toast.success({
+            detail: 'Product deleted successfully',
+            summary: 'Success',
+            duration: 1000
+          });
           this.loadInventoryItems();
           this.closeDeleteModal();
+        },
+        error: (error) => {
+          this.toast.error({
+            detail: 'Failed to delete product',
+            summary: 'Error',
+            duration: 2000
+          });
         }
       });
     } else {
-      console.error('No product selected for deletion');
+      this.toast.error({
+        detail: 'No product selected for deletion',
+        summary: 'Error',
+        duration: 2000
+      });
     } 
   }
 
@@ -886,13 +913,23 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     this.loading = true;
     
     // Get cart items from session storage
-    this.cartItems = this.getCartFromSession();
+    const allCartItems = this.getCartFromSession();
+    
+    // Apply search filter
+    const filteredItems = this.filterCartItems(allCartItems);
     
     // Calculate pagination for cart view
     const startIndex = (this.cartCurrentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.inventoryItems = this.cartItems.slice(startIndex, endIndex);
-    this.cartTotalPages = Math.ceil(this.cartItems.length / this.itemsPerPage);
+    
+    // Update cart items with filtered results
+    this.cartItems = filteredItems;
+    
+    // Update the paginated items for display
+    const paginatedItems = filteredItems.slice(startIndex, endIndex);
+    this.inventoryItems = paginatedItems;  // Only for display purposes
+    
+    this.cartTotalPages = Math.ceil(filteredItems.length / this.itemsPerPage);
     
     // Reset page if needed
     if (this.cartCurrentPage > this.cartTotalPages && this.cartTotalPages > 0) {
@@ -924,14 +961,134 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     return cartData ? JSON.parse(cartData) : [];
   }
 
-  // Add method to remove items from cart
-  removeFromCart(item: InventoryItem): void {
-    this.cartItems = this.cartItems.filter(cartItem => cartItem.product_id !== item.product_id);
-    this.saveCartToSession(this.cartItems);
-    this.loadCartItems();
+
+  // First, let's add a method to filter cart items based on search text and selected columns
+  filterCartItems(items: InventoryItem[]): InventoryItem[] {
+    if (!this.searchText || !this.columns) {
+      return items;
+    }
+
+    const searchLower = this.searchText.toLowerCase();
     
+    return items.filter(item => {
+      // Only search through columns that are checked/selected
+      return this.columns
+        .filter(col => col.checked)
+        .some(col => {
+          const value = item[col.key as keyof InventoryItem];
+          
+          if (value === undefined || value === null) {
+            return false;
+          }
+
+          // Handle arrays (like vendors)
+          if (Array.isArray(value)) {
+            return value.some(v => v.toString().toLowerCase().includes(searchLower));
+          }
+
+          // Handle other types
+          return value.toString().toLowerCase().includes(searchLower);
+        });
+    });
+  }
+
+  openCartDeleteModal(item: InventoryItem): void {
+    this.itemToDeleteFromCart = item;
+    this.showCartDeleteModal = true;
+  }
+
+  closeCartDeleteModal(): void {
+    this.showCartDeleteModal = false;
+    this.itemToDeleteFromCart = null;
+  }
+
+  removeFromCart(): void {
+    if (!this.itemToDeleteFromCart) return;
+
+    const item = this.itemToDeleteFromCart;
+    
+    // Update the backend first
+    const updatePayload = {
+      product_id: item.product_id,
+      quantity_in_stock: item.quantity_in_stock // Restore the full quantity
+    };
+
+    firstValueFrom(this.productService.updateCartProduct(item.product_id.toString(), updatePayload))
+      .then(() => {
+        // Remove item from cart in session storage
+        this.cartItems = this.cartItems.filter(cartItem => cartItem.product_id !== item.product_id);
+        this.saveCartToSession(this.cartItems);
+        
+        // Refresh both cart and inventory views
+        this.loadCartItems();
+        this.loadInventoryItems();
+        
+        this.toast.success({
+          detail: 'Item removed from cart',
+          summary: 'Success',
+          duration: 3000
+        });
+
+        // Close the modal
+        this.closeCartDeleteModal();
+      })
+      .catch(error => {
+        console.error('Error removing item from cart:', error);
+        this.toast.error({
+          detail: 'Error removing item from cart. Please try again.',
+          summary: 'Error',
+          duration: 3000
+        });
+      });
+  }
+
+  openMoveToCartDeleteModal(item: InventoryItem): void {
+    this.itemToDeleteFromMoveToCart = item;
+    this.showMoveToCartDeleteModal = true;
+  }
+
+  closeMoveToCartDeleteModal(): void {
+    this.showMoveToCartDeleteModal = false;
+    this.itemToDeleteFromMoveToCart = null;
+  }
+
+  removeFromMoveToCart(): void {
+    if (!this.itemToDeleteFromMoveToCart) return;
+
+    // Remove from selectedItems
+    this.selectedItems = this.selectedItems.filter(
+      item => item.product_id !== this.itemToDeleteFromMoveToCart!.product_id
+    );
+
+    // Remove from selectedItemsForCart
+    this.selectedItemsForCart = this.selectedItemsForCart.filter(
+      item => item.product_id !== this.itemToDeleteFromMoveToCart!.product_id
+    );
+
+    // Uncheck the item in the inventory table
+    const inventoryItem = this.inventoryItems.find(
+      item => item.product_id === this.itemToDeleteFromMoveToCart!.product_id
+    );
+    if (inventoryItem) {
+      inventoryItem.isChecked = false;
+    }
+
+    // Update isAllSelected
+    this.isAllSelected = this.inventoryItems.length > 0 && 
+      this.inventoryItems.every(item => this.selectedItems.includes(item));
+
+    // Recalculate pagination
+    this.cartTotalPages = Math.ceil(this.selectedItemsForCart.length / this.cartItemsPerPage);
+    if (this.cartCurrentPage > this.cartTotalPages && this.cartTotalPages > 0) {
+      this.cartCurrentPage = this.cartTotalPages;
+    }
+
+    // Close the modal
+    this.closeMoveToCartDeleteModal();
+
+    // Show success message
     this.toast.success({
-      detail: 'Item removed from cart',
+      detail: 'Item removed from selection',
       summary: 'Success',
       duration: 3000
     });

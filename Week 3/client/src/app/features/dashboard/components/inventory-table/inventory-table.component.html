@@ -285,7 +285,7 @@
               </div>
             </td>
             <td>
-              <button class="btn btn-sm border-0" (click)="openDeleteModal(item)">
+              <button class="btn btn-sm border-0" (click)="openCartDeleteModal(item)">
                 <i class="bi bi-trash"></i>
               </button>
             </td>
@@ -383,6 +383,7 @@
             <th>Category</th>
             <th>Vendors</th>
             <th>Quantity</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -413,6 +414,11 @@
                 <button class="btn btn-outline-secondary btn-sm" 
                         (click)="increaseQuantity(item)">+</button>
               </div>
+            </td>
+            <td>
+              <button class="btn btn-sm border-0" (click)="openMoveToCartDeleteModal(item)">
+                <i class="bi bi-trash"></i>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -467,4 +473,35 @@
     
   </div>
 </div>
+
+<!--  cart delete modal  -->
+<div class="upload-modal" *ngIf="showCartDeleteModal">
+  <div class="upload-modal-content justify-content-center d-flex flex-column align-items-center" style="padding: 1.5rem; width: 30%;">
+    <i class="bi bi-exclamation-circle text-danger mb-4 text-center" style="font-size: 1.2rem; padding:0.25rem"></i>
+    <h5 class="mb-3 text-center">Delete product</h5>
+    <p class="text-muted mb-2 text-center">Are you sure you want to remove "{{ itemToDeleteFromCart?.product_name }}" from the cart? This action cannot be undone.</p>
+    
+    <!-- Buttons -->
+    <div class="d-flex justify-content-center mt-4" style="width: 100%;">
+      <button class="btn btn-light d-flex justify-content-center me-2" style="width: 50%;" (click)="closeCartDeleteModal()">Cancel</button>
+      <button class="btn btn-danger d-flex justify-content-center" style="width: 50%;" (click)="removeFromCart()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add this modal at the bottom of your file -->
+<div class="upload-modal" *ngIf="showMoveToCartDeleteModal">
+  <div class="upload-modal-content justify-content-center d-flex flex-column align-items-center" style="padding: 1.5rem; width: 30%;">
+    <i class="bi bi-exclamation-circle text-danger mb-4 text-center" style="font-size: 1.2rem; padding:0.25rem"></i>
+    <h5 class="mb-3 text-center">Remove Selection</h5>
+    <p class="text-muted mb-2 text-center">Are you sure you want to remove "{{ itemToDeleteFromMoveToCart?.product_name }}" from selection? This item will be unselected.</p>
+    
+    <!-- Buttons -->
+    <div class="d-flex justify-content-center mt-4" style="width: 100%;">
+      <button class="btn btn-light d-flex justify-content-center me-2" style="width: 50%;" (click)="closeMoveToCartDeleteModal()">Cancel</button>
+      <button class="btn btn-danger d-flex justify-content-center" style="width: 50%;" (click)="removeFromMoveToCart()">Remove</button>
+    </div>
+  </div>
+</div>
+
 
