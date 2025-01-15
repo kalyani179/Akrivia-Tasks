@@ -350,11 +350,28 @@ const bulkAddProducts = async (req, res) => {
   }
 };
 
+const updateCartProduct = async (req, res) => {
+  const {product_id, quantity_in_stock, status } = req.body;
+  try { 
+    await knex('products').where('product_id', product_id).update({
+       quantity_in_stock : quantity_in_stock,
+       status : status 
+    });
+    res.json({ message: 'Product updated successfully' });  
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Add this to your inventory controller
 const updateProduct = async (req, res) => {
   const { productId } = req.params;
   const { productName, category, vendors, quantity, unit, status } = req.body;
   const trx = await knex.transaction();
+
+  console.log(req.body);
+  console.log(productName);
 
   try {
     // Get category_id from category name
@@ -447,6 +464,7 @@ const inventoryController = {
   deleteProduct,
   bulkAddProducts,
   updateProduct,
+  updateCartProduct,
   getVendors,
   getCategories
 };

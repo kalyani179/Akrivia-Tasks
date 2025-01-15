@@ -35,6 +35,9 @@ router.post('/bulk-add', inventoryController.bulkAddProducts);
 // Add this route
 router.put('/inventory/:productId', inventoryController.updateProduct);
 
+// Add this route
+router.put('/cart/:productId', inventoryController.updateCartProduct);
+
 // Add these routes
 router.get('/vendors', inventoryController.getVendors);
 router.get('/categories', inventoryController.getCategories);

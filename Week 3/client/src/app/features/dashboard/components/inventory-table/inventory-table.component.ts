@@ -3,10 +3,12 @@ import jsPDF from 'jspdf';
 import { NgToastService } from 'ng-angular-popup';
 import { ProductService } from 'src/app/core/services/product.service';
 import * as XLSX from 'xlsx';
+import { firstValueFrom } from 'rxjs';
 
 interface InventoryItem {
   product_id: number;
   product_name: string;
+  category_id?: number;
   category: string;
   quantity_in_stock: number;
   unit_price: number;
@@ -120,6 +122,12 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   ];
   availableCategories: string[] = [];
 
+  cartItems: InventoryItem[] = [];
+  cartCurrentPage = 1;
+  cartItemsPerPage = 3;
+  selectedItemsForCart: InventoryItem[] = [];
+  cartTotalPages = 0;
+
   constructor(
     private productService: ProductService, 
     private elementRef: ElementRef,
@@ -130,6 +138,9 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     this.loadInventoryItems();
     this.loadVendorCount();
     this.loadVendorsAndCategories();
+    
+    // Load cart items from session storage
+    this.cartItems = this.getCartFromSession();
 
     // Subscribe to refresh events
     this.refreshSubscription = this.productService.refreshInventory$.subscribe(() => {
@@ -176,14 +187,16 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     return this.inventoryItems.every(item => item.isChecked);
   }
   
-  toggleAll(){
+  toggleAll(): void {
     this.showAll = true;
     this.showCart = false;
+    this.loadInventoryItems();
   }
 
-  toggleCart(){
+  toggleCart(): void {
     this.showAll = false;
     this.showCart = true;
+    this.loadCartItems();
   } 
 
   onDragOver(event: DragEvent): void {
@@ -558,17 +571,43 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   }
 
  // cart functions
-  increaseQuantity(item: any): void {
-    item.quantity_in_stock++;
+  increaseQuantity(item: InventoryItem): void {
+    if (this.showMoveToCartModal) {
+      // When in move-to-cart modal, we can only increase up to the original quantity
+      const originalItem = this.inventoryItems.find(i => i.product_id === item.product_id);
+      if (originalItem && item.quantity_in_stock < originalItem.quantity_in_stock) {
+        item.quantity_in_stock++;
+      }
+    } else {
+      // In cart view, we can increase freely
+      item.quantity_in_stock++;
+    }
   }
   
-  decreaseQuantity(item: any): void {
+  decreaseQuantity(item: InventoryItem): void {
     if (item.quantity_in_stock > 0) {
       item.quantity_in_stock--;
     }
   }
 
-  openMoveToCartModal(): void {   
+  openMoveToCartModal(): void {
+    if (!this.selectedItems || this.selectedItems.length === 0) {
+      this.toast.error({
+        detail: 'Please select items to move to cart',
+        summary: 'No Items Selected',
+        duration: 3000
+      });
+      return;
+    }
+    
+    // Create a copy of selected items with their full quantities
+    this.selectedItemsForCart = this.selectedItems.map(item => ({
+      ...item,
+      quantity_in_stock: item.quantity_in_stock // Use full quantity by default
+    }));
+
+    this.cartTotalPages = Math.ceil(this.selectedItemsForCart.length / this.cartItemsPerPage);
+    this.cartCurrentPage = 1;
     this.showMoveToCartModal = true;
   }
 
@@ -619,7 +658,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       unit: this.editForm.unit,
       status: this.editForm.status
     };
-
     this.productService.updateProduct(item.product_id.toString(), updatedProduct).subscribe({
       next: () => {
         this.toast.success({
@@ -681,5 +719,142 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     }
     // Update the vendors string
     this.editForm.vendors = this.editForm.selectedVendors.join(',');
+  }
+
+  get cartPages(): number[] {
+    const pages: number[] = [];
+    for (let i = 1; i <= this.cartTotalPages; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  onCartPageChange(page: number): void {
+    if (page >= 1 && page <= this.cartTotalPages) {
+      this.cartCurrentPage = page;
+    }
+  }
+
+  moveToCart(): void {
+    if (!this.selectedItemsForCart.length) {
+      this.toast.error({
+        detail: 'Please select items to move to cart',
+        summary: 'No Items Selected',
+        duration: 3000
+      });
+      return;
+    }
+
+    const itemsForCart = this.selectedItemsForCart.map(cartItem => {
+      const inventoryItem = this.inventoryItems.find(
+        item => item.product_id === cartItem.product_id
+      );
+      
+      if (inventoryItem) {
+        const remainingQuantity = Math.max(0, inventoryItem.quantity_in_stock - cartItem.quantity_in_stock);
+        
+        const updatePayload = {
+          product_id: cartItem.product_id,
+          quantity_in_stock: remainingQuantity,
+          status: remainingQuantity === 0 ? 2 : 1
+        };
+
+        return firstValueFrom(this.productService.updateCartProduct(cartItem.product_id.toString(), updatePayload));
+      }
+      return Promise.resolve();
+    });
+
+    Promise.all(itemsForCart)
+      .then(() => {
+        // Add items to cart and save to session storage
+        const currentCart = this.getCartFromSession();
+        this.cartItems = [
+          ...currentCart,
+          ...this.selectedItemsForCart.map(item => ({
+            ...item,
+            quantity_in_stock: item.quantity_in_stock
+          }))
+        ];
+        this.saveCartToSession(this.cartItems);
+
+        // Clear selections
+        this.selectedItems = [];
+        this.selectedItemsForCart = [];
+        this.isAllSelected = false;
+        this.showMoveToCartModal = false;
+        
+        // Refresh inventory items
+        this.loadInventoryItems();
+        
+        this.toast.success({
+          detail: 'Items moved to cart successfully',
+          summary: 'Success',
+          duration: 3000
+        });
+      })
+      .catch(error => {
+        console.error('Error updating inventory:', error);
+        this.toast.error({
+          detail: 'Error moving items to cart. Please try again.',
+          summary: 'Error',
+          duration: 3000
+        });
+      });
+  }
+
+  loadCartItems(): void {
+    this.loading = true;
+    
+    // Get cart items from session storage
+    this.cartItems = this.getCartFromSession();
+    
+    // Calculate pagination
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.inventoryItems = this.cartItems.slice(startIndex, endIndex);
+    this.totalItems = this.cartItems.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    
+    // Reset page if needed
+    if (this.currentPage > this.totalPages && this.totalPages > 0) {
+      this.currentPage = 1;
+      this.loadCartItems();
+    }
+    
+    this.loading = false;
+  }
+
+  get paginatedSelectedItems(): InventoryItem[] {
+    const startIndex = (this.cartCurrentPage - 1) * this.cartItemsPerPage;
+    const endIndex = startIndex + this.cartItemsPerPage;
+    return this.selectedItemsForCart.slice(startIndex, endIndex);
+  }
+
+  // Add this helper method to check if an item is in cart
+  isItemInCart(productId: number): boolean {
+    return this.cartItems.some(item => item.product_id === productId);
+  }
+
+  // Add these methods to handle session storage
+  private saveCartToSession(items: InventoryItem[]): void {
+    sessionStorage.setItem('cartItems', JSON.stringify(items));
+  }
+
+  private getCartFromSession(): InventoryItem[] {
+    const cartData = sessionStorage.getItem('cartItems');
+    return cartData ? JSON.parse(cartData) : [];
+  }
+
+  // Add method to remove items from cart
+  removeFromCart(item: InventoryItem): void {
+    this.cartItems = this.cartItems.filter(cartItem => cartItem.product_id !== item.product_id);
+    this.saveCartToSession(this.cartItems);
+    this.loadCartItems();
+    
+    this.toast.success({
+      detail: 'Item removed from cart',
+      summary: 'Success',
+      duration: 3000
+    });
   }
 }

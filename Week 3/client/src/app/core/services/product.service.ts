@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -85,8 +86,23 @@ export class ProductService {
     return this.http.post(`${this.apiUrl}/bulk-add`, { products });
   }
 
-  updateProduct(productId: string, productData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/inventory/${productId}`, productData);
+  updateCartProduct(id: string, payload: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/cart/${id}`, payload);
+  }
+
+  updateProduct(id: string, payload: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/inventory/${id}`, payload)
+      .pipe(
+        catchError(error => {
+          console.error('Error updating product:', error);
+          if (error.status === 0) {
+            throw new Error('Unable to connect to the server. Please check your connection.');
+          } else if (error.status === 500) {
+            throw new Error(error.error?.message || 'Server error occurred');
+          }
+          throw error.error?.message || error.message || 'Unknown error occurred';
+        })
+      );
   }
 
   getVendors(): Observable<any[]> {
