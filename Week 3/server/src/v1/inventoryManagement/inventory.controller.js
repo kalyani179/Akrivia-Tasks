@@ -350,6 +350,93 @@ const bulkAddProducts = async (req, res) => {
   }
 };
 
+// Add this to your inventory controller
+const updateProduct = async (req, res) => {
+  const { productId } = req.params;
+  const { productName, category, vendors, quantity, unit, status } = req.body;
+  const trx = await knex.transaction();
+
+  try {
+    // Get category_id from category name
+    const [categoryResult] = await trx('categories')
+      .select('category_id')
+      .where('category_name', category);
+
+    if (!categoryResult) {
+      throw new Error('Invalid category');
+    }
+
+    // Update products table
+    await trx('products')
+      .where('product_id', productId)
+      .update({
+        product_name: productName,
+        category_id: categoryResult.category_id,
+        quantity_in_stock: quantity,
+        unit: unit,
+        status: status === 'Active' ? 1 : status === 'Inactive' ? 2 : 0,
+        updated_at: new Date()
+      });
+
+    // Update product_to_vendor relationships
+    await trx('product_to_vendor')
+      .where('product_id', productId)
+      .del();
+
+    const vendorIds = await trx('vendors')
+      .select('vendor_id')
+      .whereIn('vendor_name', vendors);
+
+    const productVendorRecords = vendorIds.map(({ vendor_id }) => ({
+      product_id: productId,
+      vendor_id: vendor_id,
+      created_at: new Date(),
+      updated_at: new Date()
+    }));
+
+    await trx('product_to_vendor').insert(productVendorRecords);
+
+    await trx.commit();
+
+    res.json({
+      success: true,
+      message: 'Product updated successfully'
+    });
+  } catch (error) {
+    await trx.rollback();
+    console.error('Error updating product:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// Add these methods to your controller
+const getVendors = async (req, res) => {
+  try {
+    const vendors = await knex('vendors')
+      .select('vendor_id', 'vendor_name')
+      .where('status', '!=', 99);
+    res.json(vendors);
+  } catch (error) {
+    console.error('Error fetching vendors:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const getCategories = async (req, res) => {
+  try {
+    const categories = await knex('categories')
+      .select('category_id', 'category_name')
+      .where('status', '!=', 99);
+    res.json(categories);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 // Export all functions
 const inventoryController = {
   generatePresignedUrl,
@@ -358,7 +445,10 @@ const inventoryController = {
   getVendorCount,
   getAllInventory,
   deleteProduct,
-  bulkAddProducts
+  bulkAddProducts,
+  updateProduct,
+  getVendors,
+  getCategories
 };
 
 module.exports = inventoryController;

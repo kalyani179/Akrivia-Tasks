@@ -309,3 +309,110 @@
 .text-purple {
   color: #6c5ce7;
 }
+
+// Add these styles
+select[multiple] {
+  padding: 0.25rem;
+  
+  option {
+    padding: 0.25rem 0.5rem;
+    margin: 2px 0;
+    border-radius: 4px;
+    
+    &:checked {
+      background-color: #0d6efd;
+      color: white;
+    }
+    
+    &:hover {
+      background-color: #e9ecef;
+    }
+  }
+}
+
+.vendor-select {
+  &.form-select {
+    padding: 0.25rem;
+    
+    option {
+      padding: 0.5rem;
+      margin: 2px 0;
+      border-radius: 4px;
+      cursor: pointer;
+      
+      &:checked {
+        background: #8054dc linear-gradient(0deg, #8054dc 0%, #8054dc 100%);
+        color: white;
+      }
+      
+      &:hover:not(:checked) {
+        background-color: #f8f9fa;
+      }
+    }
+  }
+}
+
+.text-muted {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.dropdown {
+  .dropdown-toggle {
+    text-align: left;
+    position: relative;
+    padding-right: 30px;
+    
+    &::after {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  
+  .dropdown-menu {
+    padding: 8px 0;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 4px 0;
+  
+  &:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .form-check-input {
+    margin-right: 8px;
+    
+    &:checked {
+      background-color: #8054dc;
+      border-color: #8054dc;
+    }
+  }
+  
+  .form-check-label {
+    cursor: pointer;
+    color: #374151;
+    font-size: 14px;
+  }
+}
+
+.selected-vendors {
+  min-height: 28px;
+  
+  .badge {
+    font-size: 12px;
+    padding: 4px 8px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    background: #f3f4f6;
+    color: #4b5563;
+  }
+}

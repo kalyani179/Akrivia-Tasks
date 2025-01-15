@@ -14,6 +14,7 @@ import { FileUploadComponent } from './features/dashboard/components/file-upload
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AddProductComponent } from './features/dashboard/components/inventory-table/components/add-products/add-product.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AddProductComponent } from './features/dashboard/components/inventory-t
     FormsModule,
     ReactiveFormsModule,
     NgToastModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

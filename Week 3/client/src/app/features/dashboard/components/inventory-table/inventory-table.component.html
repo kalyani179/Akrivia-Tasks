@@ -106,26 +106,112 @@
               <div class="d-flex align-items-center">
                 <img *ngIf="item.product_image" [src]="item.product_image" 
                      class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;">
-                {{item.product_name}}
+                <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayName">
+                  <input type="text" class="form-control form-control-sm" 
+                         [(ngModel)]="editForm.product_name">
+                </ng-container>
+                <ng-template #displayName>
+                  {{item.product_name}}
+                </ng-template>
               </div>
             </td>
             <td>
-              <span class="badge" [ngClass]="{'bg-success': item.quantity_in_stock > 0, 'bg-danger': item.quantity_in_stock <= 0 }">
-                {{item.quantity_in_stock > 0 ? 'Available' : 'Sold Out'}}
-              </span>              
+              <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayStatus">
+                <select class="form-select form-select-sm" [(ngModel)]="editForm.status">
+                  <option value="Active">Available</option>
+                  <option value="Inactive">Sold Out</option>
+                </select>
+              </ng-container>
+              <ng-template #displayStatus>
+                <span class="badge" [ngClass]="{'bg-success': item.quantity_in_stock > 0, 'bg-danger': item.quantity_in_stock <= 0 }">
+                  {{item.quantity_in_stock > 0 ? 'Available' : 'Sold Out'}}
+                </span>
+              </ng-template>
             </td>
-            <td>{{item.category}}</td>
             <td>
-              <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
-                {{vendor}}
-              </span>
+              <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayCategory">
+                <select class="form-select form-select-sm" 
+                        [(ngModel)]="editForm.category">
+                  <option value="">Select Category</option>
+                  <option *ngFor="let category of availableCategories" 
+                          [value]="category">
+                    {{category}}
+                  </option>
+                </select>
+              </ng-container>
+              <ng-template #displayCategory>
+                {{item.category}}
+              </ng-template>
             </td>
-            <td>{{item.quantity_in_stock}}</td>
-            <td>{{item.unit}}</td>
             <td>
-              <button class="btn btn-sm border-0" (click)="downloadField(item)"><i class="bi bi-download"></i></button>
-              <button class="btn btn-sm border-0" (click)="openDeleteModal(item)"><i class="bi bi-trash"></i></button>
-              <button class="btn btn-sm border-0"><i class="bi bi-pencil"></i></button>
+              <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayVendors">
+                <div class="dropdown" ngbDropdown>
+                  <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-100" 
+                          type="button" 
+                          id="vendorDropdown" 
+                          ngbDropdownToggle>
+                    Select Vendors
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="vendorDropdown" class="w-100">
+                    <div *ngFor="let vendor of availableVendors" class="px-3 py-1">
+                      <div class="form-check">
+                        <input class="form-check-input" 
+                               type="checkbox" 
+                               [id]="'vendor-' + vendor"
+                               [checked]="editForm.selectedVendors.includes(vendor)"
+                               (change)="toggleVendor(vendor)">
+                        <label class="form-check-label" [for]="'vendor-' + vendor">
+                          {{ vendor }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #displayVendors>
+                <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
+                  {{vendor}}
+                </span>
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayQuantity">
+                <input type="number" class="form-control form-control-sm" 
+                       [(ngModel)]="editForm.quantity_in_stock">
+              </ng-container>
+              <ng-template #displayQuantity>
+                {{item.quantity_in_stock}}
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayUnit">
+                <input type="text" class="form-control form-control-sm" 
+                       [(ngModel)]="editForm.unit">
+              </ng-container>
+              <ng-template #displayUnit>
+                {{item.unit}}
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayActions">
+                <button class="btn btn-sm border-0 text-success" (click)="saveEdit(item)">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+                <button class="btn btn-sm border-0 text-danger" (click)="cancelEdit()">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+              </ng-container>
+              <ng-template #displayActions>
+                <button class="btn btn-sm border-0" (click)="downloadField(item)">
+                  <i class="bi bi-download"></i>
+                </button>
+                <button class="btn btn-sm border-0" (click)="openDeleteModal(item)">
+                  <i class="bi bi-trash"></i>
+                </button>
+                <button class="btn btn-sm border-0" (click)="startEditing(item)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+              </ng-template>
             </td>
           </tr>
         </tbody>

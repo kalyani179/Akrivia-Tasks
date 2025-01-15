@@ -84,4 +84,16 @@ export class ProductService {
   bulkAddProducts(products: any[]): Observable<any> {
     return this.http.post(`${this.apiUrl}/bulk-add`, { products });
   }
+
+  updateProduct(productId: string, productData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/inventory/${productId}`, productData);
+  }
+
+  getVendors(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/vendors`);
+  }
+
+  getCategories(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/categories`);
+  }
 }

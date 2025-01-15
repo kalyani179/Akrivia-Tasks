@@ -46,6 +46,16 @@ interface ExcelProduct {
   'status'?: string;
 }
 
+interface EditForm {
+  product_name: string;
+  category: string;
+  vendors: string;
+  selectedVendors: string[];
+  quantity_in_stock: number;
+  unit: string;
+  status: string;
+}
+
 @Component({
   selector: 'app-inventory-table',
   templateUrl: './inventory-table.component.html',
@@ -90,6 +100,26 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
 
   refreshSubscription: any;
   selectedItems: InventoryItem[] = [];
+  editingItem: InventoryItem | null = null;
+  editForm: EditForm = {
+    product_name: '',
+    category: '',
+    vendors: '',
+    selectedVendors: [],
+    quantity_in_stock: 0,
+    unit: '',
+    status: ''
+  };
+
+  availableVendors: string[] = [
+    'Zepto',
+    'Blinkit',
+    'Fresh Meat',
+    'Swiggy',
+    'Dunzo',
+    'Big Basket'
+  ];
+  availableCategories: string[] = [];
 
   constructor(
     private productService: ProductService, 
@@ -100,6 +130,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadInventoryItems();
     this.loadVendorCount();
+    this.loadVendorsAndCategories();
 
     // Subscribe to refresh events
     this.refreshSubscription = this.productService.refreshInventory$.subscribe(() => {
@@ -568,5 +599,92 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     if (this.inventoryItems) {
       this.isAllSelected = this.inventoryItems.every(item => item.isChecked);
     }
+  }
+
+  startEditing(item: InventoryItem): void {
+    this.editingItem = item;
+    this.editForm = {
+      product_name: item.product_name,
+      category: item.category,
+      vendors: item.vendors.join(','),
+      selectedVendors: [...item.vendors],
+      quantity_in_stock: item.quantity_in_stock,
+      unit: item.unit,
+      status: item.status
+    };
+  }
+
+  saveEdit(item: InventoryItem): void {
+    const updatedProduct = {
+      ...item,
+      product_name: this.editForm.product_name,
+      category: this.editForm.category,
+      vendors: this.editForm.selectedVendors,
+      quantity_in_stock: Number(this.editForm.quantity_in_stock),
+      unit: this.editForm.unit,
+      status: this.editForm.status
+    };
+
+    this.productService.updateProduct(item.product_id.toString(), updatedProduct).subscribe({
+      next: () => {
+        this.toast.success({
+          detail: 'Product updated successfully',
+          summary: 'Success',
+          duration: 3000
+        });
+        this.loadInventoryItems();
+        this.editingItem = null;
+      },
+      error: (error) => {
+        this.toast.error({
+          detail: 'Failed to update product',
+          summary: 'Error',
+          duration: 3000
+        });
+      }
+    });
+  }
+
+  cancelEdit(): void {
+    this.editingItem = null;
+    this.editForm = {
+      product_name: '',
+      category: '',
+      vendors: '',
+      selectedVendors: [],
+      quantity_in_stock: 0,
+      unit: '',
+      status: ''
+    };
+  }
+
+  loadVendorsAndCategories(): void {
+    this.productService.getCategories().subscribe({
+      next: (categories) => {
+        this.availableCategories = categories.map(c => c.category_name);
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+      }
+    });
+  }
+
+  onVendorsChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const selectedVendors = Array.from(select.selectedOptions).map(option => option.value);
+    this.editForm.vendors = selectedVendors.join(',');
+  }
+
+  toggleVendor(vendor: string): void {
+    const index = this.editForm.selectedVendors.indexOf(vendor);
+    if (index === -1) {
+      // Add vendor if not selected
+      this.editForm.selectedVendors.push(vendor);
+    } else {
+      // Remove vendor if already selected
+      this.editForm.selectedVendors.splice(index, 1);
+    }
+    // Update the vendors string
+    this.editForm.vendors = this.editForm.selectedVendors.join(',');
   }
 }
