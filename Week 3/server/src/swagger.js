@@ -5,9 +5,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Task 3',
+      title: 'Inventory Management System',
       version: '1.0.0',
-      description: 'Product Inventory Routes',
+      description: 'Inventory Management System Routes',
     },
     servers: [
       {
