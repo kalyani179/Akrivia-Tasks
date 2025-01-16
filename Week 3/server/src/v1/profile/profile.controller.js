@@ -1,7 +1,8 @@
 const { s3Client } = require('../../aws/s3/s3');
-const { PutObjectCommand } = require('@aws-sdk/client-s3');
+const { PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const knex = require('../../mysql/knex');
+const sharp = require('sharp');
 
 const getProfile = async (req, res) => {
   try {
@@ -43,33 +44,88 @@ const saveFileMetadata = async (req, res) => {
   try {
     const { fileName, fileUrl } = req.body;
     const userId = req.user.userId;
+    
+    // Extract key from S3 URL more reliably
+    const bucketUrlPrefix = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/`;
+    const key = decodeURIComponent(fileUrl.replace(bucketUrlPrefix, ''));
 
-    // Update the user's profile_pic and thumbnail in the users table
-    await knex('users')
-      .where({ user_id: userId })
-      .update({
-        profile_pic: fileUrl,
-        thumbnail: fileUrl, // Using same URL for thumbnail for now
-        updated_at: knex.fn.now()
+    // Get the original image from S3
+    const getCommand = new GetObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: key
+    });
+    
+    try {
+      const originalImage = await s3Client.send(getCommand);
+      const imageBuffer = await streamToBuffer(originalImage.Body);
+
+      // Create thumbnail using Sharp
+      const thumbnailBuffer = await sharp(imageBuffer)
+        .resize(60, 60, {
+          fit: 'cover',
+          position: 'center'
+        })
+        .toBuffer();
+
+      // Upload thumbnail to S3
+      const thumbnailKey = `${userId}/thumbnails/${Date.now()}_thumb_${fileName}`;
+      const uploadCommand = new PutObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: thumbnailKey,
+        Body: thumbnailBuffer,
+        ContentType: 'image/jpeg'
       });
 
-    // Fetch the updated user data
-    const updatedUser = await knex('users')
-      .select('user_id', 'profile_pic', 'thumbnail')
-      .where({ user_id: userId })
-      .first();
+      await s3Client.send(uploadCommand);
+      const thumbnailUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${thumbnailKey}`;
 
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
+      // Update user record with both URLs
+      await knex('users')
+        .where({ user_id: userId })
+        .update({
+          profile_pic: fileUrl,
+          thumbnail: thumbnailUrl,
+          updated_at: knex.fn.now()
+        });
+
+      const updatedUser = await knex('users')
+        .select('user_id', 'profile_pic', 'thumbnail')
+        .where({ user_id: userId })
+        .first();
+
+      res.status(200).json(updatedUser);
+    } catch (s3Error) {
+      console.error('Error processing image:', s3Error);
+      // If S3 operations fail, still update the user with original URL
+      await knex('users')
+        .where({ user_id: userId })
+        .update({
+          profile_pic: fileUrl,
+          thumbnail: fileUrl, // Use original as thumbnail if processing fails
+          updated_at: knex.fn.now()
+        });
+
+      const updatedUser = await knex('users')
+        .select('user_id', 'profile_pic', 'thumbnail')
+        .where({ user_id: userId })
+        .first();
+
+      res.status(200).json(updatedUser);
     }
-    console.log(updatedUser);
-    res.status(200).json(updatedUser);
   } catch (err) {
     console.error('Error saving profile picture:', err);
     res.status(500).json({ message: err.message });
   }
 };
 
+// Helper function to convert stream to buffer
+const streamToBuffer = async (stream) => {
+  const chunks = [];
+  for await (const chunk of stream) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+};
 
 module.exports = {
   getProfile,

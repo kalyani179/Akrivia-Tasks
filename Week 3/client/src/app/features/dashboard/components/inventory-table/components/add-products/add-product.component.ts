@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { ProductService } from '../../../../../../core/services/product.service';
 import { HttpClient } from '@angular/common/http';
@@ -10,38 +10,36 @@ import { HttpHeaders } from '@angular/common/http';
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
+
 export class AddProductComponent {
   @Input() showModal = false;
   @Output() modalClosed = new EventEmitter<void>();
   @Output() productAdded = new EventEmitter<any>();
 
-  productForm: FormGroup;
   selectedFile: File | null = null;
   isDragging = false;
   isSubmitting = false;
   selectedVendors: string[] = [];
   previewUrl: string | null = null;
 
-  // Mock data - replace with actual data from your service
   categories = ['Product Designer', 'Product Manager', 'Frontend Developer', 'Backend Developer'];
   vendors = ['Swiggy','Zepto','Fresh Meat','Blinkit'];
   statuses = ['Created','Active', 'Inactive', 'Deleted'];
 
   constructor(
-    private fb: FormBuilder,
     private toast: NgToastService,
     private productService: ProductService,
     private http: HttpClient
-  ) {
-    this.productForm = this.fb.group({
-      productName: ['', Validators.required],
-      category: ['', Validators.required],
-      vendors: [[], Validators.required],
-      quantity: ['', [Validators.required, Validators.min(0)]],
-      unit: ['', Validators.required],
-      status: ['', Validators.required]
-    });
-  }
+  ) {}
+
+  productForm = new FormGroup({
+    productName: new FormControl('', Validators.required),
+    category: new FormControl('', Validators.required),
+    vendors: new FormControl<string[]>([], Validators.required),
+    quantity: new FormControl('', [Validators.required, Validators.min(0)]),
+    unit: new FormControl('', Validators.required),
+    status: new FormControl('', Validators.required)
+  });
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -91,7 +89,7 @@ export class AddProductComponent {
   }
 
   toggleVendor(vendor: string): void {
-    const currentVendors = this.productForm.get('vendors')?.value || [];
+    const currentVendors = [...(this.productForm.get('vendors')?.value || [])];
     const index = currentVendors.indexOf(vendor);
     
     if (index === -1) {
