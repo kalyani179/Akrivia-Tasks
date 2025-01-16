@@ -17,4 +17,8 @@ export class ProfileService {
   generatePresignedUrl(fileName: string, fileType: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/generate-presigned-url`, { fileName, fileType });
   }
+
+  saveFileMetadata(body: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/save-file-metadata`, body);
+  }
 }

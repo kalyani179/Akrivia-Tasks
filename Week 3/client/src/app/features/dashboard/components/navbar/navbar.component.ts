@@ -2,7 +2,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { ProfileService } from 'src/app/core/services/profile.service';
+
+interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
+  username: string;
+  thumbnail: string;
+}
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +19,7 @@ import { ProfileService } from 'src/app/core/services/profile.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  user = {
+  user: User = {
     firstname: '',
     lastname: '',
     email: '',
@@ -24,11 +33,12 @@ export class NavbarComponent implements OnInit {
   imageLoading = false;
 
   constructor(
-    private profileService: ProfileService,
     private router: Router,
     private elementRef: ElementRef,
     private http: HttpClient,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private authService: AuthService,
+    private profileService: ProfileService,
   ) {}
 
   ngOnInit(): void {
@@ -40,8 +50,8 @@ export class NavbarComponent implements OnInit {
     this.profileService.getProfile().subscribe({
       next: (response) => {
         this.user = response;
-        console.log(response);
-          this.imageLoading = false;
+        // console.log(response);
+        this.imageLoading = false;
       },
       error: (error) => {
         this.imageLoading = false;
@@ -65,22 +75,8 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleDropdown(event: Event): void {
-    event.stopPropagation();
+    event.stopPropagation(); // prevent other event listeners from being triggered
     this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
-  onImageLoad(): void {
-    this.imageLoading = false;
-  }
-
-  onImageError(): void {
-    this.imageLoading = false;
-    this.user.thumbnail = '';
-    this.toast.error({
-      detail: 'Error',
-      summary: 'Failed to load profile picture',
-      duration: 3000
-    });
   }
 
   onFileSelected(event: Event): void {
@@ -149,7 +145,7 @@ export class NavbarComponent implements OnInit {
 
   saveFileMetadata(fileName: string, fileUrl: string): void {
     const body = { fileName, fileUrl };
-    this.http.post(`http://localhost:3000/api/profile/save-file-metadata`, body).subscribe({
+    this.profileService.saveFileMetadata(body).subscribe({
       next: (response: any) => {
         this.user.thumbnail = response.thumbnail;
         this.imageLoading = false;
@@ -183,8 +179,8 @@ export class NavbarComponent implements OnInit {
   }
 
   onDragOver(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
+    event.preventDefault(); //  Prevents the default behavior, which is to open the file being dragged
+    event.stopPropagation(); // Stops the event from propagating further, which prevents any parent event listeners from being triggered.
     this.isDragging = true;
   }
 
@@ -204,11 +200,6 @@ export class NavbarComponent implements OnInit {
       this.selectedFile = files[0];
       this.uploadFile();
     }
-  }
-
-  logout(): void {
-    localStorage.removeItem('accessToken');
-    this.router.navigate(['/login']);
   }
 
   getDefaultProfileImage(): string {
@@ -255,5 +246,10 @@ export class NavbarComponent implements OnInit {
       hash = hash & hash; // Convert to 32-bit integer
     }
     return hash;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

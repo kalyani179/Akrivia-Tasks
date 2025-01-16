@@ -2,7 +2,6 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { FileService } from 'src/app/core/services/file.service';
 
-
 interface UploadedFile {
   name: string;
   size: string;
@@ -70,6 +69,22 @@ export class FileUploadComponent implements OnInit {
       // Add more as needed
     };
     return mimeTypes[extension] || 'application/octet-stream';
+  }
+
+  getFileIcon(fileType: string): string {
+    if (fileType.includes('image')) return 'bi-image text-purple';
+    if (fileType.includes('video')) return 'bi-camera-video text-purple';
+    if (fileType.includes('pdf')) return 'bi-file-pdf text-purple';
+    if (fileType.includes('word')) return 'bi-file-word text-purple';
+    return 'bi-file-text text-secondary';
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
   }
 
   uploadFile(): void {
@@ -148,25 +163,27 @@ export class FileUploadComponent implements OnInit {
 
       this.isDownloading = true;
       
-      this.fileService.downloadFiles(fileNames)
-        .then(() => {
+      this.fileService.downloadFiles(fileNames).subscribe({
+        next: () => {
           this.toast.success({
             detail: 'Success',
             summary: fileNames!.length === 1 ? 'File downloaded successfully' : 'Files downloaded as zip',
             duration: 1000
           });
-        })
-        .catch(err => {
+        },
+        error: (err: Error) => {
           this.toast.error({
             detail: 'Download failed',
             summary: 'Error downloading files.',
             duration: 1000
           });
           console.error('Download failed:', err);
-        })
-        .finally(() => {
+        },
+        complete: () => {
           this.isDownloading = false;
-        });
+        }
+      });
+ 
     } catch (error) {
       this.isDownloading = false;
       console.error('Download failed:', error);
@@ -189,22 +206,6 @@ export class FileUploadComponent implements OnInit {
 
   downloadSelectedFiles(): void {
     this.downloadFiles();
-  }
-
-  getFileIcon(fileType: string): string {
-    if (fileType.includes('image')) return 'bi-image text-purple';
-    if (fileType.includes('video')) return 'bi-camera-video text-purple';
-    if (fileType.includes('pdf')) return 'bi-file-pdf text-purple';
-    if (fileType.includes('word')) return 'bi-file-word text-purple';
-    return 'bi-file-text text-secondary';
-  }
-
-  formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
   }
 
   triggerFileInput(): void {

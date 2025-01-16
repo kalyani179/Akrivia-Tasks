@@ -1,4 +1,3 @@
-const profileService = require('./profile.service');
 const { s3Client } = require('../../aws/s3/s3');
 const { PutObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
@@ -7,7 +6,13 @@ const knex = require('../../mysql/knex');
 const getProfile = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const profile = await profileService.getProfile(userId);
+    const profile = await knex('users')
+    .select('firstname','lastname','username', 'email', 'thumbnail')
+    .where('user_id', userId)
+    .first();
+    if (!profile) {
+      throw new Error('User not found');
+    }
     res.status(200).json(profile);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -17,11 +22,11 @@ const getProfile = async (req, res) => {
 const generatePresignedUrl = async (req, res) => {
   try {
     const { fileName, fileType } = req.body;
-    const userId = req.user.userId; // Assuming you have user authentication and user ID is available in req.user
+    const userId = req.user.userId; 
 
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: `${userId}/${Date.now()}_${fileName}`, // Unique file name with user ID
+      Key: `${userId}/${Date.now()}_${fileName}`,
       ContentType: fileType
     };
 

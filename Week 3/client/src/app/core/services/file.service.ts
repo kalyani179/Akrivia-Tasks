@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, from } from 'rxjs';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
@@ -12,17 +12,11 @@ export class FileService {
 
   constructor(private http: HttpClient) {}
 
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  }
-
   generatePresignedUrl(fileName: string, fileType: string): Observable<any> {
-    const headers = this.getAuthHeaders();
     return this.http.post<any>(`${this.apiUrl}/generate-upload-url`, {
       fileName,
       fileType
-    }, { headers });
+    });
   }
 
   uploadToS3(uploadUrl: string, file: File): Observable<any> {
@@ -33,42 +27,43 @@ export class FileService {
     return this.http.put(uploadUrl, file, { headers });
   }
 
-  async downloadFiles(fileNames: string[]): Promise<void> {
-    const headers = this.getAuthHeaders();
-    
-    try {
-      const response = await this.http.post<any>(
-        `${this.apiUrl}/download`, 
-        { fileNames }, 
-        { headers }
-      ).toPromise();
-
-      if (fileNames.length === 1) {
-        // Single file download
-        const fileResponse = await fetch(response.downloadUrl);
-        const blob = await fileResponse.blob();
-        saveAs(blob, fileNames[0]); // Use the original filename
-      } else {
-        // Multiple files - create zip
+  downloadFiles(fileNames: string[]): Observable<void> {
+    return this.http.post<any>(`${this.apiUrl}/download`, { fileNames }).pipe(
+      switchMap(response => {
+        if (fileNames.length === 1) {
+          const headers = new HttpHeaders().set('Skip-Auth', 'true');
+          return this.http.get(response.downloadUrl, { 
+            responseType: 'blob',
+            headers 
+          }).pipe(
+            switchMap(blob => {
+              saveAs(blob, fileNames[0]);
+              return from(Promise.resolve());
+            })
+          );
+        }
         const zip = new JSZip();
-        const downloadPromises = response.downloadUrls.map(async (item: { fileName: string, downloadUrl: string }) => {
-          const fileResponse = await fetch(item.downloadUrl);
-          const blob = await fileResponse.blob();
-          zip.file(item.fileName, blob);
-        });
-
-        await Promise.all(downloadPromises);
-        const content = await zip.generateAsync({ type: 'blob' });
-        saveAs(content, 'downloaded_files.zip');
-      }
-    } catch (error) {
-      console.error('Download failed:', error);
-      throw error;
-    }
+        const headers = new HttpHeaders().set('Skip-Auth', 'true');
+        const downloadObservables = response.downloadUrls.map((item: { fileName: string, downloadUrl: string }) =>
+          this.http.get(item.downloadUrl, { responseType: 'blob', headers }).pipe(
+            switchMap(blob => {
+              zip.file(item.fileName, blob);
+              return from(Promise.resolve());
+            })
+          )
+        );
+        return from(Promise.all(downloadObservables)).pipe(
+          switchMap(() => from(zip.generateAsync({ type: 'blob' }))),
+          switchMap(content => {
+            saveAs(content, 'downloaded_files.zip');
+            return from(Promise.resolve());
+          })
+        );
+      })
+    );
   }
 
   getAllFiles(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/list`, { headers });
+    return this.http.get(`${this.apiUrl}/list`);
   }
 }
