@@ -8,28 +8,68 @@ dotenv.config({ path: '../../.env' });
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const generateUsername = async (firstname, lastname) => {
-    let baseUsername = `${firstname.toLowerCase()}${lastname.toLowerCase()}`;
-    let username = baseUsername;
-    let counter = 1;
-  
-    try {
-      // Check if the username is unique
-      while (true) {
-        const existingUser = await knex('users').where({ username }).first();
-        
-        if (!existingUser) {
-          break; 
-        }
-  
-        // Append a counter to make it unique
-        username = `${baseUsername}${counter}`;
-        counter++;
+  try {
+    // Clean and normalize the input
+    firstname = firstname.toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+    lastname = lastname.toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+
+    // Different username patterns to try
+    const patterns = [
+      // Pattern 1: firstnamelastname
+      `${firstname}${lastname}`,
+      // Pattern 2: firstname.lastname
+      `${firstname}.${lastname}`,
+      // Pattern 3: firstnameL
+      `${firstname}${lastname.charAt(0)}`,
+      // Pattern 4: first4last4
+      `${firstname.slice(0, 4)}${lastname.slice(0, 4)}`,
+      // Pattern 5: flastname (first letter + lastname)
+      `${firstname.charAt(0)}${lastname}`
+    ];
+
+    // Try each pattern first without numbers
+    for (const pattern of patterns) {
+      const exists = await knex('users').where({ username: pattern }).first();
+      if (!exists) {
+        return pattern;
       }
-  
-      return username;
-    } catch (err) {
-      throw new Error('Internal server error');
     }
+
+    // If all patterns are taken, try with random numbers
+    const randomPattern = patterns[0]; // Use first pattern as base
+    let username;
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    while (attempts < maxAttempts) {
+      // Generate a random 4-digit number
+      const randomNum = Math.floor(1000 + Math.random() * 9000);
+      username = `${randomPattern}${randomNum}`;
+      
+      const exists = await knex('users').where({ username }).first();
+      if (!exists) {
+        return username;
+      }
+      
+      attempts++;
+    }
+
+    // If still no unique username, use timestamp
+    const timestamp = Date.now().toString().slice(-4);
+    username = `${randomPattern}${timestamp}`;
+    
+    // Final check
+    const finalExists = await knex('users').where({ username }).first();
+    if (finalExists) {
+      // Last resort: Add full timestamp
+      username = `${randomPattern}${Date.now()}`;
+    }
+
+    return username;
+  } catch (err) {
+    console.error('Error generating username:', err);
+    throw new Error('Failed to generate username');
+  }
 };
   
 const signup = async (req, res) => {

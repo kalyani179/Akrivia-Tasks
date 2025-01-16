@@ -129,3 +129,18 @@ img.rounded-circle {
     height: 1.5rem;
   }
 }
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
+}
+
+.profile-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}

@@ -210,4 +210,50 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('accessToken');
     this.router.navigate(['/login']);
   }
+
+  getDefaultProfileImage(): string {
+    if (!this.user.thumbnail) {
+      // Create initials from first and last name
+      const initials = (this.user.firstname.charAt(0) + this.user.lastname.charAt(0)).toUpperCase();
+      
+      // Generate a random pastel color based on the username
+      const hue = Math.abs(this.hashCode(this.user.username)) % 360;
+      const backgroundColor = `hsl(${hue}, 70%, 85%)`; // Pastel color
+      const textColor = '#000000'; // Black text
+      
+      // Create a canvas to generate the image
+      const canvas = document.createElement('canvas');
+      const size = 128; // Size of the image
+      canvas.width = size;
+      canvas.height = size;
+      
+      const context = canvas.getContext('2d');
+      if (context) {
+        // Draw background
+        context.fillStyle = backgroundColor;
+        context.fillRect(0, 0, size, size);
+        
+        // Draw text
+        context.fillStyle = textColor;
+        context.font = 'bold 64px Arial';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(initials, size/2, size/2);
+        
+        // Convert to base64 image
+        return canvas.toDataURL('image/png');
+      }
+    }
+    return '';
+  }
+
+  private hashCode(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return hash;
+  }
 }

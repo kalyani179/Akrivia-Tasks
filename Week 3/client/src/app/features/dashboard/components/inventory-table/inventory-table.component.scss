@@ -249,6 +249,52 @@
   }
 }
 
+
+.actions-cell {
+  width: 150px; // Fixed width for consistency
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px !important;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; // Space between buttons
+  
+  .btn {
+    padding: 4px 8px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: #f8f9fa;
+      border-radius: 4px;
+    }
+    
+    i {
+      font-size: 16px; // Consistent icon size
+    }
+    
+    &.text-success:hover {
+      background-color: #d4edda;
+    }
+    
+    &.text-danger:hover {
+      background-color: #f8d7da;
+    }
+  }
+}
+
+// Ensure table cell content is always centered vertically
+td {
+  vertical-align: middle !important;
+}
+
 // Pagination styles
 .pagination-numbers {
   display: flex;

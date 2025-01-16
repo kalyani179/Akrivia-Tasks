@@ -204,27 +204,32 @@
                 {{item.unit}}
               </ng-template>
             </td>
-            <td>
-              <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayActions">
-                <button class="btn border-0 text-success" (click)="saveEdit(item)">
-                  <i class="bi bi-check-lg" style="font-size: 22px;"></i>
-                </button>
-                <button class="btn btn-sm border-0 text-danger" (click)="cancelEdit()">
-                  <i class="bi bi-x-lg"></i>
-                </button>
-              </ng-container>
-              <ng-template #displayActions>
-                <button class="btn btn-sm border-0" (click)="downloadField(item)">
-                  <i class="bi bi-download"></i>
-                </button>
-                <button class="btn btn-sm border-0" (click)="openDeleteModal(item)">
-                  <i class="bi bi-trash"></i>
-                </button>
-                <button class="btn btn-sm border-0" (click)="startEditing(item)">
-                  <i class="bi bi-pencil"></i>
-                </button>
-              </ng-template>
-            </td>
+            <!-- Replace the existing buttons code with this -->
+<td class="actions-cell">
+  <ng-container *ngIf="editingItem === item; else displayActions">
+    <div class="action-buttons">
+      <button class="btn border-0 text-success" (click)="saveEdit(item)">
+        <i class="bi bi-check-lg" style="font-size: 22px;"></i>
+      </button>
+      <button class="btn btn-sm border-0 text-danger" (click)="cancelEdit()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  </ng-container>
+  <ng-template #displayActions>
+    <div class="action-buttons">
+      <button class="btn btn-sm border-0" (click)="downloadField(item)">
+        <i class="bi bi-download"></i>
+      </button>
+      <button class="btn btn-sm border-0" (click)="openDeleteModal(item)">
+        <i class="bi bi-trash"></i>
+      </button>
+      <button class="btn btn-sm border-0" (click)="startEditing(item)">
+        <i class="bi bi-pencil"></i>
+      </button>
+    </div>
+  </ng-template>
+</td>
           </tr>
         </tbody>
       </table>
