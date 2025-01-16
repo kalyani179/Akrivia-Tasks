@@ -14,10 +14,10 @@ import { CanComponentDeactivate } from 'src/app/core/guards/unsaved-changes.guar
 
 export class SignupComponent implements OnInit,CanComponentDeactivate {
 
-  signupForm!: FormGroup;
+  signupForm !: FormGroup;
   isSubmitted = false;
 
-  constructor(private toast: NgToastService, private router: Router, private authService:AuthService, private http: HttpClient) { }
+  constructor(private toast: NgToastService, private router: Router, private authService:AuthService) { }
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({

@@ -3,7 +3,7 @@ import jsPDF from 'jspdf';
 import { NgToastService } from 'ng-angular-popup';
 import { ProductService } from 'src/app/core/services/product.service';
 import * as XLSX from 'xlsx';
-import { firstValueFrom } from 'rxjs';
+import { debounceTime, distinctUntilChanged, firstValueFrom, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface InventoryItem {
@@ -136,6 +136,9 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   showMoveToCartDeleteModal = false;
   itemToDeleteFromMoveToCart: InventoryItem | null = null;
 
+  private searchSubject = new Subject<string>();
+  private searchSubscription: any;
+
   constructor(
     private productService: ProductService, 
     private elementRef: ElementRef,
@@ -151,6 +154,20 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     // Load cart items from session storage
     this.cartItems = this.getCartFromSession();
 
+    // Set up search subscription with debounce
+    this.searchSubscription = this.searchSubject.pipe(
+      debounceTime(300), // Wait for 300ms pause in events
+      distinctUntilChanged() // Only emit if value is different from previous
+    ).subscribe(searchValue => {
+      this.searchText = searchValue;
+      if (this.showCart) {
+        this.loadCartItems();
+      } else {
+        this.currentPage = 1; // Reset to first page when searching
+        this.loadInventoryItems();
+      }
+    });
+
     // Subscribe to refresh events
     this.refreshSubscription = this.productService.refreshInventory$.subscribe(() => {
       this.loadInventoryItems();
@@ -163,6 +180,11 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     if (this.refreshSubscription) {
       this.refreshSubscription.unsubscribe();
     }
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+    // Clean up the subject
+    this.searchSubject.complete();
   }
 
   @HostListener('document:click', ['$event'])
@@ -477,26 +499,9 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       .map(col => col.key);
   }
 
-  private searchTimeout: any;
-
   onSearch(event: Event): void {
     const searchValue = (event.target as HTMLInputElement).value;
-    this.searchText = searchValue;
-    
-    // Clear any existing timeout
-    if (this.searchTimeout) {
-      clearTimeout(this.searchTimeout);
-    }
-    
-    // Set a new timeout to debounce the search
-    this.searchTimeout = setTimeout(() => {
-      if (this.showCart) {
-        this.loadCartItems();
-      } else {
-        this.currentPage = 1; // Reset to first page when searching
-        this.loadInventoryItems();
-      }
-    }, 300); // 300ms delay
+    this.searchSubject.next(searchValue); // Emit the new search value
   }
 
   loadVendorCount(): void {

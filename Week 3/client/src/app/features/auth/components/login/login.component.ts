@@ -73,8 +73,8 @@ export class LoginComponent implements OnInit {
         this.loginForm.reset();
         localStorage.setItem('accessToken', response.token);
         console.log('Token saved:', localStorage.getItem('accessToken'));
-        sessionStorage.removeItem('loginForm'); // Clear the form state
-        this.router.navigate(['/dashboard']); // Adjust the navigation path as needed
+        sessionStorage.removeItem('loginForm');
+        this.router.navigate(['/dashboard']); 
       },  
       error: (err: HttpErrorResponse) => {
         console.error('Error during login:', err);

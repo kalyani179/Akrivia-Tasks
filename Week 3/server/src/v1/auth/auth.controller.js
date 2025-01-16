@@ -18,7 +18,7 @@ const generateUsername = async (firstname, lastname) => {
         const existingUser = await knex('users').where({ username }).first();
         
         if (!existingUser) {
-          break; // Username is unique
+          break; 
         }
   
         // Append a counter to make it unique
@@ -58,7 +58,7 @@ const signup = async (req, res) => {
       await knex('users').insert({
         firstname: firstname,
         lastname,
-        username, // Assign the generated username
+        username, 
         email,
         password: hashedPassword,
         status: 0, // Default status
@@ -93,7 +93,6 @@ const login = async (req, res) => {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
 
-    console.log(JWT_SECRET);  
     // Generate a JWT token
     const token = jwt.sign({ userId: user.user_id }, JWT_SECRET, {
       expiresIn: '24h'
