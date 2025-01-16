@@ -134,7 +134,7 @@ const getInventory = async (req, res) => {
       .where('products.status', '!=', 99);
 
     // Apply search filter if search text is provided
-    if (search) {
+    if (search && search.trim() !== '') {
       if (columns.length > 0) {
         // Search in specific columns
         query = query.andWhere(function() {
@@ -164,10 +164,8 @@ const getInventory = async (req, res) => {
                   this.orWhere('products.quantity_in_stock', '=', parseInt(search));
                 }
                 break;
-              case 'unit_price':
-                if (!isNaN(search)) {
-                  this.orWhere('products.unit_price', '=', parseFloat(search));
-                }
+              case 'unit':
+                this.orWhere('products.unit', 'like', `%${search}%`);
                 break;
             }
           });
@@ -178,6 +176,7 @@ const getInventory = async (req, res) => {
           this.where('products.product_name', 'like', `%${search}%`)
             .orWhere('categories.category_name', 'like', `%${search}%`)
             .orWhere('vendors.vendor_name', 'like', `%${search}%`)
+            .orWhere('products.unit', 'like', `%${search}%`)
             .orWhere(function() {
               const statusSearch = search.toLowerCase();
               if (statusSearch.includes('available')) {
@@ -190,15 +189,15 @@ const getInventory = async (req, res) => {
             });
           
           if (!isNaN(search)) {
-            this.orWhere('products.quantity_in_stock', '=', parseInt(search))
-              .orWhere('products.unit_price', '=', parseFloat(search));
+            this.orWhere('products.quantity_in_stock', '=', parseInt(search));
           }
         });
       }
     }
 
-    // Get total count
-    const [{ total }] = await query.clone().count('* as total');
+    // Get total count for pagination
+        const [{ total }] = await query.clone()
+        .countDistinct('products.product_id as total');
 
     // Get paginated data
     const inventory = await query
@@ -219,7 +218,7 @@ const getInventory = async (req, res) => {
         'products.product_name',
         'categories.category_name',
         'products.quantity_in_stock',
-        'products.unit_price',
+        'products.unit',
         'products.product_image',
         'products.status',
         'products.created_at',

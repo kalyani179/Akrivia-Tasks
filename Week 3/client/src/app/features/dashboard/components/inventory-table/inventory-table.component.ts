@@ -374,6 +374,8 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     const params = {
       page: this.currentPage,
       limit: this.itemsPerPage,
+      search: this.searchText,
+      columns: this.selectedColumns.join(',')
     };
 
     this.loading = true;
@@ -475,15 +477,26 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       .map(col => col.key);
   }
 
+  private searchTimeout: any;
+
   onSearch(event: Event): void {
     const searchValue = (event.target as HTMLInputElement).value;
     this.searchText = searchValue;
     
-    if (this.showCart) {
-      this.loadCartItems();
-    } else {
-      this.loadInventoryItems();
+    // Clear any existing timeout
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
     }
+    
+    // Set a new timeout to debounce the search
+    this.searchTimeout = setTimeout(() => {
+      if (this.showCart) {
+        this.loadCartItems();
+      } else {
+        this.currentPage = 1; // Reset to first page when searching
+        this.loadInventoryItems();
+      }
+    }, 300); // 300ms delay
   }
 
   loadVendorCount(): void {
