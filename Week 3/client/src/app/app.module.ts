@@ -13,6 +13,8 @@ import { FileUploadComponent } from './features/dashboard/components/file-upload
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AddProductComponent } from './features/dashboard/components/inventory-table/components/add-products/add-product.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { NoAuthGuard } from './core/guards/noAuth.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -36,6 +38,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    AuthGuard,
+    NoAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
