@@ -5,7 +5,6 @@ const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const dotenv = require('dotenv');
 dotenv.config({ path: '../../.env' });
 
-// Generate presigned URL for S3 upload
 const generatePresignedUrl = async (req, res) => {
   try {
     const { fileName, fileType } = req.body;
@@ -59,7 +58,7 @@ const generatePresignedUrlProductImage = async (req, res) => {
 
 // Add new product
 const addProduct = async (req, res) => {
-  const { productName, product_image,category, vendors, quantity, unit, status } = req.body;
+  const { productName, product_image, category, vendors, quantity, unit, status } = req.body;
   const trx = await knex.transaction();
 
   try {
@@ -152,8 +151,6 @@ const getInventory = async (req, res) => {
                   this.orWhere('products.status', '=', 1);
                 } else if (statusSearch.includes('out')) {
                   this.orWhere('products.status', '=', 2);
-                } else if (statusSearch.includes('low')) {
-                  this.orWhere('products.status', '=', 3);
                 }
                 break;
               case 'vendors':
@@ -183,8 +180,6 @@ const getInventory = async (req, res) => {
                 this.orWhere('products.status', '=', 1);
               } else if (statusSearch.includes('out')) {
                 this.orWhere('products.status', '=', 2);
-              } else if (statusSearch.includes('low')) {
-                this.orWhere('products.status', '=', 3);
               }
             });
           

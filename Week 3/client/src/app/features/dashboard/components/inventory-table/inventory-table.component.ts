@@ -154,7 +154,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
 
     // search subscription with debounce
     this.searchSubscription = this.searchSubject.pipe(
-      debounceTime(300), // Wait for 300ms pause in events
+      debounceTime(300), 
       distinctUntilChanged() // Only emit if value is different from previous
     ).subscribe(searchValue => {
       this.searchText = searchValue;

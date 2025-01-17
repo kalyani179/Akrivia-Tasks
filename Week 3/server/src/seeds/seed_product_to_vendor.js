@@ -9,6 +9,9 @@
 const { faker } = require('@faker-js/faker');
 
 exports.seed = async function (knex) {
+  // First delete records from product_to_vendor
+  await knex('product_to_vendor').del();
+  
   // Fetch product and vendor IDs to ensure valid foreign key references
   const products = await knex('products').select('product_id');
   const vendors = await knex('vendors').select('vendor_id');
@@ -17,7 +20,7 @@ exports.seed = async function (knex) {
   const vendorIds = vendors.map((vendor) => vendor.vendor_id);
 
   // Generate fake data for product_to_vendor
-  const fakeProductToVendor = Array.from({ length: 10 }, () => ({
+  const fakeProductToVendor = Array.from({ length: 100 }, () => ({
     vendor_id: faker.helpers.arrayElement(vendorIds), // Random valid vendor ID
     product_id: faker.helpers.arrayElement(productIds), // Random valid product ID
     status: faker.number.int({ min: 0, max: 2 }), // Random status (0, 1, or 2)
