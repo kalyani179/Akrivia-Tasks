@@ -119,8 +119,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     'Blinkit',
     'Fresh Meat',
     'Swiggy',
-    'Dunzo',
-    'Big Basket'
   ];
   availableCategories: string[] = [];
 
@@ -154,7 +152,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     // Load cart items from session storage
     this.cartItems = this.getCartFromSession();
 
-    // Set up search subscription with debounce
+    // search subscription with debounce
     this.searchSubscription = this.searchSubject.pipe(
       debounceTime(300), // Wait for 300ms pause in events
       distinctUntilChanged() // Only emit if value is different from previous
@@ -190,8 +188,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) {
     const filtersMenu = this.elementRef.nativeElement.querySelector('.filter-menu');
-    console.log('Clicked target:', event.target);
-    console.log('Is target inside menu:', filtersMenu?.contains(event.target as Node));
     if (!filtersMenu?.contains(event.target as Node)) {
       this.showFilters = false;
     }
@@ -299,7 +295,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
         const worksheet = workbook.Sheets[firstSheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet) as ExcelProduct[];
         
-        console.log('Raw Excel Data:', jsonData); // Debug log
 
         // Format the data with proper type checking
         const formattedProducts = jsonData.map(row => {

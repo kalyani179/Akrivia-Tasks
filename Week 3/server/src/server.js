@@ -5,7 +5,8 @@ const dotenv = require('dotenv');
 const { swaggerUi, specs } = require('./swagger'); // Import Swagger configuration
 const routes = require('./v1/routes');
 const morganMiddleware = require('./middleware/loggers/morgan');
-const limiter = require('./middleware/rateLimiters/rateLimiter');
+const limiter = require('./middleware/rateLimiter/rateLimit');
+const helmet = require('helmet');
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ server.use(cors());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(morganMiddleware);
+server.use(helmet());
 // Swagger setup
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
