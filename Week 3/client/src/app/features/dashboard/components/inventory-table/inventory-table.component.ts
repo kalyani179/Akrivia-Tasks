@@ -92,6 +92,11 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   showFilters = false;
   searchText = '';
   selectedColumns: string[] = [];
+  cartColumns: ColumnFilter[] = [] = [
+    { key: 'product_name', label: 'Product Name', checked: true },
+    { key: 'category', label: 'Category', checked: true },
+    { key: 'vendors', label: 'Vendors', checked: true },
+  ];
   columns: ColumnFilter[] = [
     { key: 'product_name', label: 'Product Name', checked: true },
     { key: 'status', label: 'Status', checked: true },

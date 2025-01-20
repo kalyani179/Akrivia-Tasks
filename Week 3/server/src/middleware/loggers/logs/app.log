@@ -4588,3 +4588,43 @@
   level: 'info',
   timestamp: '2025-01-20T06:21:34.511Z'
 }
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"58.493"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:41:42.392Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"79.577"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:41:42.419Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"72.361"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:41:42.435Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"214.738"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:41:42.504Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"479.612"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:41:42.838Z'
+}
+{
+  message: '{"method":"POST","url":"/api/inventory/add-prodcut-image","status":"200","responseTime":"17.337"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:41:56.028Z'
+}
+{
+  message: '{"method":"PUT","url":"/api/inventory/inventory/515","status":"200","responseTime":"77.624"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:41:56.925Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"15.638"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:41:56.976Z'
+}

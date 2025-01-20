@@ -51,14 +51,26 @@
               <h6 class="mb-0">Columns</h6>
             </div>
             <div class="filter-options">
-              <label *ngFor="let column of columns" class="filter-option">
+              <ng-container *ngIf="showCart">
+              <label *ngFor="let column of cartColumns" class="filter-option">
                 <input 
                   type="checkbox" 
                   [checked]="column.checked"
                   (change)="onColumnToggle(column)"
                 >
                 <span>{{ column.label }}</span>
-              </label>
+                </label>
+              </ng-container>
+              <ng-container *ngIf="!showCart">
+                <label *ngFor="let column of columns" class="filter-option">
+                  <input 
+                  type="checkbox" 
+                  [checked]="column.checked"
+                  (change)="onColumnToggle(column)"
+                >
+                <span>{{ column.label }}</span>
+                </label>
+              </ng-container>
             </div>
           </div>
         </div>
