@@ -393,11 +393,11 @@ const updateCartProduct = async (req, res) => {
 // Add this to your inventory controller
 const updateProduct = async (req, res) => {
   const { productId } = req.params;
-  const { productName, category, vendors, quantity, unit, status,product_image } = req.body;
+  const { productName, category, vendors, quantity, unit, status, product_image } = req.body;
   const trx = await knex.transaction();
 
-  console.log(req.body);
-  console.log(productName);
+  // console.log(req.body);
+  console.log(quantity);
 
   try {
     // Get category_id from category name
@@ -481,6 +481,56 @@ const getCategories = async (req, res) => {
   }
 };
 
+const getProduct = async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const product = await knex('products')
+      .join('categories', 'products.category_id', '=', 'categories.category_id')
+      .leftJoin('product_to_vendor', 'products.product_id', '=', 'product_to_vendor.product_id')
+      .leftJoin('vendors', 'product_to_vendor.vendor_id', '=', 'vendors.vendor_id')
+      .where('products.product_id', productId)
+      .select(
+        'products.product_id',
+        'products.product_name',
+        'categories.category_name as category',
+        'products.quantity_in_stock',
+        'products.unit',
+        'products.product_image',
+        'products.status',
+        'products.created_at',
+        'products.updated_at',
+        knex.raw('GROUP_CONCAT(DISTINCT vendors.vendor_name) as vendors')
+      )
+      .groupBy(
+        'products.product_id',
+        'products.product_name',
+        'categories.category_name',
+        'products.quantity_in_stock',
+        'products.unit',
+        'products.product_image',
+        'products.status',
+        'products.created_at',
+        'products.updated_at'
+      )
+      .first();
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    const formattedProduct = {
+      ...product,
+      vendors: product.vendors ? product.vendors.split(',') : [],
+      status: product.status === 1 ? 'Available' : product.status === 2 ? 'Out of Stock' : 'Low Stock'
+    };
+
+    res.json(formattedProduct);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 // Export all functions
 const inventoryController = {
   generatePresignedUrl,
@@ -494,7 +544,8 @@ const inventoryController = {
   updateProduct,
   updateCartProduct,
   getVendors,
-  getCategories
+  getCategories,
+  getProduct
 };
 
 module.exports = inventoryController;

@@ -31,6 +31,9 @@ router.get('/inventory/all', inventoryController.getAllInventory);
 // Get vendor count
 router.get('/vendors/count', inventoryController.getVendorCount);
 
+// Get single product
+router.get('/getProduct/:productId', inventoryController.getProduct);
+
 // Delete product
 router.delete('/inventory/:productId', inventoryController.deleteProduct);
 

@@ -23,7 +23,7 @@ server.use(helmet());
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Use routes
-server.use('/api',limiter, routes);
+server.use('/api', routes);
 
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

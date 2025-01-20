@@ -635,77 +635,105 @@ toggleVendorSelectionForCart(item: InventoryItem, vendor: string): void {
       item.selectedVendorsForCart.splice(index, 1);
     }
   }
-  increaseQuantity(item: InventoryItem): void {
-    const originalItem = this.inventoryItems.find(i => i.product_id === item.product_id);
-    
+  increaseQuantity(item: InventoryItem): Promise<void> | void {
     if (this.showCart) {
-      // In cart view
-      if (originalItem && originalItem.quantity_in_stock > 0) {
-        item.quantity_in_stock++;
-        originalItem.quantity_in_stock--;
-        
-        // Update session storage
-        this.saveCartToSession(this.cartItems);
-        
-        // Update the product in backend
-        const updatePayload = {
-          product_id: originalItem.product_id,
-          quantity_in_stock: originalItem.quantity_in_stock
-        };
-        
-        firstValueFrom(this.productService.updateProduct(originalItem.product_id.toString(), updatePayload))
-          .catch(error => {
-            console.error('Error updating quantity:', error);
-            // Revert changes if update fails
-            item.quantity_in_stock--;
-            originalItem.quantity_in_stock++;
-            this.saveCartToSession(this.cartItems);
+      return firstValueFrom(this.productService.getProduct(item.product_id.toString()))
+        .then(originalItem => {
+          if (originalItem && originalItem.quantity_in_stock > 0) {
+            const newStockQuantity = originalItem.quantity_in_stock - 1;
+            const newCartQuantity = item.quantity_in_stock + 1;
+            
+            const updatePayload = {
+              product_id: originalItem.product_id,
+              quantity_in_stock: newStockQuantity,
+              status: newStockQuantity === 0 ? 2 : 1
+            };
+            
+            return firstValueFrom(this.productService.updateCartProduct(originalItem.product_id.toString(), updatePayload))
+              .then(() => {
+                const inventoryItem = this.inventoryItems.find(i => i.product_id === item.product_id);
+                if (inventoryItem) {
+                  inventoryItem.quantity_in_stock = newStockQuantity;
+                }
+                item.quantity_in_stock = newCartQuantity;
+                const cartItem = this.cartItems.find(i => i.product_id === item.product_id);
+                if (cartItem) {
+                  cartItem.quantity_in_stock = newCartQuantity;
+                }
+                this.saveCartToSession(this.cartItems);
+                return Promise.resolve();
+              });
+          }
+          this.toast.error({
+            detail: 'Item is out of stock',
+            summary: 'Error',
+            duration: 3000
           });
-      }
+          return Promise.resolve();
+        })
+        .catch(error => {
+          console.error('Error updating quantity:', error);
+          this.toast.error({
+            detail: 'Failed to update quantity',
+            summary: 'Error',
+            duration: 3000
+          });
+          return Promise.reject(error);
+        });
     } else {
-      // In move-to-cart modal
       const maxQuantity = item.original_quantity || item.quantity_in_stock;
       if (item.quantity_in_stock < maxQuantity) {
         item.quantity_in_stock++;
       }
+      return;
     }
   }
   
-  decreaseQuantity(item: InventoryItem): void {
-    if (item.quantity_in_stock <= 0) {
-      return;
-    }
-
+  decreaseQuantity(item: InventoryItem): Promise<void> | void {
     if (this.showCart) {
-      // In cart view
-      const originalItem = this.inventoryItems.find(i => i.product_id === item.product_id);
-      if (originalItem) {
-        item.quantity_in_stock--;
-        originalItem.quantity_in_stock++;
-        
-        // Update session storage
-        this.saveCartToSession(this.cartItems);
-        
-        // Update the product in backend
-        const updatePayload = {
-          product_id: originalItem.product_id,
-          quantity_in_stock: originalItem.quantity_in_stock
-        };
-        
-        firstValueFrom(this.productService.updateProduct(originalItem.product_id.toString(), updatePayload))
+      if (item.quantity_in_stock > 0) {
+        return firstValueFrom(this.productService.getProduct(item.product_id.toString()))
+          .then(originalItem => {
+            const newStockQuantity = originalItem.quantity_in_stock + 1;
+            const newCartQuantity = item.quantity_in_stock - 1;
+            
+            const updatePayload = {
+              product_id: originalItem.product_id,
+              quantity_in_stock: newStockQuantity,
+              status: newStockQuantity === 0 ? 2 : 1
+            };
+            
+            return firstValueFrom(this.productService.updateCartProduct(originalItem.product_id.toString(), updatePayload))
+              .then(() => {
+                const inventoryItem = this.inventoryItems.find(i => i.product_id === item.product_id);
+                if (inventoryItem) {
+                  inventoryItem.quantity_in_stock = newStockQuantity;
+                }
+                item.quantity_in_stock = newCartQuantity;
+                const cartItem = this.cartItems.find(i => i.product_id === item.product_id);
+                if (cartItem) {
+                  cartItem.quantity_in_stock = newCartQuantity;
+                }
+                this.saveCartToSession(this.cartItems);
+                return Promise.resolve();
+              });
+          })
           .catch(error => {
             console.error('Error updating quantity:', error);
-            // Revert changes if update fails
-            item.quantity_in_stock++;
-            originalItem.quantity_in_stock--;
-            this.saveCartToSession(this.cartItems);
+            this.toast.error({
+              detail: 'Failed to update quantity',
+              summary: 'Error',
+              duration: 3000
+            });
+            return Promise.reject(error);
           });
       }
+      return Promise.resolve();
     } else {
-      // In move-to-cart modal
       if (item.quantity_in_stock > 0) {
         item.quantity_in_stock--;
       }
+      return;
     }
   }
 
