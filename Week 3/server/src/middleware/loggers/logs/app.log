@@ -4563,3 +4563,28 @@
   level: 'info',
   timestamp: '2025-01-20T06:16:54.192Z'
 }
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"189.982"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:21:34.056Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"146.294"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:21:34.065Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"145.961"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:21:34.067Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"279.055"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:21:34.193Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"587.572"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:21:34.511Z'
+}
