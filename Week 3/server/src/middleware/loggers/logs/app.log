@@ -4628,3 +4628,93 @@
   level: 'info',
   timestamp: '2025-01-20T06:41:56.976Z'
 }
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"113.012"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:59:33.565Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"106.255"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:59:33.625Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"98.909"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:59:33.628Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"154.649"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:59:33.646Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"456.821"}',
+  level: 'info',
+  timestamp: '2025-01-20T06:59:33.956Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"100.374"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:02:26.180Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"73.753"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:02:26.191Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"113.636"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:02:26.223Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"90.478"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:02:26.232Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"447.155"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:02:26.577Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=product_name,status,category,vendors,quantity_in_stock,unit","status":"200","responseTime":"23.575"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:02:41.134Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=product_name,status,category,vendors,quantity_in_stock,unit","status":"304","responseTime":"11.591"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:03:27.559Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"30.845"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:03:33.855Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"42.161"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:03:33.869Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"62.406"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:03:33.919Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"98.887"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:03:33.933Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"412.142"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:03:34.254Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=product_name,status,category,vendors,quantity_in_stock,unit","status":"304","responseTime":"24.857"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:04:08.583Z'
+}
