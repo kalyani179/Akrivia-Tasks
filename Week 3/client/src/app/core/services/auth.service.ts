@@ -27,7 +27,7 @@ export class AuthService {
   isTokenValid(token: string): boolean {
     try {
       const decodedToken: any = jwtDecode(token);
-      const expirationDate = new Date(decodedToken.exp * 1000);
+      const expirationDate = new Date(decodedToken.exp * 1000); 
       return expirationDate > new Date();
     } catch (error) {
       return false;
