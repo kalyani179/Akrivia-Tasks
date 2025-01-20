@@ -31,23 +31,25 @@ router.get('/inventory/all', inventoryController.getAllInventory);
 // Get vendor count
 router.get('/vendors/count', inventoryController.getVendorCount);
 
-// Get single product
-router.get('/getProduct/:productId', inventoryController.getProduct);
-
 // Delete product
 router.delete('/inventory/:productId', inventoryController.deleteProduct);
 
 // Add new route for bulk product upload
 router.post('/bulk-add', inventoryController.bulkAddProducts);
 
-// Add this route
+// Update product
 router.put('/inventory/:productId', inventoryController.updateProduct);
 
-// Add this route
+// Update cart product
 router.put('/cart/:productId', inventoryController.updateCartProduct);
 
 // Add these routes
 router.get('/vendors', inventoryController.getVendors);
+  
+// Get categories
 router.get('/categories', inventoryController.getCategories);
+
+// Get single product
+router.get('/getProduct/:productId', inventoryController.getProduct);
 
 module.exports = router;
