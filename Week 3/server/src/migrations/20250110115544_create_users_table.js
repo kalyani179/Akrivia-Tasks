@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
     return knex.schema.createTable('users', (table) => {
-      table.increments('user_id').primary(); // Primary key
+      table.increments('id').primary(); // Primary key
       table.string('firstname', 255).notNullable();
       table.string('lastname', 255).notNullable();
       table.string('username', 255).notNullable().unique(); // Unique username

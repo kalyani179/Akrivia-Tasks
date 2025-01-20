@@ -1,11 +1,10 @@
 const { signupSchema, loginSchema } = require('./dto/auth.joi');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const knex = require('../../mysql/knex'); // Adjust the path to your Knex instance
 const dotenv = require('dotenv');
+const { generateAccessToken, generateRefreshToken } = require('../../middleware/jwt/jwt.middleware');
 dotenv.config({ path: '../../.env' });
 
-const JWT_SECRET = process.env.JWT_SECRET;
 
 const generateUsername = async (firstname, lastname) => {
   try {
@@ -133,15 +132,10 @@ const login = async (req, res) => {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
 
-    // Generate a JWT token
-    const token = jwt.sign({ userId: user.user_id }, JWT_SECRET, {
-      expiresIn: '24h'
-    });
+    const accessToken = generateAccessToken({ userId: user.id, username: user.username });
+    const refreshToken = generateRefreshToken({ userId: user.id, username: user.username });
 
-    res.status(200).json({ 
-      token,
-      message: 'Login successful'
-    });
+    res.status(200).json({ message: 'Login successful.', accessToken, refreshToken });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

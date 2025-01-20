@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const profileController = require('./profile.controller');
-const authenticateToken = require('../../middleware/jwt/jwt.middleware');
+const {authenticateToken} = require('../../middleware/jwt/jwt.middleware');
 
 require('./api-docs/profile.docs');
 

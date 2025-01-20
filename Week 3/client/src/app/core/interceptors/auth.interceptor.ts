@@ -7,41 +7,60 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { catchError, switchMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  constructor(private authService: AuthService) {}
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+   
     if (request.headers.has('Skip-Auth')) {
       const headers = request.headers.delete('Skip-Auth');
       const authReq = request.clone({ headers });
       return next.handle(authReq);
     }
-    const token = this.authService.getToken();
-    console.log('Interceptor token:', token);
+    
+    // Get the access token from local storage
+    const accessToken = localStorage.getItem('accessToken');
 
-    if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+    // Clone the request and add the authorization header if the access token exists
+    let authRequest = request;
+    if (accessToken) {
+      authRequest = request.clone({
+        headers: request.headers.set('Authorization', `Bearer ${accessToken}`)
       });
     }
 
-    return next.handle(request).pipe(
+    return next.handle(authRequest).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 || error.status === 403) {
-          this.authService.logout();
-          this.router.navigate(['/login']);
+        console.log('Error status:', error.status);
+        if (error.status === 403 && !authRequest.url.includes('/api/auth/refresh-token')) {
+          // If the access token is expired, try to refresh it
+          console.log('Access token expired. Attempting to refresh token...');
+          return this.authService.refreshToken().pipe(
+            switchMap((response: any) => {
+              console.log('Token refreshed successfully');
+              // Store the new access token
+              localStorage.setItem('accessToken', response.accessToken);
+
+              // Clone the request with the new access token
+              const newAuthRequest = request.clone({
+                headers: request.headers.set('Authorization', `Bearer ${response.accessToken}`)
+              });
+
+              // Retry the request with the new access token
+              return next.handle(newAuthRequest);
+            }),
+            catchError((refreshError) => {
+              console.error('Error refreshing token:', refreshError);
+              return throwError( () => new Error("refresh token error " + refreshError));
+            })
+          );
         }
-        return throwError(() => error);
+        return throwError(()=>error);
       })
     );
   }

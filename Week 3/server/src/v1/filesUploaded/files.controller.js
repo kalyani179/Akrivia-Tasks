@@ -12,7 +12,7 @@ const generatePresignedUrl = async (req, res) => {
     // Get username from users table
     const user = await knex('users')
       .select('username')
-      .where('user_id', userId)
+      .where('id', userId)
       .first();
 
     if (!user) {
@@ -45,7 +45,7 @@ const downloadFiles = async (req, res) => {
     // Get username from users table
     const user = await knex('users')
       .select('username')
-      .where('user_id', userId)
+      .where('id', userId)
       .first();
 
     if (!user) {
@@ -82,7 +82,7 @@ const listFiles = async (req, res) => {
     // Get username from users table
     const user = await knex('users')
       .select('username')
-      .where('user_id', userId)
+      .where('id', userId)
       .first();
 
     if (!user) {

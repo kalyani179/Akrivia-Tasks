@@ -4718,3 +4718,1118 @@
   level: 'info',
   timestamp: '2025-01-20T07:04:08.583Z'
 }
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=product_name,status,category,vendors,quantity_in_stock,unit","status":"304","responseTime":"152.406"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:19:35.736Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=product_name,status,category,vendors,quantity_in_stock,unit","status":"304","responseTime":"10.484"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:19:42.771Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=product_name,status,category,vendors,quantity_in_stock,unit","status":"304","responseTime":"12.713"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:19:50.834Z'
+}
+{
+  message: '{"method":"PUT","url":"/api/inventory/cart/514","status":"200","responseTime":"29.863"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:19:58.579Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=product_name,status,category,vendors,quantity_in_stock,unit","status":"304","responseTime":"12.442"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:19:58.611Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=product_name,status,category,vendors,quantity_in_stock,unit","status":"304","responseTime":"11.100"}',
+  level: 'info',
+  timestamp: '2025-01-20T07:20:00.355Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"403","responseTime":"31.913"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:15:27.416Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"403","responseTime":"3.124"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:15:27.433Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"403","responseTime":"1.934"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:15:27.437Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"403","responseTime":"2.030"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:15:27.442Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"403","responseTime":"2.661"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:15:27.449Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"746.811"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:16:09.431Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"500","responseTime":"11.829"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:16:09.601Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"90.100"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:16:09.768Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"500","responseTime":"108.494"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:16:09.775Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"143.888"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:16:09.810Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"215.528"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:16:09.827Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"500","responseTime":"218.151"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:20:52.494Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"500","responseTime":"156.747"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:20:52.508Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"195.552"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:20:52.537Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"184.335"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:20:52.541Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"193.882"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:20:52.558Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"500","responseTime":"208.682"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:24:11.482Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"500","responseTime":"138.920"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:24:11.496Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"183.931"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:24:11.526Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"180.266"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:24:11.529Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"182.767"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:24:11.544Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"400","responseTime":"273.539"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:25:00.471Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"140.363"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:25:06.447Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"500","responseTime":"10.922"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:25:06.560Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"79.690"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:25:06.645Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"500","responseTime":"67.400"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:25:06.697Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"141.927"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:25:06.722Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"124.085"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:25:06.728Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"500","responseTime":"183.394"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:32:42.404Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"205.486"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:32:42.450Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"500","responseTime":"208.042"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:32:42.452Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"207.672"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:32:42.457Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"393.436"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:32:42.482Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/signup","status":"201","responseTime":"118.053"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:32.250Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"92.490"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:41.982Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"500","responseTime":"35.353"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:42.112Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"32.132"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:42.120Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"22.547"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:42.156Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"248.465"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:42.330Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"472.511"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:42.610Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"500","responseTime":"53.001"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:47.105Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"38.648"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:47.110Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"40.797"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:47.130Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"70.184"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:47.155Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"120.460"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:33:47.219Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/generate-upload-url","status":"200","responseTime":"43.377"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:34:01.182Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"303.837"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:38:33.548Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"628.989"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:38:33.899Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"611.453"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:38:33.905Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"1134.822"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:38:33.965Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"1096.368"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:38:34.404Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"38.381"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:38:41.683Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"63.785"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:40:31.088Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"508.490"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:40:31.380Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"184.015"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:40:31.410Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"458.505"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:40:31.617Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"1793.978"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:40:33.125Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"594.694"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:47:09.639Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"336.282"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:47:09.657Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"371.918"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:47:09.662Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"416.693"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:47:09.685Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"775.078"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:47:10.087Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"403","responseTime":"21.063"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.121Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"403","responseTime":"1.834"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.133Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"403","responseTime":"1.658"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.137Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"403","responseTime":"1.720"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.142Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"403","responseTime":"2.177"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.146Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/auth/refresh-token","status":"404","responseTime":"3.406"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.363Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/auth/refresh-token","status":"404","responseTime":"0.958"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.367Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/auth/refresh-token","status":"404","responseTime":"0.404"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.385Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/auth/refresh-token","status":"404","responseTime":"0.787"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.436Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/auth/refresh-token","status":"404","responseTime":"0.353"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:49:24.537Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"403","responseTime":"16.293"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.311Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"403","responseTime":"1.787"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.321Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"403","responseTime":"2.740"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.332Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"403","responseTime":"3.060"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.340Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"403","responseTime":"1.765"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.360Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"46.230"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.507Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"5.334"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.525Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"5.779"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.577Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"7.627"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.614Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"3.486"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.658Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"82.069"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.855Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"47.847"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.871Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"4.511"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.889Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"7.078"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:53.932Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"879.681"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:53:54.899Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"6.124"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:54:11.679Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"13.855"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:54:11.723Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"4.299"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:54:11.755Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"12.494"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:54:11.770Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"449.725"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:54:12.213Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"257.452"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:27.281Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"117.381"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:27.313Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"204.041"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:27.359Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"139.869"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:27.361Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"515.069"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:27.755Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"23.411"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:43.017Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"4.862"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:43.025Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"27.980"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:43.026Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"11.691"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:43.070Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"278.997"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:43.333Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"5.608"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:47.443Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"4.833"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:47.464Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"17.780"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:47.470Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"3.978"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:47.481Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"45.269"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:58:47.531Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"42.906"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:59:00.702Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"31.498"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:59:00.734Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"75.130"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:59:00.744Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"66.598"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:59:00.752Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"361.903"}',
+  level: 'info',
+  timestamp: '2025-01-20T09:59:01.038Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"295.744"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:01:53.205Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"56.554"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:01:53.376Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"42.261"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:01:53.397Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"153.716"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:01:53.519Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"175.122"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:01:53.543Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"522.435"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:01:53.880Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"87.141"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:02:54.822Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"142.853"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:02:54.844Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"146.906"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:02:54.935Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"195.656"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:02:54.960Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"2489.838"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:02:57.282Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"20.885"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:14.379Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"48.183"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:14.479Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"33.271"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:14.486Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"118.132"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:14.525Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"182.095"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:14.642Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"27.478"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:27.495Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"22.793"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:27.510Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"76.920"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:27.594Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"124.147"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:27.626Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"233.165"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:27.772Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"50.846"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:30.233Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"83.852"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:30.335Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"70.741"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:30.344Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"184.078"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:30.386Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"133.220"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:03:30.418Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"42.130"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:08.986Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"105.742"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:09.124Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"68.269"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:09.135Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"166.700"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:09.170Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"441.022"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:09.547Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"19.988"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:43.958Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"132.601"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:44.105Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"57.117"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:44.122Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"197.871"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:44.221Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"417.646"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:04:44.615Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"397.648"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:06:09.243Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"286.715"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:06:09.320Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"793.616"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:06:09.817Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"776.498"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:06:09.893Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"1159.852"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:06:10.311Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"90.984"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:14.017Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"97.603"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:14.027Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"215.162"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:14.076Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"103.283"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:14.079Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"269.541"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:14.258Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"49.928"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:50.335Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"39.617"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:50.340Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"60.662"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:50.353Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"7.878"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:50.367Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"336.954"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:08:50.701Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"22.551"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:16.121Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"5.996"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:16.130Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"25.910"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:16.187Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"4.135"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:16.205Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"444.063"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:16.676Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"7.864"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:30.732Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"10.889"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:30.814Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"24.930"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:30.823Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"46.888"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:30.897Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"601.386"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:09:31.471Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"159.010"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:10:38.922Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"242.485"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:10:39.079Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"881.058"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:10:39.239Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"410.192"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:10:39.246Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"745.687"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:10:39.615Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"315.252"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:11:33.079Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"49.694"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:11:33.226Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"58.885"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:11:33.252Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"83.105"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:11:33.320Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"118.615"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:11:33.327Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"524.175"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:11:33.756Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"61.343"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:07.528Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"137.013"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:07.679Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"201.040"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:07.843Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"445.880"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:07.927Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"1083.912"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:08.651Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"27.821"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:52.242Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"20.036"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:52.248Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"14.523"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:52.249Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"31.215"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:52.255Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"344.272"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:12:52.606Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"34.982"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:14:06.323Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"85.405"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:14:06.336Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"47.361"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:14:06.339Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"116.182"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:14:06.428Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"581.059"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:14:06.885Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"50.932"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:15:38.235Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"98.807"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:16:02.222Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"80.156"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:16:02.234Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"82.409"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:16:02.285Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"138.289"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:16:02.300Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"471.739"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:16:02.660Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"68.711"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:18:24.581Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"5.731"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:18:28.664Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"513.814"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:18:50.539Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"169.153"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:18:50.693Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"385.226"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:18:50.724Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"767.977"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:18:50.757Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"832.402"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:18:50.973Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"197.272"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:19:38.507Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"421.641"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:19:38.878Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"719.093"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:19:38.918Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"592.164"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:19:38.936Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"849.363"}',
+  level: 'info',
+  timestamp: '2025-01-20T10:19:39.239Z'
+}

@@ -562,7 +562,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
 
     // Show success message
     this.toast.success({
-      detail: `${itemsToDownload.length} items downloaded successfully`,
+      detail: `${itemsToDownload.length} items downloaded`,
       summary: 'Success',
       duration: 3000
     });

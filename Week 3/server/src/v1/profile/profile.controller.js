@@ -9,7 +9,7 @@ const getProfile = async (req, res) => {
     const userId = req.user.userId;
     const profile = await knex('users')
     .select('firstname','lastname','username', 'email', 'thumbnail')
-    .where('user_id', userId)
+    .where('id', userId)
     .first();
     if (!profile) {
       throw new Error('User not found');
@@ -81,7 +81,7 @@ const saveFileMetadata = async (req, res) => {
 
       // Update user record with both URLs
       await knex('users')
-        .where({ user_id: userId })
+        .where({ id: userId })
         .update({
           profile_pic: fileUrl,
           thumbnail: thumbnailUrl,
@@ -89,8 +89,8 @@ const saveFileMetadata = async (req, res) => {
         });
 
       const updatedUser = await knex('users')
-        .select('user_id', 'profile_pic', 'thumbnail')
-        .where({ user_id: userId })
+        .select('id', 'profile_pic', 'thumbnail')
+        .where({ id: userId })
         .first();
 
       res.status(200).json(updatedUser);
@@ -98,7 +98,7 @@ const saveFileMetadata = async (req, res) => {
       console.error('Error processing image:', s3Error);
       // If S3 operations fail, still update the user with original URL
       await knex('users')
-        .where({ user_id: userId })
+        .where({ id: userId })
         .update({
           profile_pic: fileUrl,
           thumbnail: fileUrl, // Use original as thumbnail if processing fails
@@ -106,8 +106,8 @@ const saveFileMetadata = async (req, res) => {
         });
 
       const updatedUser = await knex('users')
-        .select('user_id', 'profile_pic', 'thumbnail')
-        .where({ user_id: userId })
+        .select('id', 'profile_pic', 'thumbnail')
+        .where({ id: userId })
         .first();
 
       res.status(200).json(updatedUser);

@@ -6,7 +6,7 @@ class User extends Model {
   }
 
   static get idColumn() {
-    return 'user_id'; // Primary key column (adjust if different)
+    return 'id'; // Primary key column
   }
 
   static get jsonSchema() {
@@ -14,7 +14,7 @@ class User extends Model {
       type: 'object',
       required: ['firstname', 'lastname','username', 'email', 'password'], // Validation for required fields
       properties: {
-        user_id: { type: 'integer' }, // Primary key
+        id: { type: 'integer' }, // Primary key
         firstname: { type: 'string', minLength: 1, maxLength: 255 }, // First name 
         lastname: { type: 'string', minLength: 1, maxLength: 255 }, // Last name 
         username: { type: 'string', minLength: 1, maxLength: 255 }, // Unique username

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { generatePresignedUrl, downloadFiles,listFiles } = require('./files.controller');
-const authenticateToken = require('../../middleware/jwt/jwt.middleware');
+const { authenticateToken } = require('../../middleware/jwt/jwt.middleware');
 
 require('./api-docs/filesUploaded.docs');
 
