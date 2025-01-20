@@ -204,32 +204,31 @@
                 {{item.unit}}
               </ng-template>
             </td>
-            <!-- Replace the existing buttons code with this -->
-<td class="actions-cell">
-  <ng-container *ngIf="editingItem === item; else displayActions">
-    <div class="action-buttons">
-      <button class="btn border-0 text-success" (click)="saveEdit(item)">
-        <i class="bi bi-check-lg" style="font-size: 22px;"></i>
-      </button>
-      <button class="btn btn-sm border-0 text-danger" (click)="cancelEdit()">
-        <i class="bi bi-x-lg"></i>
-      </button>
-    </div>
-  </ng-container>
-  <ng-template #displayActions>
-    <div class="action-buttons">
-      <button class="btn btn-sm border-0" (click)="downloadField(item)">
-        <i class="bi bi-download"></i>
-      </button>
-      <button class="btn btn-sm border-0" (click)="openDeleteModal(item)">
-        <i class="bi bi-trash"></i>
-      </button>
-      <button class="btn btn-sm border-0" (click)="startEditing(item)">
-        <i class="bi bi-pencil"></i>
-      </button>
-    </div>
-  </ng-template>
-</td>
+            <td class="actions-cell">
+              <ng-container *ngIf="editingItem === item; else displayActions">
+                <div class="action-buttons">
+                  <button class="btn border-0 text-success" (click)="saveEdit(item)">
+                    <i class="bi bi-check-lg" style="font-size: 22px;"></i>
+                  </button>
+                  <button class="btn btn-sm border-0 text-danger" (click)="cancelEdit()">
+                    <i class="bi bi-x-lg"></i>
+                  </button>
+                </div>
+              </ng-container>
+              <ng-template #displayActions>
+                <div class="action-buttons">
+                  <button class="btn btn-sm border-0" (click)="downloadField(item)">
+                    <i class="bi bi-download"></i>
+                  </button>
+                  <button class="btn btn-sm border-0" (click)="openDeleteModal(item)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  <button class="btn btn-sm border-0" (click)="startEditing(item)">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                </div>
+              </ng-template>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -283,7 +282,7 @@
             </td>
             <td>{{item.category}}</td>
             <td>
-              <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
+              <span *ngFor="let vendor of item.selectedVendorsForCart" class="badge bg-light text-dark me-1">
                 {{vendor}}
               </span>
             </td>
@@ -415,9 +414,28 @@
             <td>{{item.created_at | date:'MM/dd/yyyy'}}</td>
             <td>{{item.category}}</td>
             <td>
-              <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
-                {{vendor}}
-              </span>
+              <div class="dropdown" ngbDropdown>
+                <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-100" 
+                        type="button" 
+                        id="moveToCartVendorDropdown" 
+                        ngbDropdownToggle>
+                  Select vendor
+                </button>
+                <div ngbDropdownMenu aria-labelledby="moveToCartVendorDropdown" class="w-100">
+                  <div *ngFor="let vendor of item.vendors" class="px-3 py-1">
+                    <div class="form-check">
+                    <input class="form-check-input" 
+                          type="checkbox" 
+                          [id]="'moveToCart-vendor-' + vendor"
+                          [checked]="isVendorSelectedForCart(item, vendor)"
+                          (change)="toggleVendorSelectionForCart(item, vendor)">
+                    <label class="form-check-label" [for]="'moveToCart-vendor-' + vendor">
+                      {{ vendor }}
+                    </label>
+                  </div>
+                  </div>
+            </div>
+            </div>
             </td>
             <td>
               <div class="input-group input-group-sm" style="width: 120px;">

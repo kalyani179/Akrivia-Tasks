@@ -20,6 +20,7 @@ interface InventoryItem {
   updated_at: string;
   vendors: string[];
   isChecked?: boolean;
+  selectedVendorsForCart?: string[];
   original_quantity?: number;
 }
 
@@ -614,6 +615,26 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   }
 
  // cart functions
+
+ isVendorSelectedForCart(item: InventoryItem, vendor: string): boolean {
+    if (!item.selectedVendorsForCart) {
+      item.selectedVendorsForCart = [];
+    }
+    return item.selectedVendorsForCart.includes(vendor);
+  }
+
+toggleVendorSelectionForCart(item: InventoryItem, vendor: string): void {
+    if (!item.selectedVendorsForCart) {
+      item.selectedVendorsForCart = [];
+    }
+    
+    const index = item.selectedVendorsForCart.indexOf(vendor);
+    if (index === -1) {
+      item.selectedVendorsForCart.push(vendor);
+    } else {
+      item.selectedVendorsForCart.splice(index, 1);
+    }
+  }
   increaseQuantity(item: InventoryItem): void {
     const originalItem = this.inventoryItems.find(i => i.product_id === item.product_id);
     
