@@ -1,7 +1,9 @@
 const { signupSchema, loginSchema } = require('./dto/auth.joi');
 const bcrypt = require('bcrypt');
-const knex = require('../../mysql/knex'); // Adjust the path to your Knex instance
+const knex = require('../../mysql/knex'); 
 const dotenv = require('dotenv');
+const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 const { generateAccessToken, generateRefreshToken } = require('../../middleware/jwt/jwt.middleware');
 dotenv.config({ path: '../../.env' });
 
@@ -108,7 +110,6 @@ const signup = async (req, res) => {
       res.status(500).json({ error: err.message });
     }
 };
-  
 
 const login = async (req, res) => {
   // Validate request body using Joi
@@ -141,4 +142,82 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { signup, login };
+
+const forgotPassword = async (req,res) => {
+  try {
+    const { email } = req.body;
+    const user = await knex('users').where({ email }).first();
+    if (!user) {
+      return res.status(400).json({error: "User has not signed up yet!"});
+    }
+
+    const accessToken = generateAccessToken({ userId: user.id, username: user.username });
+ 
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_APP_PASSWORD
+      },
+      debug: true
+    });
+
+    // Verify connection configuration
+    transporter.verify(function(error, success) {
+      if (error) {
+        console.error('Server connection error:', error);
+        throw new Error('Email server connection failed');
+      }
+    });
+
+    const link = `http://localhost:4200/reset-password/${user.id}/${accessToken}`;
+
+    const mailOptions = {
+      from: `"Password Reset" <${process.env.EMAIL}>`,
+      to: email,
+      subject: "Reset Your Password",
+      text: "This Email is sent to Reset your password",
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2>Reset Your Password</h2>
+          <p>Click the button below to reset your password:</p>
+            <a href="${link}" 
+             style="background-color: #4CAF50; color: white; padding: 14px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">
+            Reset Password
+          </a>
+          <p style="margin-top: 20px;">If the button doesn't work, copy and paste this link in your browser:</p>
+            <p>${link}</p>
+          <p style="color: #666;">This link will expire in 15 minutes.</p>
+        </div>
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log(link)
+    return res.status(200).json({message: "Reset link sent successfully"});
+  } catch (err) {
+    console.error('Error sending email:', err);
+    return res.status(500).json({error: "Failed to send reset email. Please try again later."});
+  }
+}
+
+const resetPassword = async (req,res) => {
+  try{
+      let {password} =  req.body;
+      let {id,accessToken} = req.params;
+      const token = jwt.verify(accessToken,process.env.JWT_SECRET);
+      if (!token) return res.status(400).send({ message: "This Email has expired!" });
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await knex('users').where({ id }).update({ password: hashedPassword });
+      return res.status(200).json({ message: "Password updated successfully" });
+  }
+  catch(err){
+      console.log(err.message);
+      return res.status(500).json({"error":"Internal Server Error"});
+  }
+}
+
+
+module.exports = { signup, login, forgotPassword, resetPassword};

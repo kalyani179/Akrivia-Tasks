@@ -6,8 +6,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { InventoryTableComponent } from './components/inventory-table/inventory-table.component';
 import { AddProductComponent } from './components/inventory-table/components/add-products/add-product.component';
-import { ImportModalComponent } from './components/inventory-table/components/import-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', component: DashboardComponent }
+];
 
 @NgModule({
   declarations: [
@@ -16,13 +20,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FileUploadComponent,
     InventoryTableComponent,
     AddProductComponent,
-    ImportModalComponent
   ],
   imports: [
     CommonModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forChild(routes)
   ],
   exports: [DashboardComponent]
 })

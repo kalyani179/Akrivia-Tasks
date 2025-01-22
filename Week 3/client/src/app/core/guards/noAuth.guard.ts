@@ -35,7 +35,6 @@ export class NoAuthGuard implements CanActivate {
         );
       }
     }
-
     // If no access token is present, allow access to the route
     return true;
   }

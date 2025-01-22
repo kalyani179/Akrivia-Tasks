@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/components/login/login.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/noAuth.guard';
 
@@ -18,17 +17,18 @@ const routes: Routes = [
   },
   { 
     path: 'dashboard', 
-    component: DashboardComponent,
+    loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard] // Require authentication for dashboard
   },
   { 
-    path: '', 
-    redirectTo: '/dashboard', 
-    pathMatch: 'full' 
+    path: 'forgot-password', 
+    loadChildren: () => import('./features/auth/components/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule),
+    canActivate: [NoAuthGuard] // Prevent authenticated users from accessing forgot password
   },
-  { 
-    path: '**', 
-    redirectTo: '/dashboard' 
+  {
+    path: 'reset-password/:id/:accessToken',
+    loadChildren : () => import('./features/auth/components/reset-password/reset-password.module').then(m => m.ResetPasswordModule),
+    canActivate: [NoAuthGuard] // Prevent authenticated users from accessing reset password
   }
 ];
 

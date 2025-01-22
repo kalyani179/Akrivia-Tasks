@@ -7,25 +7,16 @@ import { LoginComponent } from './features/auth/components/login/login.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from './features/dashboard/components/navbar/navbar.component';
-import { InventoryTableComponent } from './features/dashboard/components/inventory-table/inventory-table.component';
-import { FileUploadComponent } from './features/dashboard/components/file-upload/file-upload.component';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
-import { AddProductComponent } from './features/dashboard/components/inventory-table/components/add-products/add-product.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/noAuth.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    DashboardComponent,
-    NavbarComponent,
-    InventoryTableComponent,
-    FileUploadComponent,
-    AddProductComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
