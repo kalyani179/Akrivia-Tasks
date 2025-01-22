@@ -25,6 +25,7 @@
     "jszip": "^3.10.1",
     "jwt-decode": "^4.0.0",
     "ng-angular-popup": "^0.2.0",
+    "ngx-socket-io": "^4.3.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",

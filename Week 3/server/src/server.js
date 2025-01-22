@@ -8,10 +8,26 @@ const morganMiddleware = require('./middleware/loggers/morgan');
 const limiter = require('./middleware/rateLimiter/rateLimit');
 const helmet = require('helmet');
 
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
 dotenv.config();
 
 const server = express();
 const PORT = process.env.PORT || 3000;
+
+const httpServer = createServer(server);
+const io = new Server(httpServer, { 
+  cors: {
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST"]
+  } 
+ });
+
+io.on("connection", (socket) => {
+   socket.emit("message", "Welcome to the chat");
+    console.log("a user connected");
+});
 
 // Middlewares
 server.use(cors());
@@ -23,8 +39,8 @@ server.use(helmet());
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Use routes
-server.use('/api', routes);
+server.use('/api',limiter, routes);
 
-server.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

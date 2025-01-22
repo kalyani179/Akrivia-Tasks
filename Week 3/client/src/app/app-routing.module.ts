@@ -29,6 +29,15 @@ const routes: Routes = [
     path: 'reset-password/:id/:accessToken',
     loadChildren : () => import('./features/auth/components/reset-password/reset-password.module').then(m => m.ResetPasswordModule),
     canActivate: [NoAuthGuard] // Prevent authenticated users from accessing reset password
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./features/dashboard/components/chat/chat.module').then(m => m.ChatModule),
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: '**', 
+    redirectTo: '/dashboard' 
   }
 ];
 

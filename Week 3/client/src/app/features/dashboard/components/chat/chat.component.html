@@ -1,0 +1,33 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h4>Chat Support</h4>
+    <div class="connection-status" [class.connected]="isConnected">
+      {{ isConnected ? 'Connected' : 'Disconnected' }}
+    </div>
+  </div>
+  
+  <div class="messages-container">
+    <div *ngFor="let message of messages" 
+         class="message" 
+         [class.sent]="message.sent"
+         [class.received]="!message.sent">
+      <div class="message-content">
+        {{ message.text }}
+        <small class="timestamp">{{ message.timestamp | date:'shortTime' }}</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <input type="text" 
+           [(ngModel)]="newMessage" 
+           (keyup.enter)="sendMessage()"
+           placeholder="Type a message..."
+           class="message-input">
+    <button (click)="sendMessage()" 
+            [disabled]="!newMessage.trim()"
+            class="send-button">
+      <i class="bi bi-send"></i>
+    </button>
+  </div>
+</div>
