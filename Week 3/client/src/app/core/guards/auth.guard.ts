@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
             return true;
           }),
           catchError(() => {
-            this.toast.error({ detail: 'Access Denied', summary: 'Please login to access the profile page.', duration: 5000 });
+            this.toast.error({ detail: 'Access Denied', summary: 'Please login to access the dashboard.', duration: 5000 });
             this.router.navigate(['/login']);
             return of(false);
           })
@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate {
       }
     }
 
-    this.toast.error({ detail: 'Access Denied', summary: 'Please login to access the profile page.', duration: 5000 });
+    this.toast.error({ detail: 'Access Denied', summary: 'Please login to access the dashboard.', duration: 5000 });
     this.router.navigate(['/login']);
     return false;
   }

@@ -5,6 +5,11 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/noAuth.guard';
 
 const routes: Routes = [
+  {
+    path:'',
+    redirectTo:'/login',
+    pathMatch:'full'
+  },
   { 
     path: 'login', 
     component: LoginComponent,

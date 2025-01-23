@@ -27,6 +27,10 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
    socket.emit("message", "Welcome to the chat");
     console.log("a user connected");
+    socket.on("message", (message) => {
+      console.log(message);
+      io.emit("message", message);
+    });
 });
 
 // Middlewares
