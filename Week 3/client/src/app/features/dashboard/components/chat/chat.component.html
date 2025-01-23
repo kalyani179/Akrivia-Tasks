@@ -1,33 +1,90 @@
+<button class="close-button" routerLink="/dashboard">
+  <i class="bi bi-x-lg"></i>
+</button>
 <div class="chat-container">
-  <div class="chat-header">
-    <h4>Chat Support</h4>
-    <div class="connection-status" [class.connected]="isConnected">
-      {{ isConnected ? 'Connected' : 'Disconnected' }}
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Chat mode selector -->
+    <div class="mode-selector">
+      <button [class.active]="chatMode === 'private'" (click)="chatMode = 'private'">Private Chat</button>
+      <button [class.active]="chatMode === 'group'" (click)="chatMode = 'group'">Group Chat</button>
     </div>
-  </div>
-  
-  <div class="messages-container">
-    <div *ngFor="let message of messages" 
-         class="message" 
-         [class.sent]="message.sent"
-         [class.received]="!message.sent">
-      <div class="message-content">
-        {{ message.text }}
-        <small class="timestamp">{{ message.timestamp | date:'shortTime' }}</small>
+
+    <!-- Private chat users list -->
+    <div class="users-list" *ngIf="chatMode === 'private'">
+      <h3>Active Users</h3>
+      <div class="user-item" *ngFor="let user of activeUsers" 
+           [class.selected]="selectedUser?.id === user.id"
+           (click)="selectUser(user)">
+        {{ user.username }}
+      </div>
+      <div *ngIf="activeUsers.length === 0" class="no-users">
+        No active users
+      </div>
+    </div>
+
+    <!-- Group chat rooms list -->
+    <div class="rooms-list" *ngIf="chatMode === 'group'">
+      <h3>Chat Rooms</h3>
+      <div class="create-room">
+        <input type="text" [(ngModel)]="newRoomName" placeholder="New room name">
+        <button (click)="createRoom()">Create</button>
+      </div>
+      <div class="room-item" *ngFor="let room of rooms"
+           [class.selected]="currentRoom === room"
+           (click)="joinRoom(room)">
+        {{ room }}
+      </div>
+      <div *ngIf="rooms.length === 0" class="no-rooms">
+        No rooms available
       </div>
     </div>
   </div>
 
-  <div class="input-container">
-    <input type="text" 
-           [(ngModel)]="newMessage" 
-           (keyup.enter)="sendMessage()"
-           placeholder="Type a message..."
-           class="message-input">
-    <button (click)="sendMessage()" 
-            [disabled]="!newMessage.trim()"
-            class="send-button">
-      <i class="bi bi-send"></i>
-    </button>
+  <!-- Chat area -->
+  <div class="chat-area">
+    <!-- Chat header -->
+    <div class="chat-header">
+      <ng-container *ngIf="chatMode === 'private'">
+        <h3 *ngIf="selectedUser">Chat with {{ selectedUser.username }}</h3>
+        <h3 *ngIf="!selectedUser">Select a user to start chatting</h3>
+      </ng-container>
+      <ng-container *ngIf="chatMode === 'group'">
+        <h3 *ngIf="currentRoom">{{ currentRoom }}</h3>
+        <h3 *ngIf="!currentRoom">Select a room to join</h3>
+        <button *ngIf="currentRoom" (click)="leaveRoom()">Leave Room</button>
+      </ng-container>
+    </div>
+
+    <!-- Messages -->
+    <div class="messages-container">
+      <div class="message" *ngFor="let message of messages"
+           [class.own-message]="message.sender.id === currentUser.id">
+        <div class="message-header">
+          <span class="sender">{{ message.sender.username }}</span>
+          <span class="timestamp">{{ message.timestamp | date:'short' }}</span>
+        </div>
+        <div class="message-content">{{ message.text }}</div>
+      </div>
+      <div *ngIf="messages.length === 0" class="no-messages">
+        No messages yet
+      </div>
+    </div>
+
+    <!-- Message input -->
+    <div class="message-input" *ngIf="(selectedUser && chatMode === 'private') || (currentRoom && chatMode === 'group')">
+      <input type="text" [(ngModel)]="newMessage" 
+             placeholder="Type your message..."
+             (keyup.enter)="sendMessage()">
+      <button (click)="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <!-- Room users sidebar (for group chat) -->
+  <div class="room-users" *ngIf="chatMode === 'group' && currentRoom">
+    <h3>Room Users</h3>
+    <div class="user-item" *ngFor="let user of roomUsers">
+      {{ user.username }}
+    </div>
   </div>
 </div>

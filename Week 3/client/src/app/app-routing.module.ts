@@ -38,7 +38,7 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: () => import('./features/dashboard/components/chat/chat.module').then(m => m.ChatModule),
-    canActivate: [AuthGuard]
+    canActivate : [AuthGuard]
   },
   { 
     path: '**', 

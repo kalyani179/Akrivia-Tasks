@@ -107,7 +107,7 @@ const listFiles = async (req, res) => {
         Size: item.Size,
         LastModified: item.LastModified,
       }));
-    console.log(files);
+  
     res.status(200).json({ files });
   } catch (err) {
     console.error('Error listing files:', err);

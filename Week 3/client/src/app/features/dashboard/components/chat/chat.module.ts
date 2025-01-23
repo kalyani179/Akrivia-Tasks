@@ -1,19 +1,37 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ChatComponent } from './chat.component';
 import { FormsModule } from '@angular/forms';
+import { ChatComponent } from './chat.component';
+import { ChatService } from 'src/app/core/services/chat.service';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 const routes: Routes = [
-  { path: '', component: ChatComponent }
+  {
+    path: '',
+    component: ChatComponent
+  }
 ];
 
+const config: SocketIoConfig = { 
+  url: 'http://localhost:3000', 
+  options: {
+    transports: ['websocket']
+  } 
+};
+
 @NgModule({
-  declarations: [ChatComponent],
+  declarations: [
+    ChatComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SocketIoModule.forRoot(config)
+  ],
+  providers: [
+    ChatService
   ]
 })
 export class ChatModule { } 
