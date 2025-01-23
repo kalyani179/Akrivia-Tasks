@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { FileService } from 'src/app/core/services/file.service';
-import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { firstValueFrom } from 'rxjs';
 
 interface UploadedFile {
   name: string;
@@ -10,7 +11,6 @@ interface UploadedFile {
   url?: SafeResourceUrl;
   selected: boolean;
 }
-
 
 @Component({
   selector: 'app-file-upload',
@@ -41,14 +41,37 @@ export class FileUploadComponent implements OnInit {
 
   loadFiles(): void {
     this.fileService.getAllFiles().subscribe({
-      next: (response) => {
-        this.files = response.files.map((file: any) => ({
-          name: file.Key.split('/').pop(), // Get filename from full path
-          size: this.formatFileSize(file.Size),
-          type: this.getFileType(file.Key),
-          url: this.sanitizer.bypassSecurityTrustResourceUrl(file.url),
-          selected: false
-        }));
+      next: async (response) => {
+        // Create an array of promises for getting download URLs
+        const filePromises = response.files.map(async (file: any) => {
+          try {
+            // Get the download URL for each file
+            const downloadResponse = await firstValueFrom(
+              this.fileService.getDownloadUrls([file.Key.split('/').pop()])
+            );
+
+            if (!downloadResponse?.downloadUrl) {
+              console.error('No download URL received for file:', file.Key);
+              return null;
+            }
+
+            return {
+              name: file.Key.split('/').pop(),
+              size: this.formatFileSize(file.Size),
+              type: this.getFileType(file.Key),
+              url: this.sanitizer.bypassSecurityTrustResourceUrl(downloadResponse.downloadUrl),
+              selected: false
+            };
+          } catch (error) {
+            console.error('Error getting download URL for file:', file.Key, error);
+            return null;
+          }
+        });
+
+        // Wait for all promises to resolve
+        const resolvedFiles = await Promise.all(filePromises);
+        // Filter out any null values from failed requests
+        this.files = resolvedFiles.filter((file): file is UploadedFile => file !== null);
       },
       error: (err) => {
         console.error('Error loading files:', err);

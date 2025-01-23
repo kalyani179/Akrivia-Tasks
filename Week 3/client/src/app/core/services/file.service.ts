@@ -27,6 +27,10 @@ export class FileService {
     return this.http.put(uploadUrl, file, { headers });
   }
 
+  getDownloadUrls(fileNames: string[]): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/download`, { fileNames });
+  }
+
   downloadFiles(fileNames: string[]): Observable<void> {
     return this.http.post<any>(`${this.apiUrl}/download`, { fileNames }).pipe(
       switchMap(response => {
