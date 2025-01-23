@@ -10,6 +10,7 @@ const helmet = require('helmet');
 
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const { encryptMiddleware, decryptMiddleware } = require('./middleware/crypto/encrypt.decrypt.middlware');
 
 dotenv.config();
 
@@ -42,8 +43,12 @@ server.use(helmet());
 // Swagger setup
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+server.use(decryptMiddleware);
+
 // Use routes
 server.use('/api',limiter, routes);
+
+server.use(encryptMiddleware);
 
 httpServer.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
