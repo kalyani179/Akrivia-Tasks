@@ -39,7 +39,7 @@
                  (change)="toggleFileSelection(file)">
         </div>
         <i class="bi" [ngClass]="getFileIcon(file.type)" class="mx-3"></i>
-        <div class="flex-grow-1">
+        <div class="flex-grow-1 cursor-pointer" (click)="previewFileItem(file)">
           <div class="file-name small" style="font-size: 11px;">{{file.name}}</div>
           <small class="text-muted" style="font-size: 10px;">{{file.size}}</small>
         </div>
@@ -80,6 +80,45 @@
         <span *ngIf="isUploading" class="spinner-border spinner-border-sm me-2"></span>
         {{ isUploading ? 'Uploading...' : 'Upload files' }}
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="preview-modal" *ngIf="showPreviewModal && previewFile">
+  <div class="preview-modal-content">
+    <div class="preview-header">
+      <h5 class="mb-0">{{previewFile.name}}</h5>
+      <button class="btn-close" (click)="closePreviewModal()"></button>
+    </div>
+    
+    <div class="preview-body">
+      <!-- Image Preview -->
+      <img *ngIf="previewFile.type?.startsWith('image/')" 
+           [src]="previewFile.url" 
+           [alt]="previewFile.name"
+           class="preview-image">
+           
+      <!-- PDF Preview -->
+      <iframe *ngIf="previewFile.type === 'application/pdf'"
+              [src]="previewFile.url"
+              class="preview-pdf"
+              type="application/pdf">
+      </iframe>
+      
+      <!-- Text Preview -->
+      <div *ngIf="previewFile.type === 'text/plain'" class="preview-text">
+        <pre>{{previewFile.url}}</pre>
+      </div>
+      
+      <!-- Unsupported Format -->
+      <div *ngIf="!isPreviewable(previewFile.type)" class="preview-unsupported">
+        <i class="bi bi-file-earmark-x display-1"></i>
+        <p class="mt-3">Preview not available for this file type</p>
+        <button class="btn btn-primary mt-2" (click)="downloadSingleFile(previewFile.name)">
+          Download to view
+        </button>
+      </div>
     </div>
   </div>
 </div>

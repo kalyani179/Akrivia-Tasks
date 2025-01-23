@@ -231,7 +231,8 @@
     .badge {
       font-size: 12px;
       padding: 4px 8px;
-      border-radius: 4px;
+      border-radius: 9px;
+      font-weight : 600;
       
       &.bg-success {
         background: rgba(16, 185, 129, 0.1) !important;
@@ -451,15 +452,37 @@ select[multiple] {
 }
 
 .selected-vendors {
-  min-height: 28px;
-  
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
+  min-height: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  padding-bottom: 2px;
+
   .badge {
-    font-size: 12px;
+    font-weight: normal;
     padding: 4px 8px;
-    margin-right: 4px;
-    margin-bottom: 4px;
-    background: #f3f4f6;
-    color: #4b5563;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+.dropdown-toggle {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 38px;
+  
+  &::after {
+    margin-left: 8px;
   }
 }
 

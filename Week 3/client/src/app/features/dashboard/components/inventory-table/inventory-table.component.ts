@@ -1243,4 +1243,13 @@ toggleVendorSelectionForCart(item: InventoryItem, vendor: string): void {
       duration: 3000
     });
   }
+
+  getVendorColor(index: number): string {
+    const colors = ['#E8F3FF', '#FFF1E8', '#F3E8FF'];  // Light blue, Light orange, Light purple
+    return colors[index % colors.length];
+  }
+
+  getSelectedVendorsForItem(item: any): string[] {
+    return item.selectedVendorsForCart || [];
+  }
 }

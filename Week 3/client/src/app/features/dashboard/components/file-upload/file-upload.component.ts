@@ -1,13 +1,22 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { FileService } from 'src/app/core/services/file.service';
+import { DomSanitizer, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
 interface UploadedFile {
   name: string;
   size: string;
   type: string;
-  url?: string;
-  selected?: boolean;
+  url?: SafeResourceUrl;
+  selected: boolean;
+}
+
+interface FileItem {
+  name: string;
+  type: string;
+  size: string;
+  selected: boolean;
+  url?: SafeUrl;
 }
 
 @Component({
@@ -24,10 +33,13 @@ export class FileUploadComponent implements OnInit {
   files: UploadedFile[] = [];
   isUploading = false;
   isDownloading = false;
+  showPreviewModal = false;
+  previewFile: UploadedFile | null = null;
 
   constructor(
     private fileService: FileService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -41,7 +53,7 @@ export class FileUploadComponent implements OnInit {
           name: file.Key.split('/').pop(), // Get filename from full path
           size: this.formatFileSize(file.Size),
           type: this.getFileType(file.Key),
-          url: file.url,
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(file.url),
           selected: false
         }));
       },
@@ -123,7 +135,8 @@ export class FileUploadComponent implements OnInit {
           name: fileName,
           size: this.formatFileSize(file.size),
           type: file.type,
-          url: uploadUrl.split('?')[0]
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(uploadUrl.split('?')[0]),
+          selected: false
         });
         this.isUploading = false;
         this.toast.success({
@@ -260,5 +273,25 @@ export class FileUploadComponent implements OnInit {
   toggleAllFiles(): void {
     const newValue = !this.allFilesSelected();
     this.files.forEach(file => file.selected = newValue);
+  }
+
+  previewFileItem(file: UploadedFile): void {
+    this.previewFile = file;
+    this.showPreviewModal = true;
+  }
+
+  closePreviewModal(): void {
+    this.showPreviewModal = false;
+    this.previewFile = null;
+  }
+
+  isPreviewable(fileType: string): boolean {
+    const imageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
+    const documentTypes = ['application/pdf', 'text/plain'];
+    return imageTypes.includes(fileType) || documentTypes.includes(fileType);
+  }
+
+  getFileUrl(fileName: string): string {
+    return `/api/files/download/${fileName}`;
   }
 }

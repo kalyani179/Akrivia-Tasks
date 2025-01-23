@@ -168,13 +168,41 @@
               </ng-template>
             </td>
             <td>
-              <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayVendors">
+              <ng-container *ngIf="editingItem?.product_id !== item.product_id">
+                <span *ngFor="let vendor of item.vendors.slice(0, 2); let i = index" 
+                      class="badge me-1" 
+                      [style.background-color]="getVendorColor(i)"
+                      style="color: #000;">
+                  {{vendor}}
+                </span>
+                <span *ngIf="item.vendors.length > 2" 
+                      class="badge bg-light text-dark" 
+                      style="font-weight: normal;">
+                  +{{item.vendors.length - 2}}
+                </span>
+              </ng-container>
+              <ng-container *ngIf="editingItem?.product_id === item.product_id">
                 <div class="dropdown" ngbDropdown>
                   <button class="btn btn-outline-secondary btn-sm dropdown-toggle w-100" 
                           type="button" 
                           id="vendorDropdown" 
                           ngbDropdownToggle>
-                    Select Vendors
+                    <div class="selected-vendors">
+                      <ng-container *ngIf="editForm.selectedVendors.length > 0">
+                        <span *ngFor="let vendor of editForm.selectedVendors.slice(0, 2); let i = index" 
+                              class="badge me-1"
+                              [style.background-color]="getVendorColor(i)"
+                              style="color: #000;">
+                          {{vendor}}
+                        </span>
+                        <span *ngIf="editForm.selectedVendors.length > 2" 
+                              class="badge bg-secondary text-white"
+                              style="font-weight: normal;">
+                          +{{editForm.selectedVendors.length - 2}}
+                        </span>
+                      </ng-container>
+                      <span *ngIf="editForm.selectedVendors.length === 0">Select Vendors</span>
+                    </div>
                   </button>
                   <div ngbDropdownMenu aria-labelledby="vendorDropdown" class="w-100">
                     <div *ngFor="let vendor of availableVendors" class="px-3 py-1">
@@ -183,7 +211,7 @@
                                type="checkbox" 
                                [id]="'vendor-' + vendor"
                                [checked]="editForm.selectedVendors.includes(vendor)"
-                               (change)="toggleVendor(vendor)">
+                               (change)="toggleVendor(vendor)" style="margin-left: 5px;">
                         <label class="form-check-label" [for]="'vendor-' + vendor">
                           {{ vendor }}
                         </label>
@@ -192,11 +220,6 @@
                   </div>
                 </div>
               </ng-container>
-              <ng-template #displayVendors>
-                <span *ngFor="let vendor of item.vendors" class="badge bg-light text-dark me-1">
-                  {{vendor}}
-                </span>
-              </ng-template>
             </td>
             <td>
               <ng-container *ngIf="editingItem?.product_id === item.product_id; else displayQuantity">
@@ -294,9 +317,19 @@
             </td>
             <td>{{item.category}}</td>
             <td>
-              <span *ngFor="let vendor of item.selectedVendorsForCart" class="badge bg-light text-dark me-1">
-                {{vendor}}
-              </span>
+              <ng-container *ngIf="item.selectedVendorsForCart">
+                <span *ngFor="let vendor of item.selectedVendorsForCart.slice(0, 2); let i = index" 
+                      class="badge bg-light text-dark me-1"
+                      [style.background-color]="getVendorColor(i)"
+                      style="color: #000;">
+                  {{vendor}}
+                </span>
+                <span *ngIf="item.selectedVendorsForCart.length > 2" 
+                      class="badge bg-light text-dark"
+                      style="font-weight: normal;">
+                  +{{item.selectedVendorsForCart.length - 2}}
+                </span>
+              </ng-container>
             </td>
             <td>
               <div class="input-group input-group-sm" style="width: 120px;">
@@ -431,23 +464,38 @@
                         type="button" 
                         id="moveToCartVendorDropdown" 
                         ngbDropdownToggle>
-                  Select vendor
+                  <div class="selected-vendors">
+                    <ng-container *ngIf="getSelectedVendorsForItem(item).length > 0">
+                      <span *ngFor="let vendor of getSelectedVendorsForItem(item).slice(0, 2); let i = index" 
+                            class="badge me-1"
+                            [style.background-color]="getVendorColor(i)"
+                            style="color: #000;">
+                        {{vendor}}
+                      </span>
+                      <span *ngIf="getSelectedVendorsForItem(item).length > 2" 
+                            class="badge bg-secondary text-white"
+                            style="font-weight: normal;">
+                        +{{getSelectedVendorsForItem(item).length - 2}}
+                      </span>
+                    </ng-container>
+                    <span *ngIf="getSelectedVendorsForItem(item).length === 0">Select vendor</span>
+                  </div>
                 </button>
                 <div ngbDropdownMenu aria-labelledby="moveToCartVendorDropdown" class="w-100">
                   <div *ngFor="let vendor of item.vendors" class="px-3 py-1">
                     <div class="form-check">
-                    <input class="form-check-input" 
-                          type="checkbox" 
-                          [id]="'moveToCart-vendor-' + vendor"
-                          [checked]="isVendorSelectedForCart(item, vendor)"
-                          (change)="toggleVendorSelectionForCart(item, vendor)">
-                    <label class="form-check-label" [for]="'moveToCart-vendor-' + vendor">
-                      {{ vendor }}
-                    </label>
+                      <input class="form-check-input" 
+                            type="checkbox" 
+                            [id]="'moveToCart-vendor-' + vendor"
+                            [checked]="isVendorSelectedForCart(item, vendor)"
+                            (change)="toggleVendorSelectionForCart(item, vendor)" style="margin-left: 5px;">
+                      <label class="form-check-label" [for]="'moveToCart-vendor-' + vendor">
+                        {{ vendor }}
+                      </label>
+                    </div>
                   </div>
-                  </div>
-            </div>
-            </div>
+                </div>
+              </div>
             </td>
             <td>
               <div class="input-group input-group-sm" style="width: 120px;">
