@@ -11,13 +11,6 @@ interface UploadedFile {
   selected: boolean;
 }
 
-interface FileItem {
-  name: string;
-  type: string;
-  size: string;
-  selected: boolean;
-  url?: SafeUrl;
-}
 
 @Component({
   selector: 'app-file-upload',
@@ -277,6 +270,7 @@ export class FileUploadComponent implements OnInit {
 
   previewFileItem(file: UploadedFile): void {
     this.previewFile = file;
+    console.log(this.previewFile.url);
     this.showPreviewModal = true;
   }
 

@@ -1245,7 +1245,7 @@ toggleVendorSelectionForCart(item: InventoryItem, vendor: string): void {
   }
 
   getVendorColor(index: number): string {
-    const colors = ['#E8F3FF', '#FFF1E8', '#F3E8FF'];  // Light blue, Light orange, Light purple
+    const colors = ['#E8F3FF', '#F3E8FF','#FFF1E8'];  // Light blue, Light purple, Light orange
     return colors[index % colors.length];
   }
 
