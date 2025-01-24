@@ -8,6 +8,7 @@ export interface Message {
   timestamp: Date;
   type: 'private' | 'group';
   room?: string;
+  messageId?: string;
 }
 
 export interface User {

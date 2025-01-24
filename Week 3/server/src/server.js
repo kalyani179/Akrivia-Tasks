@@ -29,14 +29,17 @@ const io = new Server(httpServer, {
 const activeUsers = new Map();
 const rooms = new Map(); // Store chat rooms and their members
 
+
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
   // Handle user joining
   socket.on('join', (userData) => {
     console.log('User joined:', userData);
-    activeUsers.set(socket.id, userData);
-    
+    // Add socket.id to the user data
+    const userWithId = { ...userData, id: socket.id };
+    activeUsers.set(socket.id, userWithId);
+    console.log(activeUsers);
     // Broadcast updated user list to all clients
     io.emit('users', Array.from(activeUsers.values()));
   });
@@ -47,14 +50,21 @@ io.on('connection', (socket) => {
     if (sender && to) {
       const messageData = {
         text: message,
-        sender: sender,
+        sender: { ...sender, id: socket.id },
         timestamp: new Date(),
         type: 'private'
       };
       
-      // Send to recipient and sender
-      io.to(to).emit('private-message', messageData);
+      // Send to recipient
+      socket.to(to).emit('private-message', messageData);
+      // Send back to sender
       socket.emit('private-message', messageData);
+      
+      console.log('Private message sent:', {
+        from: sender.username,
+        to: to,
+        message: messageData
+      });
     }
   });
 
@@ -66,7 +76,11 @@ io.on('connection', (socket) => {
       if (!rooms.has(roomName)) {
         rooms.set(roomName, [user]);
       } else {
-        rooms.get(roomName).push(user);
+        // Check if user is not already in the room
+        const roomUsers = rooms.get(roomName);
+        if (!roomUsers.some(u => u.id === user.id)) {
+          roomUsers.push(user);
+        }
       }
       io.emit('room-list', Array.from(rooms.keys()));
       io.to(roomName).emit('room-users', {
@@ -80,7 +94,11 @@ io.on('connection', (socket) => {
     const user = activeUsers.get(socket.id);
     if (user && rooms.has(roomName)) {
       socket.join(roomName);
-      rooms.get(roomName).push(user);
+      // Check if user is not already in the room
+      const roomUsers = rooms.get(roomName);
+      if (!roomUsers.some(u => u.id === user.id)) {
+        roomUsers.push(user);
+      }
       io.to(roomName).emit('room-users', {
         room: roomName,
         users: rooms.get(roomName)
@@ -92,7 +110,11 @@ io.on('connection', (socket) => {
     const user = activeUsers.get(socket.id);
     if (user && rooms.has(roomName)) {
       socket.leave(roomName);
-      rooms.set(roomName, rooms.get(roomName).filter(u => u.id !== user.id));
+      // Remove user from room
+      const roomUsers = rooms.get(roomName);
+      rooms.set(roomName, roomUsers.filter(u => u.id !== user.id));
+      
+      // Delete room if empty
       if (rooms.get(roomName).length === 0) {
         rooms.delete(roomName);
         io.emit('room-list', Array.from(rooms.keys()));
@@ -110,12 +132,24 @@ io.on('connection', (socket) => {
     if (sender && rooms.has(room)) {
       const messageData = {
         text: message,
-        sender: sender,
-        timestamp: new Date(),
+        sender: {
+          id: socket.id,
+          username: sender.username
+        },
+        timestamp: new Date().toISOString(),  // Use ISO string for consistent timestamp
+        messageId: `${socket.id}_${Date.now()}`,  // Add unique message ID
         type: 'group',
         room: room
       };
-      io.to(room).emit('group-message', messageData);
+      
+      // Send to all users in the room including sender
+      io.in(room).emit('group-message', messageData);
+      
+      console.log('Group message sent:', {
+        room: room,
+        from: sender.username,
+        message: messageData
+      });
     }
   });
 

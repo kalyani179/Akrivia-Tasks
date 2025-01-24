@@ -14,9 +14,17 @@
     <div class="users-list" *ngIf="chatMode === 'private'">
       <h3>Active Users</h3>
       <div class="user-item" *ngFor="let user of activeUsers" 
-           [class.selected]="selectedUser?.id === user.id"
+           [class.selected]="selectedUser?.username === user.username"
            (click)="selectUser(user)">
-        {{ user.username }}
+        <div class="user-item-content">
+          <div class="user-info">
+            <span class="username">{{ user.username }}</span>
+            <span class="status-dot active"></span>
+            <span class="notification-badge" *ngIf="user.unreadCount && user.unreadCount > 0">
+              {{ user.unreadCount }}
+            </span>
+          </div>
+        </div>
       </div>
       <div *ngIf="activeUsers.length === 0" class="no-users">
         No active users
@@ -59,9 +67,9 @@
     <!-- Messages -->
     <div class="messages-container">
       <div class="message" *ngFor="let message of messages"
-           [class.own-message]="message.sender.id === currentUser.id">
+           [class.own-message]="isOwnMessage(message)">
         <div class="message-header">
-          <span class="sender">{{ message.sender.username }}</span>
+          <span class="sender" style="margin-right: 10px;">{{ message.sender.username }}</span>
           <span class="timestamp">{{ message.timestamp | date:'short' }}</span>
         </div>
         <div class="message-content">{{ message.text }}</div>
