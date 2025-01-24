@@ -6,9 +6,8 @@ const SECRET_KEY = process.env.JWT_SECRET;
  
 function encryptData(data) {
     const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), SECRET_KEY).toString();
-    console.log('Encrypted Payload (Backend):', encrypted);
     return encrypted;
-  }
+}
  
 function decryptData(encryptedData) {
     const decrypted = CryptoJS.AES.decrypt(encryptedData, SECRET_KEY);
