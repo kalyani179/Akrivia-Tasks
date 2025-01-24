@@ -5,7 +5,6 @@ import { ChatService, Message, User } from 'src/app/core/services/chat.service';
 export interface UserWithNotification extends User {
   unreadCount?: number;
 }
-
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',

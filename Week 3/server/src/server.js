@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const { swaggerUi, specs } = require('./swagger'); // Import Swagger configuration
+const { swaggerUi, specs } = require('./swagger');
 const routes = require('./v1/routes');
 const morganMiddleware = require('./middleware/loggers/morgan');
 const limiter = require('./middleware/rateLimiter/rateLimit');
@@ -28,7 +28,6 @@ const io = new Server(httpServer, {
 // Store active users with their socket IDs
 const activeUsers = new Map();
 const rooms = new Map(); // Store chat rooms and their members
-
 
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
