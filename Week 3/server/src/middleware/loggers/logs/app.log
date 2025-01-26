@@ -19803,3 +19803,33 @@
   level: 'info',
   timestamp: '2025-01-26T07:13:06.305Z'
 }
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"150.797"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:16:07.107Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"10.124"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:16:07.344Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"31.974"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:16:07.392Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"146.601"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:16:07.514Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"180.865"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:16:07.530Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"725.243"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:16:08.102Z'
+}
