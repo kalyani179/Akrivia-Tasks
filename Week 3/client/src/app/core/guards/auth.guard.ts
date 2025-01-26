@@ -13,20 +13,21 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> | boolean {
     const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
+    const userId = localStorage.getItem('userId');
 
     if (accessToken) {
       if (this.authService.isTokenValid(accessToken)) {
         return true;
-      } else if (refreshToken) {
-        // Access token is expired, try to refresh it
+      } else if (userId) {
+        // Access token is expired, try to refresh it using userId
         return this.authService.refreshToken().pipe(
           map((response: any) => {
             localStorage.setItem('accessToken', response.accessToken);
             return true;
           }),
-          catchError(() => {
-            this.toast.error({ detail: 'Access Denied', summary: 'Please login to access the dashboard.', duration: 5000 });
+          catchError((error) => {
+            console.error('Token refresh failed:', error);
+            this.toast.error({ detail: 'Session Expired', summary: 'Please login again to continue.', duration: 5000 });
             this.router.navigate(['/login']);
             return of(false);
           })

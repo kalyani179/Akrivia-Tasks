@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/components/login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/noAuth.guard';
+import { UnsavedChangesGuard } from './core/guards/unsaved-changes.guard';
 
 const routes: Routes = [
   {
@@ -13,12 +14,14 @@ const routes: Routes = [
   { 
     path: 'login', 
     component: LoginComponent,
-    canActivate: [NoAuthGuard] // Prevent authenticated users from accessing login
+    canActivate: [NoAuthGuard], // Prevent authenticated users from accessing login
+    canDeactivate: [UnsavedChangesGuard]
   },
   { 
     path: 'signup', 
     loadChildren: () => import('./features/auth/components/signup/signup.module').then(m => m.SignupModule),
-    canActivate: [NoAuthGuard] // Prevent authenticated users from accessing signup
+    canActivate: [NoAuthGuard], // Prevent authenticated users from accessing signup
+    canDeactivate: [UnsavedChangesGuard]
   },
   { 
     path: 'dashboard', 

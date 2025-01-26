@@ -12,15 +12,15 @@ export class NoAuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> | boolean {
     const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
+    const userId = localStorage.getItem('userId');
 
     if (accessToken) {
       if (this.authService.isTokenValid(accessToken)) {
         // If the token is valid, redirect to the profile page
         this.router.navigate(['/dashboard']);
         return false;
-      } else if (refreshToken) {
-        // Access token is expired, try to refresh it
+      } else if (userId) {
+        // Access token is expired, try to refresh it using userId
         return this.authService.refreshToken().pipe(
           map((response: any) => {
             localStorage.setItem('accessToken', response.accessToken);
@@ -28,7 +28,8 @@ export class NoAuthGuard implements CanActivate {
             this.router.navigate(['/dashboard']);
             return false;
           }),
-          catchError(() => {
+          catchError((error) => {
+            console.error('Token refresh failed:', error);
             // If refreshing the token fails, allow access to the route
             return of(true);
           })
