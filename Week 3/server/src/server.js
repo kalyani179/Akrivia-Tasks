@@ -7,6 +7,7 @@ const routes = require('./v1/routes');
 const morganMiddleware = require('./middleware/loggers/morgan');
 const limiter = require('./middleware/rateLimiter/rateLimit');
 const helmet = require('helmet');
+const { notFoundHandler, globalErrorHandler, socketErrorHandler } = require('./middleware/error_handlers/error-handler');
 
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -31,6 +32,11 @@ const rooms = new Map(); // Store chat rooms and their members
 
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
+
+  // Handle socket errors
+  socket.on('error', (error) => {
+    socketErrorHandler(socket, error);
+  });
 
   // Handle user joining
   socket.on('join', (userData) => {
@@ -196,6 +202,10 @@ server.use(decryptMiddleware);
 server.use('/api',limiter, routes);
 
 server.use(encryptMiddleware);
+
+// Error Handling Middlewares
+server.use(notFoundHandler);  // Handle 404 errors
+server.use(globalErrorHandler);  // Global error handler
 
 httpServer.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
