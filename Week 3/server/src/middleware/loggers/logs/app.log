@@ -19973,3 +19973,8 @@
   level: 'info',
   timestamp: '2025-01-26T08:10:26.398Z'
 }
+{
+  message: '{"method":"POST","url":"/api/files/generate-upload-url","status":"200","responseTime":"799.973"}',
+  level: 'info',
+  timestamp: '2025-01-26T08:21:20.372Z'
+}
