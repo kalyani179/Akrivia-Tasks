@@ -23,6 +23,7 @@ class User extends Model {
         profile_pic: { type: ['string', 'null'], maxLength: 255 }, // Profile picture (nullable string)
         thumbnail: { type: ['string', 'null'], maxLength: 255 }, // Thumbnail URL (nullable string)
         status: { type: 'integer', default: 0 }, // User status (default is 0)
+        refresh_token: { type: ['string', 'null'] }, // Refresh token (nullable string)
         created_at: { type: 'string', format: 'date-time' }, // Timestamp (created_at)
         updated_at: { type: 'string', format: 'date-time' }, // Timestamp (updated_at)
       },

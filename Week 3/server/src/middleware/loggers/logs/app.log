@@ -19778,3 +19778,28 @@
   level: 'info',
   timestamp: '2025-01-26T06:21:50.453Z'
 }
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"400","responseTime":"178.400"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:09:31.236Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"500","responseTime":"162.108"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:09:37.406Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/signup","status":"400","responseTime":"19.201"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:12:55.476Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/signup","status":"201","responseTime":"113.080"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:12:59.770Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"500","responseTime":"149.748"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:13:06.305Z'
+}

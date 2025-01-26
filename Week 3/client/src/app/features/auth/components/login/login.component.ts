@@ -72,9 +72,7 @@ export class LoginComponent implements OnInit {
         this.isSubmitted = true;
         this.loginForm.reset();
         localStorage.setItem('accessToken', response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
         console.log('Token saved:', localStorage.getItem('accessToken'));
-        console.log('Refresh Token saved:', localStorage.getItem('refreshToken'));
         sessionStorage.removeItem('loginForm');
         this.router.navigate(['/dashboard']); 
       },  

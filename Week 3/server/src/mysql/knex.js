@@ -9,3 +9,4 @@ const knex = Knex(knexConfig);
 Model.knex(knex);
 
 module.exports = knex;
+

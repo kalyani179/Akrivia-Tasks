@@ -75,15 +75,18 @@ export class AuthInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error: HttpErrorResponse) => {
-        console.log('Error status:', error.status);
         if (error.status === 403 && !authRequest.url.includes('/api/auth/refresh-token')) {
           // If the access token is expired, try to refresh it
           console.log('Access token expired. Attempting to refresh token...');
           return this.authService.refreshToken().pipe(
             switchMap((response: any) => {
+              if (!response.accessToken) {
+                // If no new access token, force logout
+                this.authService.handleAuthError(new Error('Failed to refresh token'));
+                throw new Error('Failed to refresh token');
+              }
+
               console.log('Token refreshed successfully');
-              // Store the new access token
-              localStorage.setItem('accessToken', response.accessToken);
 
               // Clone the request with the new access token
               const newAuthRequest = request.clone({
@@ -103,7 +106,16 @@ export class AuthInterceptor implements HttpInterceptor {
             }),
             catchError((refreshError) => {
               console.error('Error refreshing token:', refreshError);
-              return throwError(() => new Error("refresh token error " + refreshError));
+              
+              // Check if it's a refresh token expiration
+              if (refreshError.status === 401) {
+                console.log('Refresh token expired or invalid');
+                this.authService.handleAuthError(new Error('Session expired. Please login again.'));
+              } else {
+                this.authService.handleAuthError(refreshError);
+              }
+              
+              return throwError(() => new Error('Session expired. Please login again.'));
             })
           );
         }

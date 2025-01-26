@@ -136,12 +136,83 @@ const login = async (req, res) => {
     const accessToken = generateAccessToken({ userId: user.id, username: user.username });
     const refreshToken = generateRefreshToken({ userId: user.id, username: user.username });
 
-    res.status(200).json({ message: 'Login successful.', accessToken, refreshToken });
+    // Store refresh token in database
+    await knex('users')
+      .where({ id: user.id })
+      .update({ refresh_token: refreshToken });
+
+    res.status(200).json({ 
+      message: 'Login successful.', 
+      accessToken,
+      userId: user.id // Send userId instead of refresh token
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
+const refreshAccessToken = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    // Get user and refresh token from database
+    const user = await knex('users')
+      .where({ id: userId })
+      .select('refresh_token', 'username')
+      .first();
+
+    if (!user || !user.refresh_token) {
+      return res.status(401).json({ 
+        error: 'Invalid refresh token',
+        code: 'INVALID_REFRESH_TOKEN'
+      });
+    }
+
+    try {
+      // Verify the refresh token
+      jwt.verify(user.refresh_token, process.env.JWT_REFRESH_SECRET);
+      
+      // Generate new access token
+      const accessToken = generateAccessToken({ 
+        userId: userId, 
+        username: user.username 
+      });
+
+      // Generate new refresh token
+      const newRefreshToken = generateRefreshToken({ 
+        userId: userId, 
+        username: user.username 
+      });
+
+      // Update refresh token in database
+      await knex('users')
+        .where({ id: userId })
+        .update({ refresh_token: newRefreshToken });
+
+      res.json({ accessToken });
+    } catch (err) {
+      // If refresh token is invalid or expired
+      await knex('users')
+        .where({ id: userId })
+        .update({ refresh_token: null });
+        
+      return res.status(401).json({ 
+        error: 'Refresh token expired',
+        code: 'REFRESH_TOKEN_EXPIRED'
+      });
+    }
+  } catch (err) {
+    console.error('Refresh token error:', err);
+    res.status(500).json({ 
+      error: 'Internal server error',
+      code: 'SERVER_ERROR'
+    });
+  }
+};
 
 const forgotPassword = async (req,res) => {
   try {
@@ -220,4 +291,10 @@ const resetPassword = async (req,res) => {
 }
 
 
-module.exports = { signup, login, forgotPassword, resetPassword};
+module.exports = { 
+  signup, 
+  login, 
+  forgotPassword, 
+  resetPassword,
+  refreshAccessToken
+};
