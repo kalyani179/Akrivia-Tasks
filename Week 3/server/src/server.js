@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const { swaggerUi, specs } = require('./swagger');
 const routes = require('./v1/routes');
-const morganMiddleware = require('./middleware/loggers/morgan');
-const limiter = require('./middleware/rateLimiter/rateLimit');
+const morganMiddleware = require('./middleware/loggers/morgan.middleware');
+const limiter = require('./middleware/rateLimiter/rateLimiter.middleware');
 const helmet = require('helmet');
-const { notFoundHandler, globalErrorHandler, socketErrorHandler } = require('./middleware/error_handlers/error-handler');
+const { notFoundHandler, globalErrorHandler, socketErrorHandler } = require('./middleware/error_handlers/errorHandler.middleware');
 
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -198,8 +198,10 @@ server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 server.use(decryptMiddleware);
 
+server.use(limiter);
+
 // Use routes
-server.use('/api',limiter, routes);
+server.use('/api', routes);
 
 server.use(encryptMiddleware);
 

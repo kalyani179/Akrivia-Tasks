@@ -1,5 +1,5 @@
 const morgan = require('morgan');
-const logger = require('./logger');
+const logger = require('./logger.middleware');
 
 const morganFormat = ":method :url :status :response-time ms";
 
