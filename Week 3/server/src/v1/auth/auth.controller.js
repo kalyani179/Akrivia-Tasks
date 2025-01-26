@@ -310,7 +310,7 @@ const resetPassword = async (req,res) => {
 module.exports = { 
   signup, 
   login, 
+  refreshAccessToken,
   forgotPassword, 
-  resetPassword,
-  refreshAccessToken
+  resetPassword
 };
