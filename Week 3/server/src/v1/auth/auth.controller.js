@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const { generateAccessToken, generateRefreshToken } = require('../../middleware/jwt/jwt.middleware');
+const { encrypt, decrypt } = require('../../constants/encrypt.decrypt');
 dotenv.config({ path: '../../.env' });
 
 
@@ -136,17 +137,21 @@ const login = async (req, res) => {
     const accessToken = generateAccessToken({ userId: user.id, username: user.username });
     const refreshToken = generateRefreshToken({ userId: user.id, username: user.username });
 
-    // Store refresh token in database
+    // Encrypt refresh token before storing
+    const encryptedRefreshToken = encrypt(refreshToken, process.env.CRYPTO_SECRET_KEY);
+
+    // Store encrypted refresh token in database
     await knex('users')
       .where({ id: user.id })
-      .update({ refresh_token: refreshToken });
+      .update({ refresh_token: encryptedRefreshToken });
 
     res.status(200).json({ 
       message: 'Login successful.', 
       accessToken,
-      userId: user.id // Send userId instead of refresh token
+      userId: user.id
     });
   } catch (err) {
+    console.error('Login error:', err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -159,7 +164,7 @@ const refreshAccessToken = async (req, res) => {
       return res.status(400).json({ error: 'User ID is required' });
     }
 
-    // Get user and refresh token from database
+    // Get user and encrypted refresh token from database
     const user = await knex('users')
       .where({ id: userId })
       .select('refresh_token', 'username')
@@ -173,8 +178,14 @@ const refreshAccessToken = async (req, res) => {
     }
 
     try {
-      // Verify the refresh token
-      jwt.verify(user.refresh_token, process.env.JWT_REFRESH_SECRET);
+      // Decrypt the stored refresh token
+      const decryptedRefreshToken = decrypt(user.refresh_token, process.env.CRYPTO_SECRET_KEY);
+      if (!decryptedRefreshToken) {
+        throw new Error('Failed to decrypt refresh token');
+      }
+
+      // Verify the decrypted refresh token
+      jwt.verify(decryptedRefreshToken, process.env.JWT_REFRESH_SECRET);
       
       // Generate new access token
       const accessToken = generateAccessToken({ 
@@ -188,20 +199,25 @@ const refreshAccessToken = async (req, res) => {
         username: user.username 
       });
 
-      // Update refresh token in database
+      // Encrypt new refresh token before storing
+      const encryptedNewRefreshToken = encrypt(newRefreshToken, process.env.CRYPTO_SECRET_KEY);
+
+      // Update encrypted refresh token in database
       await knex('users')
         .where({ id: userId })
-        .update({ refresh_token: newRefreshToken });
+        .update({ refresh_token: encryptedNewRefreshToken });
 
       res.json({ accessToken });
     } catch (err) {
-      // If refresh token is invalid or expired
+      console.error('Token verification/decryption error:', err);
+      
+      // If refresh token is invalid, expired, or decryption fails
       await knex('users')
         .where({ id: userId })
         .update({ refresh_token: null });
         
       return res.status(401).json({ 
-        error: 'Refresh token expired',
+        error: 'Refresh token expired or invalid',
         code: 'REFRESH_TOKEN_EXPIRED'
       });
     }

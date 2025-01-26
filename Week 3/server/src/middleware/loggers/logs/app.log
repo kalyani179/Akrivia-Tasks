@@ -19833,3 +19833,18 @@
   level: 'info',
   timestamp: '2025-01-26T07:16:08.102Z'
 }
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"500","responseTime":"169.486"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:23:08.450Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/signup","status":"201","responseTime":"97.152"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:23:58.992Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"500","responseTime":"77.440"}',
+  level: 'info',
+  timestamp: '2025-01-26T07:24:04.701Z'
+}
