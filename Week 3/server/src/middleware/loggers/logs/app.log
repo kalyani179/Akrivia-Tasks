@@ -19978,3 +19978,33 @@
   level: 'info',
   timestamp: '2025-01-26T08:21:20.372Z'
 }
+{
+  message: '{"method":"GET","url":"/api-docs/","status":"304","responseTime":"5.594"}',
+  level: 'info',
+  timestamp: '2025-01-26T08:23:10.468Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui.css","status":"304","responseTime":"2.667"}',
+  level: 'info',
+  timestamp: '2025-01-26T08:23:10.507Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-bundle.js","status":"304","responseTime":"1.817"}',
+  level: 'info',
+  timestamp: '2025-01-26T08:23:10.512Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-init.js","status":"200","responseTime":"1.089"}',
+  level: 'info',
+  timestamp: '2025-01-26T08:23:10.516Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-standalone-preset.js","status":"304","responseTime":"0.707"}',
+  level: 'info',
+  timestamp: '2025-01-26T08:23:10.519Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/favicon-32x32.png","status":"304","responseTime":"0.890"}',
+  level: 'info',
+  timestamp: '2025-01-26T08:23:10.757Z'
+}
