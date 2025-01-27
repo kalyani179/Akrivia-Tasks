@@ -253,7 +253,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       console.log('Sending group message to room:', this.currentRoom);
       this.chatService.sendGroupMessage(this.currentRoom, this.newMessage.trim());
     }
-
     this.newMessage = '';
   }
 

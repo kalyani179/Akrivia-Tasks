@@ -6,7 +6,7 @@ class ApiError extends Error {
     this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
     this.isOperational = true;
 
-    Error.captureStackTrace(this, this.constructor);
+    Error.captureStackTrace(this, this.constructor); // captures the stack trace of the error and stores it in the error object
   }
 }
 
@@ -26,24 +26,15 @@ const globalErrorHandler = (err, req, res, next) => {
     statusCode: err.statusCode,
     status: err.status,
     message: err.message,
-    stack: err.stack
+    stack: err.stack  //gives detailed report of the sequence of function calls that led to the error being thrown
   });
 
-  if (process.env.NODE_ENV === 'development') {
-    // Development error response (with stack trace)
-    res.status(err.statusCode).json({
-      status: err.status,
-      error: err,
-      message: err.message,
-      stack: err.stack
-    });
-  } else {
-    // Production error response (without sensitive info)
-    res.status(err.statusCode).json({
-      status: err.status,
-      message: err.isOperational ? err.message : 'Something went wrong!'
-    });
-  }
+  res.status(err.statusCode).json({
+    status: err.status,
+    error: err,
+    message: err.message,
+    stack: err.stack
+  });
 };
 
 // Async Handler to catch async errors
@@ -59,9 +50,7 @@ const socketErrorHandler = (socket, error) => {
   
   const errorResponse = {
     status: 'error',
-    message: process.env.NODE_ENV === 'development' 
-      ? error.message 
-      : 'Socket connection error'
+    message: error.message 
   };
 
   socket.emit('error', errorResponse);

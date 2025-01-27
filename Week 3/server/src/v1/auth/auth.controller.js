@@ -185,7 +185,7 @@ const refreshAccessToken = async (req, res) => {
       }
 
       // Verify the decrypted refresh token
-      jwt.verify(decryptedRefreshToken, process.env.JWT_REFRESH_SECRET);
+      jwt.verify(decryptedRefreshToken, process.env.REFRESH_TOKEN_SECRET);
       
       // Generate new access token
       const accessToken = generateAccessToken({ 

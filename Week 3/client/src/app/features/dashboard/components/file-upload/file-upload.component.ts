@@ -93,8 +93,8 @@ export class FileUploadComponent implements OnInit {
       'jpg': 'image/jpeg',
       'jpeg': 'image/jpeg',
       'png': 'image/png',
-      'gif': 'image/gif'
-      // Add more as needed
+      'gif': 'image/gif',
+      'txt': 'text/plain'
     };
     return mimeTypes[extension] || 'application/octet-stream';
   }

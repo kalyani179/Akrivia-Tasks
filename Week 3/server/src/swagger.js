@@ -1,9 +1,10 @@
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+// Swagger is an open-source tool for designing, documenting, and testing RESTful APIs
+const swaggerJsdoc = require('swagger-jsdoc'); // Generates Swagger/OpenAPI specs from comments in your code 
+const swaggerUi = require('swagger-ui-express'); // Serves the generated API documentation through a web interface.
 
 const options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: '3.0.0', // standard specification for defining, describing, and documenting RESTful APIs in a machine-readable format.
     info: {
       title: 'Inventory Management System',
       version: '1.0.0',

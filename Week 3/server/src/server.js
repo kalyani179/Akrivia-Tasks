@@ -26,8 +26,7 @@ const io = new Server(httpServer, {
   } 
  });
 
-// Store active users with their socket IDs
-const activeUsers = new Map();
+const activeUsers = new Map(); // Store active users with their socket IDs
 const rooms = new Map(); // Store chat rooms and their members
 
 io.on('connection', (socket) => {

@@ -38,22 +38,5 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-const refreshToken = (req, res) => {
-  const token = req.body.token;
-  if (!token) return res.status(403).json({ message: 'Refresh token required' });
 
-  jwt.verify(token, REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ message: 'Invalid or expired refresh token' });
-
-    try {
-      const decryptedPayload = decrypt(decoded.data, REFRESH_TOKEN_SECRET);
-      const user = JSON.parse(decryptedPayload);
-      const accessToken = generateAccessToken(user);
-      res.json({ accessToken });
-    } catch (error) {
-      return res.status(403).json({ message: 'Failed to decrypt the refresh token payload' });
-    }
-  });
-};
-
-module.exports = { authenticateToken, generateAccessToken, generateRefreshToken, refreshToken };
+module.exports = { authenticateToken, generateAccessToken, generateRefreshToken };

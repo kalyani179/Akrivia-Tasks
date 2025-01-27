@@ -20008,3 +20008,1613 @@
   level: 'info',
   timestamp: '2025-01-26T08:23:10.757Z'
 }
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"680.235"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:33.210Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"86.810"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:33.557Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"59.858"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:33.567Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"239.534"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:33.775Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"334.351"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:33.784Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"460.729"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:33.983Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"111.543"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.614Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"40.763"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.624Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"109.359"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.634Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"103.506"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.648Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"103.680"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.660Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"101.929"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.674Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"110.948"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.797Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"112.455"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.815Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"96.107"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.833Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"117.013"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.869Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"134.238"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:34:34.911Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"93.858"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:53:17.286Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"4.264"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:53:17.313Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"3.481"}',
+  level: 'info',
+  timestamp: '2025-01-26T16:53:19.827Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"548.518"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:31:44.784Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"59.594"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:31:45.054Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"66.176"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:31:45.082Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"138.833"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:31:45.166Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"399.494"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:31:45.415Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"773.802"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:31:45.814Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"247.139"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:08.888Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"53.326"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.181Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"38.430"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.197Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"52.540"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.224Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"96.849"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.245Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"328.736"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.515Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"66.105"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.609Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"61.791"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.622Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"59.929"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.628Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"60.517"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:32:09.641Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"82.771"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:37.931Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"85.697"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:37.948Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"128.532"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:38.009Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"148.153"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:38.051Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"2602.983"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:40.474Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"98.623"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:40.624Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"151.119"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:40.714Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"112.849"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:40.747Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"104.402"}',
+  level: 'info',
+  timestamp: '2025-01-26T17:38:40.780Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"44.061"}',
+  level: 'info',
+  timestamp: '2025-01-26T18:40:55.585Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"9.085"}',
+  level: 'info',
+  timestamp: '2025-01-26T18:40:55.617Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"2.144"}',
+  level: 'info',
+  timestamp: '2025-01-26T18:41:03.386Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"50.036"}',
+  level: 'info',
+  timestamp: '2025-01-26T18:44:32.208Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"7.822"}',
+  level: 'info',
+  timestamp: '2025-01-26T18:44:32.287Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"320.932"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:20.377Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"42.905"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:20.491Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"60.163"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:20.515Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"51.504"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:20.519Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"131.231"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:20.570Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"236.470"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:20.715Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"107.116"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:41.794Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"19.237"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:42.087Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"16.028"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:42.095Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"20.198"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:42.096Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"27.171"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:42.111Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"172.406"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:42.244Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"50.667"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:43.313Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"48.002"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:43.320Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"50.499"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:43.333Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"59.097"}',
+  level: 'info',
+  timestamp: '2025-01-26T19:04:43.346Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"70.565"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:22:29.889Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/","status":"304","responseTime":"39.429"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:26:46.271Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-init.js","status":"304","responseTime":"0.586"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:26:46.489Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-bundle.js","status":"304","responseTime":"14.652"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:26:46.497Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui.css","status":"304","responseTime":"16.114"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:26:46.504Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-standalone-preset.js","status":"304","responseTime":"17.780"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:26:46.512Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/favicon-32x32.png","status":"304","responseTime":"1.126"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:26:46.914Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"38.700"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:38:27.159Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/forgot-password","status":"200","responseTime":"4724.162"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:38:35.418Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"17.637"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:38:35.505Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"6.777"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:38:38.653Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/forgot-password","status":"200","responseTime":"3891.290"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:38:50.476Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"4.610"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:38:50.515Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"42.746"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:39:45.929Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/reset-password/23/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiVTJGc2RHVmtYMTk0R1d1K1k2Z24rSXZxYlcyODk1Nm1PckoxVFJmQWtpQThnL2UxQ3ZpWEMxMjA5UjJZeDFUOFcxMDR2Ymx4TXRBdVBtanBpMWk2cHc9PSIsImlhdCI6MTczNzk1MjcyNiwiZXhwIjoxNzM3OTU5OTI2fQ.gr7wqBvSXdc-KE03RMw-ImqjBPP0qhAus34ZJWR62ew","status":"200","responseTime":"646.904"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:39:54.896Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"17.183"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:39:54.944Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"519.160"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:04.001Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"228.474"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:04.635Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"222.034"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:04.673Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"229.281"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:04.722Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"629.420"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:04.961Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"910.340"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:05.417Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"318.609"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:05.855Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"274.305"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:05.881Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"267.814"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:05.934Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"232.056"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:40:05.976Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"301.231"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:16.507Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"48.189"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:16.516Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"36.557"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:16.523Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"380.309"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:16.633Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"18.058"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:16.653Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"21.900"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:16.663Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"23.382"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:16.665Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"25.017"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:16.675Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"573.985"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.066Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"47.397"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.122Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"22.169"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.227Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"20.746"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.232Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"10.148"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.262Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"8.624"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.273Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"6.444"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.439Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"7.347"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.448Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"8.260"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.489Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"7.825"}',
+  level: 'info',
+  timestamp: '2025-01-27T04:52:17.514Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"209.194"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:11.976Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"143.714"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:11.992Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"293.606"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.129Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"337.936"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.156Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"24.009"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.158Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"18.176"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.162Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"14.840"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.164Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"18.197"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.185Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"696.274"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.555Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"91.802"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.654Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"37.462"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.683Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"29.733"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.687Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"26.550"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.691Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"26.821"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.697Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"13.273"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.801Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"15.984"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.809Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"14.249"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.817Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"8.967"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:12.820Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"4.236"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.538Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"5.283"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.563Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"17.428"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.566Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"5.473"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.584Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"6.110"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.593Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"10.078"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.643Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"4.195"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.723Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"3.243"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.738Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"262.001"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:23.876Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"126.847"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.007Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"19.684"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.118Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"18.716"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.123Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"15.356"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.127Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"6.547"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.136Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"10.887"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.207Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"9.933"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.211Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"9.118"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.230Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"6.193"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:24.247Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"3.110"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.134Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"11.263"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.156Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"3.541"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.172Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"4.475"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.218Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"3.169"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.319Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"9.290"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.332Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"42.411"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.337Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"5.702"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.345Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"3.426"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.400Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"98.024"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:29.502Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"5.844"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:31.429Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"8.482"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:31.447Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"5.502"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:31.501Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"8.500"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:31.541Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"9.155"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:31.578Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"5.785"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:31.637Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"8.784"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:31.661Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"8.654"}',
+  level: 'info',
+  timestamp: '2025-01-27T05:48:31.692Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/","status":"304","responseTime":"15.683"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:14:24.266Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-init.js","status":"304","responseTime":"1.793"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:14:24.457Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui.css","status":"304","responseTime":"15.818"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:14:24.466Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-bundle.js","status":"304","responseTime":"18.892"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:14:24.472Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-standalone-preset.js","status":"304","responseTime":"12.893"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:14:24.476Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"22.537"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:18.237Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"298.647"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:26.588Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"27.608"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:26.824Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"21.656"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:26.830Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"33.332"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:26.867Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"71.306"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:26.873Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"407.803"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:27.223Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"24.134"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:27.866Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"21.340"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:27.868Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"21.837"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:27.876Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"25.665"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:27.885Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"11.114"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.387Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"12.636"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.392Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"11.704"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.395Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"19.298"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.408Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"485.090"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.878Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"14.808"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.962Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"11.095"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.964Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"13.986"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.971Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"7.738"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:34:54.974Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"84.005"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:04.980Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"12.457"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:05.038Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"12.558"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:05.046Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"8.785"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:05.059Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"33.043"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:05.062Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"466.999"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:05.509Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"21.528"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:56.780Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"18.706"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:56.783Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"42.747"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:56.793Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"44.508"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:56.804Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"369.741"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:35:57.141Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"6.658"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.138Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"27.425"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.163Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"19.008"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.167Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"46.155"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.191Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"455.286"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.595Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"22.984"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.639Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"21.145"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.642Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"24.711"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.649Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"21.796"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:36:11.652Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"100.001"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:20.535Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"18.181"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:20.730Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"18.062"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:20.733Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"14.476"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:20.735Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"16.008"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:20.753Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"273.151"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:20.981Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"23.361"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:21.242Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"22.632"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:21.245Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"20.065"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:21.248Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"27.500"}',
+  level: 'info',
+  timestamp: '2025-01-27T06:37:21.260Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/","status":"304","responseTime":"29.993"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:14:46.446Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-init.js","status":"304","responseTime":"1.143"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:14:46.533Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-bundle.js","status":"304","responseTime":"10.121"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:14:46.540Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui.css","status":"304","responseTime":"6.796"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:14:46.541Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-standalone-preset.js","status":"304","responseTime":"7.509"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:14:46.543Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/favicon-32x32.png","status":"304","responseTime":"2.178"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:14:46.807Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"110.154"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:34:12.685Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"59.095"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:34:12.689Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"76.116"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:34:12.735Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"130.702"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:34:12.757Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"1044.828"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:34:13.697Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"34.874"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:32.856Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"29.544"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:32.874Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"38.491"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:32.876Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"57.216"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:32.887Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"371.352"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:33.205Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"23.514"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:38.240Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"22.034"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:38.254Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"30.362"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:38.257Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"39.121"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:38.274Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"96.899"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:38.316Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"5.528"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:50.789Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"8.846"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:50.806Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"5.232"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:50.812Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"3.337"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:50.824Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"512.465"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:51.352Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"19.785"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:55.721Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"13.399"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:55.723Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"11.699"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:55.726Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"26.820"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:55.733Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"54.186"}',
+  level: 'info',
+  timestamp: '2025-01-27T09:35:55.773Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/forgot-password","status":"200","responseTime":"4312.765"}',
+  level: 'info',
+  timestamp: '2025-01-27T11:32:11.971Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"400","responseTime":"41.063"}',
+  level: 'info',
+  timestamp: '2025-01-27T11:40:54.407Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"400","responseTime":"2.480"}',
+  level: 'info',
+  timestamp: '2025-01-27T11:40:57.130Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"400","responseTime":"4.602"}',
+  level: 'info',
+  timestamp: '2025-01-27T11:41:23.188Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"400","responseTime":"209.917"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:49.817Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"167.840"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:57.793Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"79.940"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:57.931Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"78.450"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:57.937Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"99.134"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:57.999Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"149.664"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:58.012Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"560.582"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:58.447Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"23.477"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:58.489Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"19.253"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:58.492Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"20.489"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:58.499Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"34.789"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:03:58.518Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/","status":"304","responseTime":"37.089"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:21:59.347Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-init.js","status":"304","responseTime":"1.885"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:21:59.523Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-bundle.js","status":"304","responseTime":"3.163"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:21:59.528Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui.css","status":"304","responseTime":"6.588"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:21:59.536Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/swagger-ui-standalone-preset.js","status":"304","responseTime":"7.417"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:21:59.537Z'
+}
+{
+  message: '{"method":"GET","url":"/api-docs/favicon-32x32.png","status":"304","responseTime":"0.753"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:21:59.793Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"301.159"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:28.943Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"259.748"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:28.952Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"269.532"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:28.955Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"298.027"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:28.972Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"559.088"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:29.259Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"37.613"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:29.898Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"37.840"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:29.903Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"32.591"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:29.909Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"36.922"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:29.920Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/login","status":"200","responseTime":"231.918"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:52.167Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"31.829"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:52.274Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"35.344"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:52.287Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"122.977"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:52.392Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"144.389"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:52.400Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"507.486"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:52.768Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"42.587"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:53.390Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"45.086"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:53.403Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"48.885"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:53.412Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"46.681"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:32:53.419Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"2.918"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:34:06.194Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"403","responseTime":"2.081"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:34:06.244Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"156.429"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:53.773Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"14.116"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.188Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"11.910"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.204Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"15.944"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.213Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"40.429"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.219Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"483.765"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.712Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"29.028"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.801Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"27.055"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.807Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"10.478"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.857Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"8.374"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:37:54.965Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"36.910"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:09.885Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"43.049"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:10.219Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"32.769"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:10.229Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"77.944"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:10.263Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"117.566"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:10.294Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"403.118"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:10.606Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"48.092"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:11.189Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"60.094"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:11.212Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"69.301"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:11.229Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"67.226"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:11.242Z'
+}
+{
+  message: '{"method":"POST","url":"/api/auth/refresh-token","status":"200","responseTime":"90.748"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:31.025Z'
+}
+{
+  message: '{"method":"GET","url":"/api/profile","status":"200","responseTime":"4.351"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:31.250Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"200","responseTime":"28.036"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:31.312Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"200","responseTime":"74.528"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:31.351Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"200","responseTime":"59.392"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:31.355Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"200","responseTime":"337.996"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:31.656Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"103.815"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:32.094Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"60.593"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:32.111Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"46.549"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:32.123Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"31.795"}',
+  level: 'info',
+  timestamp: '2025-01-27T12:38:32.128Z'
+}

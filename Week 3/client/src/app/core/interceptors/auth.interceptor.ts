@@ -57,7 +57,7 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    // Apply encryption if needed
+    // Apply encryption
     if (!skipEncryption && authRequest.body) {
       console.log('Request Body (Frontend):', authRequest.body);
       authRequest = authRequest.clone({
