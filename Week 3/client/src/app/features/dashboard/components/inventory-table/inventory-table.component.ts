@@ -105,7 +105,6 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     { key: 'quantity_in_stock', label: 'Quantity', checked: true },
     { key: 'unit', label: 'Unit', checked: true }
   ];
- 
 
   refreshSubscription: any;
   selectedItems: InventoryItem[] = [];

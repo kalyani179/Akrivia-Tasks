@@ -3,6 +3,7 @@ import { NgToastService } from 'ng-angular-popup';
 import { FileService } from 'src/app/core/services/file.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { firstValueFrom } from 'rxjs';
+import { SecurityContext } from '@angular/core';
 
 interface UploadedFile {
   name: string;
@@ -90,11 +91,12 @@ export class FileUploadComponent implements OnInit {
       'pdf': 'application/pdf',
       'doc': 'application/msword',
       'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'xls': 'application/vnd.ms-excel',
       'jpg': 'image/jpeg',
       'jpeg': 'image/jpeg',
       'png': 'image/png',
-      'gif': 'image/gif',
-      'txt': 'text/plain'
+      'gif': 'image/gif'
     };
     return mimeTypes[extension] || 'application/octet-stream';
   }
@@ -293,8 +295,25 @@ export class FileUploadComponent implements OnInit {
 
   previewFileItem(file: UploadedFile): void {
     this.previewFile = file;
-    console.log(this.previewFile.url);
+    if (this.isExcelFile(file.type) && file.url) {
+      const baseUrl = (this.sanitizer.sanitize(SecurityContext.URL, file.url) || '').split('?')[0];
+      if (baseUrl) {
+        const officeBaseUrl = 'https://view.officeapps.live.com/op/view.aspx?src=';
+        this.previewFile = {
+          ...file,
+          url: this.sanitizer.bypassSecurityTrustResourceUrl(`${officeBaseUrl}${encodeURIComponent(baseUrl)}`)
+        };
+        console.log(this.previewFile.url);
+      }
+    }
     this.showPreviewModal = true;
+  }
+
+  private isExcelFile(fileType: string): boolean {
+    return [
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ].includes(fileType);
   }
 
   closePreviewModal(): void {
@@ -305,7 +324,11 @@ export class FileUploadComponent implements OnInit {
   isPreviewable(fileType: string): boolean {
     const imageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
     const documentTypes = ['application/pdf', 'text/plain'];
-    return imageTypes.includes(fileType) || documentTypes.includes(fileType);
+    const excelTypes = [
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+    return imageTypes.includes(fileType) || documentTypes.includes(fileType) || excelTypes.includes(fileType);
   }
 
   getFileUrl(fileName: string): string {
