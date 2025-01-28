@@ -93,10 +93,12 @@ export class FileUploadComponent implements OnInit {
       'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'xls': 'application/vnd.ms-excel',
+      'txt': 'text/plain',
       'jpg': 'image/jpeg',
       'jpeg': 'image/jpeg',
       'png': 'image/png',
-      'gif': 'image/gif'
+      'gif': 'image/gif',
+      'mp4': 'video/mp4'
     };
     return mimeTypes[extension] || 'application/octet-stream';
   }
@@ -295,7 +297,7 @@ export class FileUploadComponent implements OnInit {
 
   previewFileItem(file: UploadedFile): void {
     this.previewFile = file;
-    if (this.isExcelFile(file.type) && file.url) {
+    if (this.isExcelFile(file.type) && file.url || this.isDocFile(file.type) && file.url) {
       const baseUrl = (this.sanitizer.sanitize(SecurityContext.URL, file.url) || '').split('?')[0];
       if (baseUrl) {
         const officeBaseUrl = 'https://view.officeapps.live.com/op/view.aspx?src=';
@@ -316,6 +318,13 @@ export class FileUploadComponent implements OnInit {
     ].includes(fileType);
   }
 
+  private isDocFile(fileType: string): boolean {
+    return [
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ].includes(fileType);
+  }
+
   closePreviewModal(): void {
     this.showPreviewModal = false;
     this.previewFile = null;
@@ -328,7 +337,9 @@ export class FileUploadComponent implements OnInit {
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ];
-    return imageTypes.includes(fileType) || documentTypes.includes(fileType) || excelTypes.includes(fileType);
+    const docTypes = ['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    const videoTypes = ['video/mp4'];
+    return imageTypes.includes(fileType) || documentTypes.includes(fileType) || excelTypes.includes(fileType) || docTypes.includes(fileType) || videoTypes.includes(fileType);
   }
 
   getFileUrl(fileName: string): string {

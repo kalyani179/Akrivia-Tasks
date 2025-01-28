@@ -113,6 +113,20 @@
               style="width: 100%; height: 600px; border: none; scrollbar-width: none;">
       </iframe>
 
+      <!-- Doc Preview -->
+      <iframe *ngIf="previewFile.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || previewFile.type === 'application/msword'"
+              [src]="previewFile.url"
+              class="preview-doc"
+              style="width: 100%; height: 600px; border: none; scrollbar-width: none;">
+      </iframe>
+
+      <!-- Video Preview -->
+      <iframe *ngIf="previewFile.type === 'video/mp4'"
+              [src]="previewFile.url"
+              class="preview-video"
+              style="width: 100%; height: 600px; border: none; scrollbar-width: none;">
+      </iframe>
+
       <!-- Text Preview -->
       <div *ngIf="previewFile.type === 'text/plain'" class="preview-text">
         <pre>{{previewFile.url}}</pre>
