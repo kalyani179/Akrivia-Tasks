@@ -25,7 +25,7 @@ export class ProductService {
       }
     });
   }
-
+  
   addProduct(productData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/add`, productData);
   }
@@ -40,7 +40,6 @@ export class ProductService {
       withCredentials: false
     });
   }
-
 
   getInventoryItems(params: {
     page: number;

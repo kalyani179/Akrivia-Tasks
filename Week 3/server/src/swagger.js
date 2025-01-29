@@ -16,7 +16,6 @@ const options = {
       },
     ],
   },
-  // apis: ['./v1/auth/api-docs/*.docs.js', './v1/profile/api-docs/*.docs.js', './v1/inventoryManagement/api-docs/*.docs.js', './v1/filesUploaded/api-docs/*.docs.js' ], // Path to the API docs
   apis: ['./v1/auth/api-docs/*.docs.js'], // Path to the API docs
 };
 

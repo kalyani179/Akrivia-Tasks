@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';  // Import
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
 import { CanComponentDeactivate } from 'src/app/core/guards/unsaved-changes.guard';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-signup',

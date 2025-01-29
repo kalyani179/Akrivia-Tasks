@@ -259,7 +259,7 @@ const forgotPassword = async (req,res) => {
       }
     });
 
-    const link = `http://localhost:4200/reset-password/${user.id}/${accessToken}`;
+    const link = `http://localhost:4200/reset-password/${accessToken}`;
 
     const mailOptions = {
       from: `"Password Reset" <${process.env.EMAIL}>`,
@@ -293,10 +293,11 @@ const forgotPassword = async (req,res) => {
 const resetPassword = async (req,res) => {
   try{
       let {password} =  req.body;
-      let {id,accessToken} = req.params;
+      let {accessToken} = req.params;
       const token = jwt.verify(accessToken,process.env.JWT_SECRET);
       if (!token) return res.status(400).send({ message: "This Email has expired!" });
       const hashedPassword = await bcrypt.hash(password, 10);
+      const id = token.userId;
       await knex('users').where({ id }).update({ password: hashedPassword });
       return res.status(200).json({ message: "Password updated successfully" });
   }
