@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/core/services/product.service';
 import * as XLSX from 'xlsx';
 import { debounceTime, distinctUntilChanged, firstValueFrom, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface InventoryItem {
   product_id: number;
@@ -92,7 +93,7 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   showFilters = false;
   searchText = '';
   selectedColumns: string[] = [];
-  cartColumns: ColumnFilter[] = [] = [
+  cartColumns: ColumnFilter[] = [
     { key: 'product_name', label: 'Product Name', checked: true },
     { key: 'category', label: 'Category', checked: true },
     { key: 'vendors', label: 'Vendors', checked: true },
@@ -142,11 +143,14 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
   private searchSubject = new Subject<string>();
   private searchSubscription: any;
 
+  isUploading = false;
+
   constructor(
-    private productService: ProductService, 
+    private productService: ProductService,
     private elementRef: ElementRef,
     private toast: NgToastService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -269,19 +273,18 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
       const file = input.files[0];
       if (this.isExcelFile(file)) {
         this.selectedFile = file;
-        this.readExcelFile(file);
       } else {
         this.toast.error({
           detail: 'Please upload only Excel files (.xlsx, .xls)',
           summary: 'Invalid File',
           duration: 3000
         });
-        input.value = ''; // Clear the input
+        input.value = '';
         this.selectedFile = null;
       }
     }
   }
-
+  
   isExcelFile(file: File): boolean {
     const allowedTypes = [
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
@@ -290,87 +293,57 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     return allowedTypes.includes(file.type);
   }
 
-  readExcelFile(file: File): void {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      try {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet) as ExcelProduct[];
-        
+  uploadFileForProcessing(file: File): void {
+    if (!file) return;
+    
+    this.isUploading = true;
+    const fileName = file.name;
+    const fileType = file.type;
 
-        // Format the data with proper type checking
-        const formattedProducts = jsonData.map(row => {
-          // Handle vendors field safely
-          let vendorsList: string[] = [];
-          if (row.Vendors || row.vendors) {
-            const vendorsData = row.Vendors || row.vendors;
-            if (typeof vendorsData === 'string') {
-              vendorsList = vendorsData.split(',').map((vendor: string) => vendor.trim());
-            } else if (Array.isArray(vendorsData)) {
-              vendorsList = vendorsData;
-            }
-          }
+    this.productService.getUploadUrl(fileName, fileType).subscribe({
+      next: async (response) => {
+        try {
+          // Upload to S3
+          const headers = new HttpHeaders()
+            .set('Content-Type', fileType)
+            .set('Skip-Auth', 'true');
 
-          return {
-            productName: row['Product Name'] || row.productName || '',
-            category: row['Category'] || row.category || '',
-            vendors: vendorsList,
-            quantity: Number(row['Quantity'] || row.quantity || 0),
-            unit: row['Unit'] || row.unit || '',
-            status: row['Status'] || row.status || 'Active'
-          };
-        });
+          await this.http.put(response.uploadUrl, file, { headers }).toPromise();
 
-        console.log('Formatted Products:', formattedProducts); // Debug log
+          this.toast.success({
+            detail: 'File uploaded successfully!',
+            summary: 'Success',
+            duration: 3000
+          });
 
-        // Use bulk upload
-        this.productService.bulkAddProducts(formattedProducts).subscribe({
-          next: (response) => {
-            this.toast.success({
-              detail: 'Products added successfully',
-              summary: 'Success',
-              duration: 3000
-            });
-            this.loadInventoryItems();
-            this.closeUploadModal();
-          },
-          error: (error) => {
-            console.error('Upload error:', error);
-            this.toast.error({
-              detail: `Failed to add products: ${error.message}`,
-              summary: 'Error',
-              duration: 3000
-            });
-          }
-        });
-      } catch (error) {
-        console.error('Error processing Excel file:', error);
+          this.closeUploadModal();
+        } catch (error) {
+          console.error('Error uploading file:', error);
+          this.toast.error({
+            detail: 'Failed to upload file',
+            summary: 'Error',
+            duration: 3000
+          });
+        } finally {
+          this.isUploading = false;
+          this.showImportModal = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error getting upload URL:', error);
         this.toast.error({
-          detail: 'Error processing Excel file. Please check the file format.',
+          detail: 'Failed to get upload URL',
           summary: 'Error',
           duration: 3000
         });
+        this.isUploading = false;
+        this.showImportModal = false;
       }
-    };
-
-    reader.onerror = (error) => {
-      console.error('FileReader error:', error);
-      this.toast.error({
-        detail: 'Error reading file',
-        summary: 'Error',
-        duration: 3000
-      });
-    };
-
-    reader.readAsArrayBuffer(file);
+    });
   }
 
-  uploadFile(): void {
-    console.log('File uploaded:', this.selectedFile);
-    this.showImportModal = false;
+  onShowFilesClick(){
+    this.router.navigate(['/file-uploads']);
   }
   
   openUploadModal(): void {
@@ -466,20 +439,8 @@ export class InventoryTableComponent implements OnInit, OnDestroy {
     this.showAddProductModal = false;
   }
 
-  openImportModal(): void {
-    console.log('Opening import modal');
-    this.showImportModal = true;
-  }
-
-  closeImportModal(): void {
-    console.log('Closing import modal');
-    this.showImportModal = false;
-  }
-
   importProducts(): void {
-    console.log('Import button clicked');
     this.showImportModal = true;
-    console.log('showImportModal set to:', this.showImportModal);
   }
 
   onProductAdded(newProduct: any): void {

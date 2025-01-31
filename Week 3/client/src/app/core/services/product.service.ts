@@ -6,6 +6,18 @@ import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { switchMap } from 'rxjs/operators';
 
+export interface FileUpload {
+  id: number;
+  file_name: string;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  processed_count: number;
+  error_count: number;
+  error_message?: string;
+  created_at: string;
+  completed_at?: string;
+  errorFileUrl?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -147,5 +159,20 @@ export class ProductService {
 
   getProduct(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/getProduct/${id}`);
+  }
+
+  getUploadUrl(fileName: string, fileType: string): Observable<{ uploadUrl: string; fileUploadId: number }> {
+    return this.http.post<{ uploadUrl: string; fileUploadId: number }>(
+      `${this.apiUrl}/upload-file`,
+      { fileName, fileType }
+    );
+  }
+
+  getFileUploads(): Observable<FileUpload[]> {
+    return this.http.get<FileUpload[]>(`${this.apiUrl}/file-uploads`);
+  }
+
+  triggerProcessing(): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/trigger-processing`, {});
   }
 }

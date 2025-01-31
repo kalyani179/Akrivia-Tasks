@@ -8,6 +8,8 @@ import { InventoryTableComponent } from './components/inventory-table/inventory-
 import { AddProductComponent } from './components/inventory-table/components/add-products/add-product.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardRoutingModule } from './dashboard-routing.module';
+import { FileUploadsComponent } from './components/file-uploads/file-uploads.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent }
@@ -20,13 +22,15 @@ const routes: Routes = [
     FileUploadComponent,
     InventoryTableComponent,
     AddProductComponent,
+    FileUploadsComponent
   ],
   imports: [
     CommonModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    DashboardRoutingModule
   ],
   exports: [DashboardComponent]
 })

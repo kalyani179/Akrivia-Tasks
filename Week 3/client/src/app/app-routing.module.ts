@@ -4,6 +4,7 @@ import { LoginComponent } from './features/auth/components/login/login.component
 import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/noAuth.guard';
 import { UnsavedChangesGuard } from './core/guards/unsaved-changes.guard';
+import { FileUploadsComponent } from './features/dashboard/components/file-uploads/file-uploads.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
     path: 'chat',
     loadChildren: () => import('./features/dashboard/components/chat/chat.module').then(m => m.ChatModule),
     canActivate : [AuthGuard]
+  },
+  {
+    path:'file-uploads',
+    component : FileUploadsComponent
   },
   { 
     path: '**', 

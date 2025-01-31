@@ -32,6 +32,9 @@
       </div>
       
       <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-light me-2" (click)="onShowFilesClick()">
+          Show Uploaded Files
+        </button>
         <div class="search-box">
           <i class="bi bi-search"></i>
           <input 
@@ -396,8 +399,8 @@
 <!-- Import Modal -->
 <div class="upload-modal" *ngIf="showImportModal">
   <div class="upload-modal-content">
-    <h5 class="mb-3">Upload and attach files</h5>
-    <p class="text-muted mb-4">Upload and attach files to this project.</p>
+    <h5 class="mb-3">Upload Excel File</h5>
+    <p class="text-muted mb-4">Upload an Excel file containing product data. The file will be processed in the background.</p>
     
     <!-- Upload Area -->
     <div class="upload-area" 
@@ -420,14 +423,17 @@
              (change)="onFileSelected($event)">
     </div>
     <!-- Buttons -->
-    <div class="d-flex justify-content-end mt-4">
-      <button class="btn btn-light me-2" (click)="closeUploadModal()">Cancel</button>
-      <button class="btn btn-primary" 
-              [disabled]="!selectedFile"
-              (click)="uploadFile()">
-        Upload files
-      </button>
-    </div>
+     
+      <div class="d-flex justify-content-end mt-4">
+        <button class="btn btn-light me-2" (click)="closeUploadModal()">Cancel</button>
+        <button class="btn btn-primary" 
+                [disabled]="!selectedFile || isUploading"
+                (click)="uploadFileForProcessing(selectedFile!)">
+          <span *ngIf="isUploading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ isUploading ? 'Uploading...' : 'Upload files' }}
+        </button>
+      </div>
+    
   </div>
 </div>
 

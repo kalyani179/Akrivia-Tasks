@@ -1,8 +1,9 @@
 const knex = require('../../mysql/knex');
 const { s3Client } = require('../../aws/s3/s3');
-const { PutObjectCommand } = require('@aws-sdk/client-s3');
+const { PutObjectCommand, GetObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const dotenv = require('dotenv');
+const backgroundTaskService = require('../../services/backgroundTaskService');
 dotenv.config({ path: '../../.env' });
 
 const generatePresignedUrl = async (req, res) => {
@@ -331,7 +332,6 @@ const bulkAddProducts = async (req, res) => {
           category_id: categoryResult.category_id,
           quantity_in_stock: product.quantity,
           unit: product.unit,
-          status: product.status === 'Active' ? 1 : product.status === 'Inactive' ? 2 : 0,
           created_at: new Date(),
           updated_at: new Date()
         });
@@ -531,6 +531,78 @@ const getProduct = async (req, res) => {
   }
 };
 
+// Add these new methods
+const uploadFileForProcessing = async (req, res) => {
+  try {
+    const { fileName, fileType } = req.body;
+    const userId = req.user.userId;
+    const fileKey = `uploads/${userId}/${Date.now()}_${fileName}`;
+
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: fileKey,
+      ContentType: fileType
+    };
+
+    const command = new PutObjectCommand(params);
+    const uploadUrl = await getSignedUrl(s3Client, command, { expiresIn: 60 });
+
+    // Create file upload record
+    const [fileUploadId] = await knex('file_uploads').insert({
+      user_id: userId,
+      file_name: fileName,
+      file_key: fileKey,
+      status: 'pending',
+      created_at: new Date()
+    });
+
+    res.status(200).json({ 
+      uploadUrl,
+      fileUploadId
+    });
+  } catch (err) {
+    console.error('Error generating pre-signed URL:', err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getFileUploads = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const fileUploads = await knex('file_uploads')
+      .where('user_id', userId)
+      .orderBy('created_at', 'desc');
+
+    // Generate download URLs for error files where applicable
+    const fileUploadsWithUrls = await Promise.all(fileUploads.map(async (upload) => {
+      if (upload.error_file_key) {
+        const command = new GetObjectCommand({
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: upload.error_file_key
+        });
+        const errorFileUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        return { ...upload, errorFileUrl };
+      }
+      return upload;
+    }));
+
+    res.json(fileUploadsWithUrls);
+  } catch (error) {
+    console.error('Error fetching file uploads:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const triggerProcessing = async (req, res) => {
+  try {
+    await backgroundTaskService.processUploadedFiles();
+    res.json({ message: 'Processing triggered successfully' });
+  } catch (error) {
+    console.error('Error triggering processing:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 // Export all functions
 const inventoryController = {
   generatePresignedUrl,
@@ -545,7 +617,10 @@ const inventoryController = {
   updateCartProduct,
   getVendors,
   getCategories,
-  getProduct
+  getProduct,
+  uploadFileForProcessing,
+  getFileUploads,
+  triggerProcessing
 };
 
 module.exports = inventoryController;

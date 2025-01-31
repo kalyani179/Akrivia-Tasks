@@ -4,7 +4,7 @@ const inventoryController = require('./inventory.controller');
 const { authenticateToken } = require('../../middleware/jwt/jwt.middleware');
 
 // Make sure controller functions exist before setting up routes
-if (!inventoryController.generatePresignedUrl || !inventoryController.addProduct || !inventoryController.getInventory || !inventoryController.getVendorCount || !inventoryController.getAllInventory || !inventoryController.deleteProduct  ) {
+if (!inventoryController.generatePresignedUrl || !inventoryController.addProduct || !inventoryController.getInventory || !inventoryController.getVendorCount || !inventoryController.getAllInventory || !inventoryController.deleteProduct) {
   throw new Error('Required controller functions are not properly exported');
 }
 
@@ -51,5 +51,11 @@ router.get('/categories', inventoryController.getCategories);
 
 // Get single product
 router.get('/getProduct/:productId', inventoryController.getProduct);
+
+// Add new routes for file processing
+router.post('/upload-file', inventoryController.uploadFileForProcessing);
+
+router.get('/file-uploads', inventoryController.getFileUploads);
+router.post('/trigger-processing', inventoryController.triggerProcessing);
 
 module.exports = router;
