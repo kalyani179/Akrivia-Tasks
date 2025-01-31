@@ -40588,3 +40588,68 @@
   level: 'info',
   timestamp: '2025-01-31T10:00:26.882Z'
 }
+{
+  message: '{"method":"GET","url":"/api/profile","status":"304","responseTime":"161.773"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:57.269Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/categories","status":"304","responseTime":"127.768"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:57.279Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/vendors/count","status":"304","responseTime":"274.250"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:57.407Z'
+}
+{
+  message: '{"method":"GET","url":"/api/files/list","status":"304","responseTime":"845.878"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.003Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"48.355"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.141Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"49.902"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.150Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"51.388"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.156Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"56.847"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.167Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"52.312"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.175Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"35.648"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.218Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"31.260"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.224Z'
+}
+{
+  message: '{"method":"POST","url":"/api/files/download","status":"200","responseTime":"30.662"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:00:58.236Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/inventory?page=1&limit=10&search=&columns=","status":"304","responseTime":"4465.535"}',
+  level: 'info',
+  timestamp: '2025-01-31T10:01:01.605Z'
+}
