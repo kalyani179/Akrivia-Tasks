@@ -34,9 +34,6 @@ router.get('/vendors/count', inventoryController.getVendorCount);
 // Delete product
 router.delete('/inventory/:productId', inventoryController.deleteProduct);
 
-// Add new route for bulk product upload
-router.post('/bulk-add', inventoryController.bulkAddProducts);
-
 // Update product
 router.put('/inventory/:productId', inventoryController.updateProduct);
 

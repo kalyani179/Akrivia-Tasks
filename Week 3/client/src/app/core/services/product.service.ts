@@ -106,10 +106,6 @@ export class ProductService {
     return this.http.delete(`${this.apiUrl}/inventory/${productId}`);
   }
 
-  bulkAddProducts(products: any[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}/bulk-add`, { products });
-  }
-
   updateCartProduct(id: string, payload: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/cart/${id}`, payload);
   }

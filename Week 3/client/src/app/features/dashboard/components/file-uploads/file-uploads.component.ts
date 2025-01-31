@@ -15,13 +15,6 @@ interface FileUpload {
     errorFileUrl?: string;
 }
 
-interface S3File {
-  file_name: string;
-  size: number;
-  last_modified: string;
-  key: string;
-}
-
 @Component({
   selector: 'app-file-uploads',
   templateUrl: './file-uploads.component.html',
@@ -30,7 +23,6 @@ interface S3File {
 
 export class FileUploadsComponent implements OnInit, OnDestroy {
   fileUploads: FileUpload[] = [];
-  s3Files: S3File[] = [];
   showUploadModal = false;
   selectedFile: File | null = null;
   isDragging = false;
@@ -39,8 +31,7 @@ export class FileUploadsComponent implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
-    private toast: NgToastService,
-    private http: HttpClient
+    private toast: NgToastService
   ) {}
 
   ngOnInit() {
