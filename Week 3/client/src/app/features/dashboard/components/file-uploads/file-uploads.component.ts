@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 import { ProductService } from 'src/app/core/services/product.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface FileUpload {
     id: number;
