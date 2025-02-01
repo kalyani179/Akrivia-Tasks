@@ -11,7 +11,15 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NoAuthGuard } from './core/guards/noAuth.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+
+const config: SocketIoConfig = { 
+  url: 'http://localhost:3000', 
+  options: {
+    transports: ['websocket']
+  }
+};
 
 @NgModule({
   declarations: [
@@ -26,6 +34,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgToastModule,
     HttpClientModule,
     NgbModule,
+    SocketIoModule.forRoot(config)
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

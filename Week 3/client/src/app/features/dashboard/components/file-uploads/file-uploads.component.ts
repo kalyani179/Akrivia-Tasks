@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { ProductService } from 'src/app/core/services/product.service';
 
 interface FileUpload {
@@ -30,7 +31,8 @@ export class FileUploadsComponent implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
-    private toast: NgToastService
+    private toast: NgToastService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {

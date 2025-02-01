@@ -13,6 +13,8 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const { encryptMiddleware, decryptMiddleware } = require('./middleware/crypto/encrypt.decrypt.middlware');
 
+const backgroundTaskService = require('./services/backgroundTaskService');
+
 dotenv.config();
 
 const server = express();
@@ -28,6 +30,8 @@ const io = new Server(httpServer, {
 
 const activeUsers = new Map(); // Store active users with their socket IDs
 const rooms = new Map(); // Store chat rooms and their members
+
+backgroundTaskService.setSocketIO(io);
 
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);

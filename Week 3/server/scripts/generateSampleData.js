@@ -1,7 +1,7 @@
 const XLSX = require('xlsx');
 const { faker } = require('@faker-js/faker');
 
-const generateSampleData = (count = 20000) => {
+const generateSampleData = (count = 5000) => {
   const products = [];
   const categories = ['Product Designer', 'Product Manager', 'Frontend Developer', 'Backend Developer', 'Full Stack Developer', 'UX Designer', 'UX Copywriter', 'UI Designer', 'QA Engineer'];
   const vendors = ['Zepto', 'Blinkit', 'Fresh Meat', 'Swiggy'];
@@ -20,7 +20,7 @@ const generateSampleData = (count = 20000) => {
   const worksheet = XLSX.utils.json_to_sheet(products);
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Products');
 
-  XLSX.writeFile(workbook, 'sample_products_20000.xlsx');
+  XLSX.writeFile(workbook, 'sample_products_5000.xlsx');
   console.log(`Generated ${count} sample products in sample_products.xlsx`);
 };
 

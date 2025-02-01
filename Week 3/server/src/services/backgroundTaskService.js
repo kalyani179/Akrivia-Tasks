@@ -11,6 +11,12 @@ class BackgroundTaskService {
     this.initCronJob();
   }
 
+   // Rename setIo to setSocketIO to match the call in server.js
+   setSocketIO(io) {
+    this.io = io;
+    console.log('Socket.IO instance set in BackgroundTaskService');
+  }
+
   initCronJob() {
     // Run every 10 minutes
     cron.schedule('*/10 * * * *', async () => {
@@ -32,6 +38,15 @@ class BackgroundTaskService {
     try {
       console.log(`Starting to process file: ${fileUpload.file_name}`);
       
+      if (this.io) {
+        this.io.emit('fileProcessing', {
+          fileId: fileUpload.id,
+          fileName: fileUpload.file_name,
+          status: 'processing',
+          message: `Started processing ${fileUpload.file_name}`
+        });
+      }
+
       await knex('file_uploads')
         .where('id', fileUpload.id)
         .update({ 
@@ -74,22 +89,45 @@ class BackgroundTaskService {
       const successfulRecords = [];
       const failedRecords = [];
 
-      // Process each record
-      console.log('Processing started...');
-      for (const record of data) {
-        const result = await this.processRecord(record, fileUpload.user_id);
+      // Get total number of records to process
+      const totalRecords = data.length;
+      
+      // Process records and emit progress
+      for (let i = 0; i < data.length; i++) {
+        const result = await this.processRecord(data[i], fileUpload.user_id);
         
         if (result.success) {
-          successfulRecords.push(record);
+          successfulRecords.push(data[i]);
         } else {
           failedRecords.push({
-            ...record,
+            ...data[i],
             Error_Message: result.error
+          });
+        }
+        
+        // Calculate progress percentage
+        const progress = Math.round(((i + 1) / totalRecords) * 100);
+        
+        // Emit progress update
+        if (this.io) {
+          this.io.emit('fileProgress', {
+            fileId: fileUpload.id,
+            fileName: fileUpload.file_name,
+            progress: progress,
+            message: `Processing record ${i + 1} of ${totalRecords}`
           });
         }
       }
 
-      console.log(`Successful records: ${successfulRecords.length}, Failed records: ${failedRecords.length}`);
+      // Final progress update
+      if (this.io) {
+        this.io.emit('fileProgress', {
+          fileId: fileUpload.id,
+          fileName: fileUpload.file_name,
+          progress: 100,
+          message: 'Processing complete'
+        });
+      }
 
       // Generate error sheet if there are failed records
       let errorFileKey = null;
@@ -98,12 +136,11 @@ class BackgroundTaskService {
         errorFileKey = await this.generateErrorSheet(failedRecords, fileUpload.id);
       }
 
-      // Always mark as completed
+      // When processing completes successfully
       const errorMessage = failedRecords.length > 0 
         ? `Processing completed. ${failedRecords.length} records had errors. Download error sheet for details.`
         : null;
 
-      console.log('Updating file upload status...');
       await knex('file_uploads')
         .where('id', fileUpload.id)
         .update({
@@ -115,7 +152,18 @@ class BackgroundTaskService {
           completed_at: new Date()
         });
 
-      console.log('File processing completed');
+      // Emit completion event
+      if (this.io) {
+        this.io.emit('fileProcessingComplete', {
+          fileId: fileUpload.id,
+          fileName: fileUpload.file_name,
+          status: 'completed',
+          processedCount: successfulRecords.length,
+          errorCount: failedRecords.length,
+          errorMessage: errorMessage
+        });
+      }
+
     } catch (error) {
       console.error('Critical error processing file:', {
         fileId: fileUpload.id,
@@ -133,6 +181,16 @@ class BackgroundTaskService {
           error_message: error.message || 'An unknown error occurred while processing the file',
           completed_at: new Date()
         });
+
+      // Emit error event
+      if (this.io) {
+        this.io.emit('fileProcessingError', {
+          fileId: fileUpload.id,
+          fileName: fileUpload.file_name,
+          status: 'failed',
+          error: error.message || 'An unknown error occurred while processing the file'
+        });
+      }
     }
   }
 
