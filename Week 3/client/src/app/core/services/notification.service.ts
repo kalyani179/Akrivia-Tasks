@@ -70,9 +70,10 @@ export class NotificationService {
 
       if (data.errorCount > 0) {
         this.toast.warning({
-          detail: `File processed with ${data.errorCount} errors. Check error sheet for details.`,
+          detail: `File processed with ${data.errorCount} errors. Check Error Sheet for details`,
           duration: 5000
         });
+
       } else {
         this.toast.success({
           detail: `Successfully processed ${data.processedCount} records`,
@@ -134,14 +135,14 @@ export class NotificationService {
           case 'completed':
             if (status.errorCount && status.errorCount > 0) {
               this.toast.warning({
-                detail: `File "${status.fileName}" processed with ${status.errorCount} errors. Check error sheet for details.`,
-                summary: 'Previous Upload Completed with Errors',
+                detail: `"${status.fileName}" processed with ${status.errorCount} errors.`,
+                // summary: 'Previous Upload Completed with Errors',
                 duration: 5000
               });
             } else {
               this.toast.success({
                 detail: `File "${status.fileName}" successfully processed ${status.processedCount} records`,
-                summary: 'Previous Upload Completed',
+                // summary: 'Previous Upload Completed',
                 duration: 5000
               });
             }
