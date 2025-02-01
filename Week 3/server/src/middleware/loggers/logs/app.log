@@ -45038,3 +45038,13 @@
   level: 'info',
   timestamp: '2025-02-01T05:09:15.720Z'
 }
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads","status":"200","responseTime":"120.400"}',
+  level: 'info',
+  timestamp: '2025-02-01T05:09:35.834Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads","status":"200","responseTime":"15.823"}',
+  level: 'info',
+  timestamp: '2025-02-01T05:10:12.720Z'
+}
