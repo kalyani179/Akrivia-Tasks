@@ -47938,3 +47938,23 @@
   level: 'info',
   timestamp: '2025-02-03T06:15:57.248Z'
 }
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selected&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"11.988"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:16:07.259Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selected&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"13.103"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:16:17.248Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selected&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"27.522"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:16:27.276Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selected&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"12.320"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:16:37.256Z'
+}

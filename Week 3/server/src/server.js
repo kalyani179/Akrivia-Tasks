@@ -194,7 +194,7 @@ io.on('connection', (socket) => {
 server.use(cors());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
-server.use(morganMiddleware);
+// server.use(morganMiddleware);
 server.use(helmet());
 // Swagger setup
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
