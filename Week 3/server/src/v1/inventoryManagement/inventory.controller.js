@@ -1,6 +1,6 @@
 const knex = require('../../mysql/knex');
 const { s3Client } = require('../../aws/s3/s3');
-const { PutObjectCommand, GetObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
+const { PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const dotenv = require('dotenv');
 const backgroundTaskService = require('../../services/backgroundTaskService');
