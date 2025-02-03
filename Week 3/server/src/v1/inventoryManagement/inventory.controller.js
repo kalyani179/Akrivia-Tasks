@@ -502,7 +502,14 @@ const getFileUploads = async (req, res) => {
   try {
     const userId = req.user.userId;
     const searchText = req.query.searchText || ''; 
-    const selectedColumns = req.query.selectedColumns || []; 
+    
+    // Convert selectedColumns to array if it's a string
+    let selectedColumns = [];
+    if (req.query.selectedColumns) {
+      selectedColumns = Array.isArray(req.query.selectedColumns) 
+        ? req.query.selectedColumns 
+        : [req.query.selectedColumns];
+    }
 
     console.log('Search Parameters:', { searchText, selectedColumns }); 
 
@@ -512,15 +519,14 @@ const getFileUploads = async (req, res) => {
 
     if (searchText && searchText.trim() !== '') {
       query = query.andWhere(function() {
-        // If specific columns are selected
-        if (selectedColumns && selectedColumns.length > 0) {
+        if (selectedColumns.length > 0) {
           selectedColumns.forEach(column => {
             switch(column) {
               case 'file_name':
-                this.orWhere(knex.raw('LOWER(file_name) LIKE ?', [`%${searchText.toLowerCase()}%`]));
+                this.orWhere('file_name', 'like', `%${searchText}%`);
                 break;
               case 'status':
-                this.orWhere(knex.raw('LOWER(status) LIKE ?', [`%${searchText.toLowerCase()}%`]));
+                this.orWhere('status', 'like', `%${searchText}%`);
                 break;
               case 'processed_count':
                 if (!isNaN(searchText)) {
@@ -533,17 +539,17 @@ const getFileUploads = async (req, res) => {
                 }
                 break;
               case 'created_at':
-                this.orWhere(knex.raw('DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") LIKE ?', [`%${searchText}%`]));
+                this.orWhere('created_at', 'like', `%${searchText}%`);
                 break;
               case 'completed_at':
-                this.orWhere(knex.raw('DATE_FORMAT(completed_at, "%Y-%m-%d %H:%i:%s") LIKE ?', [`%${searchText}%`]));
+                this.orWhere('completed_at', 'like', `%${searchText}%`);
                 break;
             }
           });
         } else {
           // If no specific columns selected, search in all columns
-          this.orWhere(knex.raw('LOWER(file_name) LIKE ?', [`%${searchText.toLowerCase()}%`]))
-            .orWhere(knex.raw('LOWER(status) LIKE ?', [`%${searchText.toLowerCase()}%`]));
+          this.orWhere('file_name', 'like', `%${searchText}%`)
+            .orWhere('status', 'like', `%${searchText}%`);
 
           // Only search in numeric columns if the search text is a number
           if (!isNaN(searchText)) {
@@ -552,17 +558,16 @@ const getFileUploads = async (req, res) => {
           }
 
           // Search in date columns
-          this.orWhere(knex.raw('DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") LIKE ?', [`%${searchText}%`]))
-            .orWhere(knex.raw('DATE_FORMAT(completed_at, "%Y-%m-%d %H:%i:%s") LIKE ?', [`%${searchText}%`]));
+          this.orWhere('created_at', 'like', `%${searchText}%`)
+            .orWhere('completed_at', 'like', `%${searchText}%`);
         }
       });
     }
 
-    console.log('Generated SQL:', query.toString()); // Debug log
+    console.log('Generated SQL:', query.toString());
 
-    // Execute the query
     const fileUploads = await query;
-    console.log('Query results:', fileUploads.length); // Debug log
+    console.log('Query results:', fileUploads.length);
 
     // Generate download URLs for error files where applicable
     const fileUploadsWithUrls = await Promise.all(fileUploads.map(async (upload) => {
