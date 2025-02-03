@@ -1,0 +1,46 @@
+<div class="notification-wrapper">
+    <button class="notification-btn btn" (click)="toggleNotifications()" (click)="$event.stopPropagation()">
+      <div class="notification-icon">
+        <i class="bi bi-bell"></i>
+      </div>
+     
+      <span *ngIf="unreadCount > 0" class="notification-badge">
+        {{ unreadCount }}
+      </span>
+    </button>
+
+    <div *ngIf="showNotifications" class="notification-dropdown" (click)="$event.stopPropagation()">
+      <div class="notification-header">
+        <h6 style="color:gray">Notifications</h6>
+        <button class="btn btn-light" style="color: #6366f1;" *ngIf="unreadCount > 0" (click)="markAllAsRead()">
+          Mark all as read
+        </button>
+      </div>
+
+      <div class="notification-list">
+        <div *ngFor="let notification of notifications"
+             [class.unread]="!notification.isRead"
+             class="notification-item"
+             (click)="markAsRead(notification)">
+          <div class="notification-content">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center justify-center" >
+                    <i [class]="getNotificationIcon(notification)" class="me-2"></i>
+                    <h6 style="margin:0" class="me-5">{{ notification.title }}</h6>
+                    <small style="margin:0">{{ notification.timestamp | date:'medium' }}</small>
+                </div>
+
+                <button class="close-button" (click)="deleteNotification(notification)">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+            <p>{{ notification.message }}</p>
+          </div>
+        </div>
+        
+        <div *ngIf="notifications.length === 0" class="text-center">
+          No notifications
+        </div>
+      </div>
+    </div>
+</div>

@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { FileUploadsComponent } from './components/file-uploads/file-uploads.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent }
@@ -22,7 +23,8 @@ const routes: Routes = [
     FileUploadComponent,
     InventoryTableComponent,
     AddProductComponent,
-    FileUploadsComponent
+    FileUploadsComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,

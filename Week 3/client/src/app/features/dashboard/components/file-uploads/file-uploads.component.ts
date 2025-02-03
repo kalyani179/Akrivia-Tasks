@@ -87,7 +87,7 @@ export class FileUploadsComponent implements OnInit, OnDestroy {
     this.productService.getFileUploads(searchParams).subscribe({
       next: (uploads) => {
         this.fileUploads = uploads;
-        console.log(this.fileUploads);
+        // console.log(this.fileUploads);
         // Check for pending files and trigger processing
         const pendingFiles = uploads.filter(u => u.status === 'pending');
         if (pendingFiles.length > 0) {

@@ -511,8 +511,6 @@ const getFileUploads = async (req, res) => {
         : [req.query.selectedColumns];
     }
 
-    console.log('Search Parameters:', { searchText, selectedColumns }); 
-
     let query = knex('file_uploads')
       .where('user_id', userId)
       .orderBy('created_at', 'desc');
@@ -564,10 +562,8 @@ const getFileUploads = async (req, res) => {
       });
     }
 
-    console.log('Generated SQL:', query.toString());
-
     const fileUploads = await query;
-    console.log('Query results:', fileUploads.length);
+  
 
     // Generate download URLs for error files where applicable
     const fileUploadsWithUrls = await Promise.all(fileUploads.map(async (upload) => {
