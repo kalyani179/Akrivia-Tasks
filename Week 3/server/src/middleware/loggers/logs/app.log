@@ -47873,3 +47873,63 @@
   level: 'info',
   timestamp: '2025-02-03T06:14:16.261Z'
 }
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"128.129"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:16.369Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"46.329"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:22.868Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"14.400"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:26.818Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=se&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"26.492"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:31.104Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=seke&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"11.731"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:31.650Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=se&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"19.172"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:32.348Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=sel&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"24.586"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:32.776Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=sele&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"36.440"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:33.211Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selec&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"24.249"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:33.924Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selected&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"23.390"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:35.494Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selected&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"28.461"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:36.822Z'
+}
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selected&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"14.320"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:47.251Z'
+}
