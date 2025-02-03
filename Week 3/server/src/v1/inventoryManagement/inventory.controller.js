@@ -501,17 +501,15 @@ const uploadFileForProcessing = async (req, res) => {
 const getFileUploads = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const searchText = req.query.searchText || ''; // Changed from search to searchText to match frontend
-    const selectedColumns = req.query.selectedColumns || []; // Changed from columns to selectedColumns
+    const searchText = req.query.searchText || ''; 
+    const selectedColumns = req.query.selectedColumns || []; 
 
-    console.log('Search Parameters:', { searchText, selectedColumns }); // Debug log
+    console.log('Search Parameters:', { searchText, selectedColumns }); 
 
-    // Start building the query
     let query = knex('file_uploads')
       .where('user_id', userId)
       .orderBy('created_at', 'desc');
 
-    // Apply search filter if search text is provided
     if (searchText && searchText.trim() !== '') {
       query = query.andWhere(function() {
         // If specific columns are selected
