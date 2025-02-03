@@ -47933,3 +47933,8 @@
   level: 'info',
   timestamp: '2025-02-03T06:15:47.251Z'
 }
+{
+  message: '{"method":"GET","url":"/api/inventory/file-uploads?searchText=selected&selectedColumns=file_name&selectedColumns=status&selectedColumns=processed_count&selectedColumns=error_count&selectedColumns=created_at&selectedColumns=completed_at","status":"200","responseTime":"9.484"}',
+  level: 'info',
+  timestamp: '2025-02-03T06:15:57.248Z'
+}
