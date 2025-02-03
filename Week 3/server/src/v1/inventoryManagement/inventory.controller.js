@@ -501,9 +501,70 @@ const uploadFileForProcessing = async (req, res) => {
 const getFileUploads = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const fileUploads = await knex('file_uploads')
+    const searchText = req.query.searchText || ''; // Changed from search to searchText to match frontend
+    const selectedColumns = req.query.selectedColumns || []; // Changed from columns to selectedColumns
+
+    console.log('Search Parameters:', { searchText, selectedColumns }); // Debug log
+
+    // Start building the query
+    let query = knex('file_uploads')
       .where('user_id', userId)
       .orderBy('created_at', 'desc');
+
+    // Apply search filter if search text is provided
+    if (searchText && searchText.trim() !== '') {
+      query = query.andWhere(function() {
+        // If specific columns are selected
+        if (selectedColumns && selectedColumns.length > 0) {
+          selectedColumns.forEach(column => {
+            switch(column) {
+              case 'file_name':
+                this.orWhere(knex.raw('LOWER(file_name) LIKE ?', [`%${searchText.toLowerCase()}%`]));
+                break;
+              case 'status':
+                this.orWhere(knex.raw('LOWER(status) LIKE ?', [`%${searchText.toLowerCase()}%`]));
+                break;
+              case 'processed_count':
+                if (!isNaN(searchText)) {
+                  this.orWhere('processed_count', '=', parseInt(searchText));
+                }
+                break;
+              case 'error_count':
+                if (!isNaN(searchText)) {
+                  this.orWhere('error_count', '=', parseInt(searchText));
+                }
+                break;
+              case 'created_at':
+                this.orWhere(knex.raw('DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") LIKE ?', [`%${searchText}%`]));
+                break;
+              case 'completed_at':
+                this.orWhere(knex.raw('DATE_FORMAT(completed_at, "%Y-%m-%d %H:%i:%s") LIKE ?', [`%${searchText}%`]));
+                break;
+            }
+          });
+        } else {
+          // If no specific columns selected, search in all columns
+          this.orWhere(knex.raw('LOWER(file_name) LIKE ?', [`%${searchText.toLowerCase()}%`]))
+            .orWhere(knex.raw('LOWER(status) LIKE ?', [`%${searchText.toLowerCase()}%`]));
+
+          // Only search in numeric columns if the search text is a number
+          if (!isNaN(searchText)) {
+            this.orWhere('processed_count', '=', parseInt(searchText))
+              .orWhere('error_count', '=', parseInt(searchText));
+          }
+
+          // Search in date columns
+          this.orWhere(knex.raw('DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") LIKE ?', [`%${searchText}%`]))
+            .orWhere(knex.raw('DATE_FORMAT(completed_at, "%Y-%m-%d %H:%i:%s") LIKE ?', [`%${searchText}%`]));
+        }
+      });
+    }
+
+    console.log('Generated SQL:', query.toString()); // Debug log
+
+    // Execute the query
+    const fileUploads = await query;
+    console.log('Query results:', fileUploads.length); // Debug log
 
     // Generate download URLs for error files where applicable
     const fileUploadsWithUrls = await Promise.all(fileUploads.map(async (upload) => {
@@ -518,7 +579,7 @@ const getFileUploads = async (req, res) => {
       return upload;
     }));
 
-    res.json(fileUploadsWithUrls);
+    res.status(200).json(fileUploadsWithUrls);
   } catch (error) {
     console.error('Error fetching file uploads:', error);
     res.status(500).json({ error: 'Internal server error' });

@@ -3,6 +3,39 @@
     <div class="d-flex justify-content-between align-items-center">
       <h5 class="mb-0">File Uploads</h5>
       <div class="d-flex gap-2">
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Search..." 
+            (input)="onSearch($event)"
+          >
+        </div>
+        <div class="filter-dropdown">
+          <button class="btn btn-light" (click)="toggleFilters()" (click)="$event.stopPropagation()">
+            <i class="bi bi-funnel me-2"></i>
+            Filters
+          </button>
+          <div class="filter-menu" *ngIf="showFilters" (click)="$event.stopPropagation()">
+            <div class="filter-header">
+              <h6 class="mb-0">Columns</h6>
+            </div>
+            <div class="filter-options">
+              <ng-container *ngIf="showFilters">
+              <label *ngFor="let column of columns" class="filter-option">
+                <input 
+                  type="checkbox" 
+                  [checked]="column.checked"
+                  (change)="onColumnToggle(column)"
+                >
+                <span>{{ column.label }}</span>
+                </label>
+              </ng-container>
+
+            </div>
+          </div>
+        </div>
         <button class="btn btn-outline-primary" (click)="triggerProcessing()">
           <i class="bi bi-play-fill me-1"></i>
           Process Pending Files

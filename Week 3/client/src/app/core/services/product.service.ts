@@ -164,8 +164,8 @@ export class ProductService {
     );
   }
 
-  getFileUploads(): Observable<FileUpload[]> {
-    return this.http.get<FileUpload[]>(`${this.apiUrl}/file-uploads`);
+  getFileUploads(params: { searchText: string; selectedColumns: string[] }): Observable<FileUpload[]> {
+    return this.http.get<FileUpload[]>(`${this.apiUrl}/file-uploads`, { params });
   }
 
   triggerProcessing(): Observable<{ message: string }> {
