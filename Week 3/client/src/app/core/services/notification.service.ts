@@ -62,7 +62,7 @@ export class NotificationService {
       this.showToast(notification);
     });
   }
-
+  
   private addNotification(notification: Notification) {
     const current = this.notifications.value;
     const updated = [notification, ...current];

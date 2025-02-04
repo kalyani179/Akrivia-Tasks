@@ -4,6 +4,7 @@ const cron = require('node-cron');
 const { s3Client } = require('../aws/s3/s3');
 const { GetObjectCommand, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+const ExcelJS = require('exceljs');
 
 class BackgroundTaskService {
   constructor() {
@@ -61,73 +62,71 @@ class BackgroundTaskService {
         Key: fileUpload.file_key
       }));
 
-      // Process the Excel file
-      console.log('Reading Excel file...');
-      const buffer = await s3Object.Body.transformToByteArray();
-      const workbook = XLSX.read(buffer, { type: 'array' });
-      
-      if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
-        throw new Error('Excel file is empty or invalid');
-      }
-
-      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-      if (!worksheet) {
-        throw new Error('First worksheet is empty or invalid');
-      }
-
-      console.log('Converting Excel data to JSON...');
-      const data = XLSX.utils.sheet_to_json(worksheet, { 
-        raw: false,
-        defval: ''
-      });
-
-      if (!data || data.length === 0) {
-        throw new Error('No data found in the Excel file');
-      }
-
-      console.log(`Found ${data.length} records to process`);
+      // Initialize ExcelJS workbook and use stream reader
+      const workbook = new ExcelJS.Workbook();
       const successfulRecords = [];
       const failedRecords = [];
+      let totalRows = 0;
+      let processedRows = 0;
 
-      // Get total number of records to process
-      const totalRecords = data.length;
-      
-      // Process records and emit progress
-      for (let i = 0; i < data.length; i++) {
-        const result = await this.processRecord(data[i], fileUpload.user_id);
-        
-        if (result.success) {
-          successfulRecords.push(data[i]);
-        } else {
-          failedRecords.push({
-            ...data[i],
-            Error_Message: result.error
-          });
-        }
-        
-        // Calculate progress percentage
-        const progress = Math.round(((i + 1) / totalRecords) * 100);
-        
-        // Emit progress update
-        if (this.io) {
-          this.io.emit('fileProgress', {
-            fileId: fileUpload.id,
-            fileName: fileUpload.file_name,
-            progress: progress,
-            message: `Processing record ${i + 1} of ${totalRecords}`
-          });
-        }
-      }
+      await new Promise((resolve, reject) => {
+        workbook.xlsx.read(s3Object.Body)
+          .then(async () => {
+            const worksheet = workbook.getWorksheet(1);
+            if (!worksheet) {
+              throw new Error('First worksheet is empty or invalid');
+            }
 
-      // Final progress update
-      if (this.io) {
-        this.io.emit('fileProgress', {
-          fileId: fileUpload.id,
-          fileName: fileUpload.file_name,
-          progress: 100,
-          message: 'Processing complete'
-        });
-      }
+            totalRows = worksheet.rowCount - 1; // Subtract header row
+            const headers = worksheet.getRow(1).values.slice(1); // Get headers, skip first empty cell
+
+            // Process rows using worksheet.eachRow
+            for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
+              const row = worksheet.getRow(rowNumber);
+              const rowData = {};
+              
+              // Convert row to object using header as keys
+              row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+                const header = headers[colNumber - 1];
+                rowData[header] = cell.value || '';
+              });
+
+              try {
+                const result = await this.processRecord(rowData, fileUpload.user_id);
+                
+                if (result.success) {
+                  successfulRecords.push(rowData);
+                } else {
+                  failedRecords.push({
+                    ...rowData,
+                    Error_Message: result.error
+                  });
+                }
+
+                processedRows++;
+                
+                // Emit progress update every 100 rows or on the last row
+                if (this.io && (processedRows % 100 === 0 || processedRows === totalRows)) {
+                  const progress = Math.round((processedRows / totalRows) * 100);
+                  this.io.emit('fileProgress', {
+                    fileId: fileUpload.id,
+                    fileName: fileUpload.file_name,
+                    progress,
+                    message: `Processing record ${processedRows} of ${totalRows}`
+                  });
+                }
+              } catch (error) {
+                console.error('Error processing row:', rowNumber, error);
+                failedRecords.push({
+                  ...rowData,
+                  Error_Message: error.message
+                });
+              }
+            }
+            resolve();
+          })
+          .catch(reject);
+      });
 
       // Generate error sheet if there are failed records
       let errorFileKey = null;
@@ -136,7 +135,7 @@ class BackgroundTaskService {
         errorFileKey = await this.generateErrorSheet(failedRecords, fileUpload.id);
       }
 
-      // When processing completes successfully
+      // Update final status
       const errorMessage = failedRecords.length > 0 
         ? `Processing completed. ${failedRecords.length} records had errors. Download error sheet for details.`
         : null;
@@ -182,7 +181,6 @@ class BackgroundTaskService {
           completed_at: new Date()
         });
 
-      // Emit error event
       if (this.io) {
         this.io.emit('fileProcessingError', {
           fileId: fileUpload.id,
